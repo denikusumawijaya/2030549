@@ -1055,8 +1055,8 @@
                     </div>
 
                     <div class="action-btns">
-                        <button class="btn btn-check" onclick="checkGame('game4', 5, 'q4_')"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
-                        <button class="btn btn-reset" onclick="resetGame('game4', 5, 'q4_')"><i class="fas fa-redo"></i> Reset</button>
+                        <button class="btn btn-check" onclick="checkGame4()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+                        <button class="btn btn-reset" onclick="resetGame4()"><i class="fas fa-redo"></i> Reset</button>
                     </div>
                 </div>
             </div>
@@ -1180,9 +1180,9 @@
                     <div class="question-block">
                         <div class="q-text">4. Urutkan dari yang terkecil ke terbesar (Klik sesuai urutan!):</div>
                         <div class="sequence-options" id="seq-q6_4">
-                            <button class="seq-btn" onclick="selectSequence(this, 'q6_4', 1)">5 × 10<sup>3</sup></button>
-                            <button class="seq-btn" onclick="selectSequence(this, 'q6_4', 2)">2 × 10<sup>4</sup></button>
-                            <button class="seq-btn" onclick="selectSequence(this, 'q6_4', 3)">9 × 10<sup>2</sup></button>
+                            <button class="seq-btn" data-val="5x10^3" onclick="selectSequence(this, 'q6_4', 1)">5 × 10<sup>3</sup></button>
+                            <button class="seq-btn" data-val="2x10^4" onclick="selectSequence(this, 'q6_4', 2)">2 × 10<sup>4</sup></button>
+                            <button class="seq-btn" data-val="9x10^2" onclick="selectSequence(this, 'q6_4', 3)">9 × 10<sup>2</sup></button>
                         </div>
                         <div class="hint-text" id="hint-q6_4">Petunjuk: Ubah ke bentuk biasa dulu: 5000, 20000, 900. Mana paling kecil?</div>
                     </div>
@@ -1451,7 +1451,6 @@
             </div>
 
         </div> <!-- Penutup material-col -->
-        </div>
 
         <!-- KOLOM CANVAS (1) -->
         <div class="canvas-col">
