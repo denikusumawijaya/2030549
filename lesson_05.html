@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Tutoring - Underwater Office</title>
+    <style>
+        :root {
+            --deep-blue: #001f3f;
+            --ocean-blue: #003366;
+            --aqua: #7FDBFF;
+            --coral: #FF851B;
+            --sand: #f7f7f7;
+            --bubble: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #001f3f, #003366, #0074D9);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Bubbles Animation */
+        .bubble {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            z-index: -1;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Layout Grid 3:1 */
+        .container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-content {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid var(--aqua);
+            box-shadow: 0 0 20px rgba(127, 219, 255, 0.2);
+        }
+
+        /* Sticky Sidebar Canvas */
+        .sidebar {
+            position: relative;
+        }
+        .canvas-wrapper {
+            position: sticky;
+            top: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 10px;
+            color: black;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        #scratchpad {
+            border: 2px solid #ccc;
+            background: white;
+            cursor: crosshair;
+            width: 100%;
+            border-radius: 10px;
+            touch-action: none;
+        }
+        .canvas-tools {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .color-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #333; cursor: pointer; }
+        .tool-btn { padding: 5px 10px; border: none; border-radius: 5px; background: #ddd; cursor: pointer; font-weight: bold; }
+
+        /* Typography & Sections */
+        h1, h2, h3 { color: var(--aqua); text-shadow: 1px 1px 2px black; }
+        .section-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--coral);
+        }
+        .timer {
+            background: var(--coral);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .theory {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .translation {
+            font-size: 0.85em;
+            color: #aaa;
+            font-style: italic;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Interactive Games */
+        .game-area {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-check { background: var(--aqua); color: var(--deep-blue); }
+        .btn-reset { background: var(--coral); color: white; }
+        .btn:hover { transform: scale(1.05); }
+        
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        .correct { color: #2ECC40; }
+        .incorrect { color: #FF4136; }
+
+        input[type="text"], select {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* SVG Icons */
+        .icon { width: 24px; height: 24px; vertical-align: middle; fill: var(--aqua); }
+
+        /* Print Style */
+        /* Assessment Styles */
+        .assessment-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--coral);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question-block {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .q-title { font-weight: bold; margin-bottom: 10px; color: var(--aqua); }
+        .options-group label { display: block; margin: 5px 0; cursor: pointer; }
+        .drag-container { display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+        .draggable {
+            background: var(--aqua);
+            color: var(--deep-blue);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: grab;
+            font-weight: bold;
+            user-select: none;
+        }
+        .draggable:active { cursor: grabbing; }
+        .drop-zone {
+            border: 2px dashed var(--aqua);
+            min-width: 60px;
+            min-height: 35px;
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 0 5px;
+            text-align: center;
+            line-height: 35px;
+        }
+        .drop-zone.over { background: rgba(127, 219, 255, 0.2); }
+        .dragging { opacity: 0.5; }
+        .explanation {
+            margin-top: 10px;
+            font-size: 0.9em;
+            padding: 8px;
+            border-radius: 5px;
+            display: none;
+        }
+        .explanation.correct-exp { background: rgba(46, 204, 64, 0.2); border-left: 4px solid #2ECC40; color: #2ECC40; display: block;}
+        .explanation.incorrect-exp { background: rgba(255, 65, 54, 0.2); border-left: 4px solid #FF4136; color: #FF4136; display: block;}
+
+        .print-area { display: none; } /* Hidden on screen */
+        @media print {
+            body { background: white !important; color: black !important; }
+            .container { display: block !important; }
+            .main-content, .section-box, .assessment-box, .question-block { 
+                border: 1px solid #ccc !important; 
+                box-shadow: none !important; 
+                background: white !important;
+                page-break-inside: avoid;
+            }
+            .sidebar, .btn, .timer, .bubble, .translation, .game-area, canvas { display: none !important; }
+            h1, h2, h3, .q-title { color: black !important; text-shadow: none !important; }
+            .print-area { display: block !important; color: black; }
+            #printSection { display: block !important; }
+            .explanation { display: block !important; border-left: 2px solid #ccc !important; background: #f9f9f9 !important; color: black !important; }
+            .correct-exp::before { content: "✔️ "; }
+            .incorrect-exp::before { content: "❌ "; }
+        }
+      
+        @media print {
+            body { background: white; color: black; }
+            .sidebar, .btn, .timer, .bubble { display: none !important; }
+            .container { display: block; }
+            .main-content { border: none; box-shadow: none; }
+            .section-box { border: 1px solid #ccc; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bubbles Background Generator -->
+    <script>
+        for(let i=0; i<15; i++) {
+            let b = document.createElement('div');
+            b.className = 'bubble';
+            let size = Math.random() * 60 + 20;
+            b.style.width = size + 'px';
+            b.style.height = size + 'px';
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.animationDuration = Math.random() * 10 + 10 + 's';
+            b.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(b);
+        }
+    </script>
+
+    <div class="container">
+        <!-- MAIN CONTENT AREA (3/4) -->
+        <div class="main-content">
+            
+            <!-- HEADER -->
+            <div style="text-align: center; border-bottom: 2px solid var(--aqua); padding-bottom: 20px; margin-bottom: 30px;">
+                <h1><svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z"/></svg> MATH TUTORING</h1>
+                <h2>Topic: Advanced Place Value (Up to Millions & Decimals)</h2>
+                <p><span class="translation">Topik: Nilai Tempat Lanjutan (Hingga Jutaan & Desimal)</span></p>
+                <h3>Tutor: Deni</h3>
+            </div>
+
+            <!-- CLASS RULES -->
+            <div class="section-box" style="border-left: 5px solid #FFDC00; background: rgba(255, 220, 0, 0.1);">
+                <h3><svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Class Rules / Aturan Kelas</h3>
+                <ul>
+                    <li>Take turns when speaking. <span class="translation">Berbicara secara bergantian.</span></li>
+                    <li>Ask for permission if you need to leave the Zoom/class. <span class="translation">Minta izin jika harus meninggalkan kelas/Zoom.</span></li>
+                    <li>Use the scratchpad on the right for rough work! <span class="translation">Gunakan kanvas di kanan untuk coretan kasar!</span></li>
+                </ul>
+            </div>
+
+            <!-- SECTION 1: Spiral Review Warm-up -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:00 - 00:10</div>
+                <h3>1. Spiral Review Warm-up</h3>
+                <div class="theory">
+                    <p>Before we dive deep into the ocean of numbers, let's warm up! Do you remember volume and basic place values? Volume is the space inside a 3D object, and place value tells us how much a digit is worth based on its position.</p>
+                    <span class="translation">Sebelum kita menyelam ke lautan angka, mari pemanasan! Apakah kamu ingat volume dan nilai tempat dasar? Volume adalah ruang di dalam benda 3D, dan nilai tempat memberi tahu kita nilai dari sebuah angka berdasarkan posisinya.</span>
+                </div>
+                
+                <div class="game-area" id="game1">
+                    <p>Challenge: A cube has an edge of 3 cm. What is its volume?<br><span class="translation">Tantangan: Sebuah kubus memiliki rusuk 3 cm. Berapa volumenya?</span></p>
+                    <input type="text" id="g1ans" placeholder="Answer in cm³">
+                    <button class="btn btn-check" onclick="checkGame1()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame1()">Reset</button>
+                    <div class="feedback" id="g1fb"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Introduction & Real-World Connection -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:10 - 00:15</div>
+                <h3>2. Introduction & Real-World Connection</h3>
+                <div class="theory">
+                    <p>Imagine the number of stars in the galaxy—millions! Or the weight of a tiny microbe—very small, less than 1! We need a strong place value system to record these, from giant millions to tiny decimals.</p>
+                    <span class="translation">Bayangkan jumlah bintang di galaksi—jutaan! Atau berat mikroba kecil—sangat kecil, kurang dari 1! Kita butuh sistem nilai tempat yang kuat untuk mencatat ini semua, dari jutaan raksasa hingga desimal kecil.</span>
+                </div>
+
+                <div class="game-area" id="game2">
+                    <p>Challenge: Which is larger, 0.7 or 0.09?<br><span class="translation">Tantangan: Manakah yang lebih besar, 0.7 atau 0.09?</span></p>
+                    <select id="g2ans">
+                        <option value="">-- Select --</option>
+                        <option value="0.7">0.7</option>
+                        <option value="0.09">0.09</option>
+                    </select>
+                    <button class="btn btn-check" onclick="checkGame2()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame2()">Reset</button>
+                    <div class="feedback" id="g2fb"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Review of Prior Knowledge -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:15 - 00:20</div>
+                <h3>3. Review of Prior Knowledge</h3>
+                <div class="theory">
+                    <p>Remember our place value table? Ones, Tens, Hundreds, Thousands. If we move left from Thousands, we get Ten Thousands, then Hundred Thousands. What comes next? Millions!</p>
+                    <span class="translation">Ingat tabel nilai tempat kita? Satuan, Puluhan, Ratusan, Ribuan. Jika kita bergerak ke kiri dari Ribuan, kita mendapatkan Puluh Ribuan, lalu Ratus Ribuan. Selanjutnya apa? Jutaan!</span>
+                </div>
+
+                <div class="game-area" id="game3">
+                    <p>Challenge: In the number 4,567, what is the value of the digit 5?<br><span class="translation">Tantangan: Pada angka 4.567, berapa nilai angka 5?</span></p>
+                    <input type="text" id="g3ans" placeholder="Value of 5">
+                    <button class="btn btn-check" onclick="checkGame3()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame3()">Reset</button>
+                    <div class="feedback" id="g3fb"></div>
+                </div>
+            </div>
+
+            <!-- SECTIONS 4-7 WILL BE INJECTED IN PART 2 -->
+            <!-- SECTION 4: Problem Introduction -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:20 - 00:30</div>
+                <h3>4. Problem Introduction</h3>
+                <div class="theory">
+                    <p>Imagine finding a new planet with a population of 2,450,700.25! Let's dissect this long number. The digit 2 is in the millions place. Notice the decimal point; it separates whole numbers from fractional parts.</p>
+                    <span class="translation">Bayangkan menemukan planet baru dengan populasi 2.450.700,25! Mari kita bedah angka panjang ini. Angka 2 berada di tempat jutaan. Perhatikan koma desimal; ia memisahkan bilangan bulat dari bagian pecahan.</span>
+                </div>
+                <div class="theory">
+                    <p>After the decimal point, we have tenths and hundredths. Why tenths? Because it takes 10 of them to make 1 whole. The digit 2 after the decimal means two tenths (0.2), and 5 means five hundredths (0.05).</p>
+                    <span class="translation">Setelah koma desimal, kita memiliki persepuluhan dan perseratusan. Kenapa persepuluhan? Karena butuh 10 dari itu untuk menjadi 1 utuh. Angka 2 setelah koma berarti dua persepuluhan (0,2), dan 5 berarti lima perseratusan (0,05).</span>
+                </div>
+
+                <div class="game-area" id="game4">
+                    <p>Challenge: In the number 2,450,700.25, what is the place value of the digit 5?<br><span class="translation">Tantangan: Pada angka 2.450.700,25, apa nilai tempat angka 5?</span></p>
+                    <select id="g4ans">
+                        <option value="">-- Select Place Value --</option>
+                        <option value="tens">Puluhan / Tens</option>
+                        <option value="thousands">Ribuan / Thousands</option>
+                        <option value="tenths">Persepuluhan / Tenths</option>
+                        <option value="hundredths">Perseratusan / Hundredths</option>
+                    </select>
+                    <button class="btn btn-check" onclick="checkGame4()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame4()">Reset</button>
+                    <div class="feedback" id="g4fb"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: Guided Practice -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:30 - 00:45</div>
+                <h3>5. Guided Practice</h3>
+                <div class="theory">
+                    <p>Now it's your turn, Captain! Let's handle some 'star cargo'. We need to place numbers into their correct columns in the place value chart, from millions down to hundredths.</p>
+                    <span class="translation">Sekarang giliranmu, Kapten! Mari tangani beberapa 'kargo bintang'. Kita perlu memasukkan angka ke kolom yang benar dalam tabel nilai tempat, dari jutaan hingga perseratusan.</span>
+                </div>
+                <div class="theory">
+                    <p>Writing numbers in expanded form means breaking them down by their place values. For example, 1,000,005.6 is (1,000,000 + 5 + 0.6). Every digit's value is shown clearly!</p>
+                    <span class="translation">Menulis angka dalam bentuk panjang berarti menguraikannya berdasarkan nilai tempatnya. Misalnya, 1.000.005,6 adalah (1.000.000 + 5 + 0,6). Nilai setiap angka ditampilkan dengan jelas!</span>
+                </div>
+
+                <div class="game-area" id="game5">
+                    <p>Challenge: In the number 7,890,123.45, what is the value of the digit 4?<br><span class="translation">Tantangan: Pada angka 7.890.123,45, berapa nilai angka 4?</span></p>
+                    <input type="text" id="g5ans" placeholder="Type the value (e.g., 400)">
+                    <button class="btn btn-check" onclick="checkGame5()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame5()">Reset</button>
+                    <div class="feedback" id="g5fb"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 6: Independent Practice -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:45 - 00:55</div>
+                <h3>6. Independent Practice</h3>
+                <div class="theory">
+                    <p>Time for a solo simulation! You need to determine the value of specific circled digits and convert decimals into words. This tests your true navigation skills in the sea of numbers.</p>
+                    <span class="translation">Waktunya simulasi mandiri! Kamu harus menentukan nilai angka yang dilingkari dan mengubah desimal menjadi kata-kata. Ini menguji kemampuan navigasimu yang sebenarnya di lautan angka.</span>
+                </div>
+                <div class="theory">
+                    <p>When reading decimals, 0.25 is read as "twenty-five hundredths" because it goes up to the hundredths place. Always check the farthest digit to the right after the decimal!</p>
+                    <span class="translation">Saat membaca desimal, 0,25 dibaca "dua puluh lima perseratus" karena nilainya sampai di tempat perseratusan. Selalu periksa angka terjauh di kanan setelah koma!</span>
+                </div>
+
+                <div class="game-area" id="game6">
+                    <p>Challenge: How do you write 0.25 in words?<br><span class="translation">Tantangan: Bagaimana menulis 0,25 dalam kata-kata?</span></p>
+                    <select id="g6ans">
+                        <option value="">-- Select Answer --</option>
+                        <option value="tenths">Two tenths and five hundredths</option>
+                        <option value="hundredths">Twenty-five hundredths</option>
+                        <option value="thousandths">Twenty-five thousandths</option>
+                    </select>
+                    <button class="btn btn-check" onclick="checkGame6()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame6()">Reset</button>
+                    <div class="feedback" id="g6fb"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 7: Consolidation & Reflection -->
+            <div class="section-box">
+                <div class="timer">⏱️ 00:55 - 01:00</div>
+                <h3>7. Consolidation & Reflection</h3>
+                <div class="theory">
+                    <p>Fantastic job today! Remember, moving one place to the left makes a digit 10 times larger, and moving right makes it 10 times smaller. The decimal point is our anchor!</p>
+                    <span class="translation">Luar biasa hari ini! Ingat, berpindah satu tempat ke kiri membuat angka 10 kali lebih besar, dan ke kanan membuatnya 10 kali lebih kecil. Koma desimal adalah jangkar kita!</span>
+                </div>
+                <div class="theory">
+                    <p>You've mastered numbers from millions down to hundredths. Keep practicing to strengthen your math radar! Don't forget to review this lesson on the learning platform.</p>
+                    <span class="translation">Kamu sudah menguasai angka dari jutaan hingga perseratusan. Terus berlatih untuk memperkuat radar matematikamu! Jangan lupa mengulas materi ini di platform belajar.</span>
+                </div>
+
+                <div class="game-area" id="game7">
+                    <p>Final Quest: If a digit moves one place to the left, its value becomes ___ times larger.<br><span class="translation">Misi Akhir: Jika sebuah angka berpindah satu tempat ke kiri, nilainya menjadi ___ kali lebih besar.</span></p>
+                    <input type="text" id="g7ans" placeholder="Type the number">
+                    <button class="btn btn-check" onclick="checkGame7()">Check</button>
+                    <button class="btn btn-reset" onclick="resetGame7()">Reset</button>
+                    <div class="feedback" id="g7fb"></div>
+                </div>
+            </div>
+
+            <!-- ASSESSMENT WILL BE INJECTED IN PART 3 & 4 -->
+            <!-- ASSESSMENT SECTION -->
+            <div class="section-box">
+                <div class="timer">⏱️ Assessment Time</div>
+                <h2>📝 Assessment / Penilaian</h2>
+                
+                <div class="assessment-box" style="background: rgba(255,255,255,0.15); border: none;">
+                    <label style="font-weight:bold; margin-right:10px;">Student Name / Nama Siswa: <span class="translation">(Isi namamu)</span></label>
+                    <input type="text" id="studentName" style="width: 200px; padding: 5px;"><br><br>
+                    <label style="font-weight:bold; margin-right:10px;">Test Date / Tanggal Tes:</label>
+                    <input type="date" id="testDate" style="padding: 5px;">
+                </div>
+
+                <!-- GROUP 1: EASY -->
+                <h3 style="color:var(--coral);">Group 1: Easy Questions <span class="translation" style="font-size:0.8em; color:#ccc;">(Soal Mudah)</span></h3>
+                <div class="assessment-box" id="group1">
+
+                    <!-- Q1: Dropdown -->
+                    <div class="question-block">
+                        <div class="q-title">1. What is the place value of the digit 5 in the number 450? <span class="translation">(Apa nilai tempat angka 5 pada bilangan 450?)</span></div>
+                        <select id="g1q1">
+                            <option value="">-- Select --</option>
+                            <option value="ones">Ones / Satuan</option>
+                            <option value="tens">Tens / Puluhan</option>
+                            <option value="hundreds">Hundreds / Ratusan</option>
+                        </select>
+                        <div class="explanation" id="g1q1-exp"></div>
+                    </div>
+
+                    <!-- Q2: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">2. Write "Two hundred thirty-four" in standard form. <span class="translation">(Tulis "Dua ratus tiga puluh empat" dalam bentuk standar.)</span></div>
+                        <input type="text" id="g1q2" placeholder="Answer...">
+                        <div class="explanation" id="g1q2-exp"></div>
+                    </div>
+
+                    <!-- Q3: Radio -->
+                    <div class="question-block">
+                        <div class="q-title">3. Which is larger: 0.3 or 0.03? <span class="translation">(Mana yang lebih besar: 0,3 atau 0,03?)</span></div>
+                        <div class="options-group">
+                            <label><input type="radio" name="g1q3" value="0.3"> 0.3</label>
+                            <label><input type="radio" name="g1q3" value="0.03"> 0.03</label>
+                        </div>
+                        <div class="explanation" id="g1q3-exp"></div>
+                    </div>
+
+                    <!-- Q4: Checkbox -->
+                    <div class="question-block">
+                        <div class="q-title">4. Which of these numbers have a 0 in the tens place? (Select ALL that apply) <span class="translation">(Angka mana yang memiliki 0 di tempat puluhan? Pilih semua yang benar)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g1q4" value="105"> 105</label>
+                            <label><input type="checkbox" class="g1q4" value="250"> 250</label>
+                            <label><input type="checkbox" class="g1q4" value="702"> 702</label>
+                            <label><input type="checkbox" class="g1q4" value="990"> 990</label>
+                        </div>
+                        <div class="explanation" id="g1q4-exp"></div>
+                    </div>
+
+                    <!-- Q5: Drag and Drop -->
+                    <div class="question-block">
+                        <div class="q-title">5. Drag the digits of the number 607 into the correct place value boxes. <span class="translation">(Seret angka 607 ke kotak nilai tempat yang benar.)</span></div>
+                        <div class="drag-container" id="g1q5-bank">
+                            <div class="draggable" draggable="true" id="drag-6" ondragstart="dragStart(event)">6</div>
+                            <div class="draggable" draggable="true" id="drag-0" ondragstart="dragStart(event)">0</div>
+                            <div class="draggable" draggable="true" id="drag-7" ondragstart="dragStart(event)">7</div>
+                        </div>
+                        <div style="display:flex; gap:15px; margin-top:15px;">
+                            <div style="text-align:center;">Hundreds<br><div class="drop-zone" id="g1q5-hundreds" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></div>
+                            <div style="text-align:center;">Tens<br><div class="drop-zone" id="g1q5-tens" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></div>
+                            <div style="text-align:center;">Ones<br><div class="drop-zone" id="g1q5-ones" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></div>
+                        </div>
+                        <button class="btn btn-reset" onclick="resetDrag('g1q5')" style="margin-top:10px;">Reset Drag</button>
+                        <div class="explanation" id="g1q5-exp"></div>
+                    </div>
+
+                    <!-- Q6: Dropdown -->
+                    <div class="question-block">
+                        <div class="q-title">6. What is the value of the digit 2 in 2,500? <span class="translation">(Berapa nilai angka 2 pada 2.500?)</span></div>
+                        <select id="g1q6">
+                            <option value="">-- Select --</option>
+                            <option value="2">2</option>
+                            <option value="20">20</option>
+                            <option value="200">200</option>
+                            <option value="2000">2,000</option>
+                        </select>
+                        <div class="explanation" id="g1q6-exp"></div>
+                    </div>
+
+                    <!-- Q7: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">7. Convert expanded form (40 + 5 + 0.1) to standard form. <span class="translation">(Ubah bentuk panjang (40 + 5 + 0,1) ke bentuk standar.)</span></div>
+                        <input type="text" id="g1q7" placeholder="Answer...">
+                        <div class="explanation" id="g1q7-exp"></div>
+                    </div>
+
+                    <!-- Q8: Radio -->
+                    <div class="question-block">
+                        <div class="q-title">8. What does the decimal point separate? <span class="translation">(Apa yang dipisahkan oleh koma desimal?)</span></div>
+                        <div class="options-group">
+                            <label><input type="radio" name="g1q8" value="millions"> Millions and Thousands / Jutaan dan Ribuan</label>
+                            <label><input type="radio" name="g1q8" value="wholes"> Whole numbers and Fractions / Bilangan bulat dan Pecahan</label>
+                            <label><input type="radio" name="g1q8" value="tenths"> Tenths and Hundredths / Persepuluhan dan Perseratusan</label>
+                        </div>
+                        <div class="explanation" id="g1q8-exp"></div>
+                    </div>
+
+                    <!-- Q9: Checkbox -->
+                    <div class="question-block">
+                        <div class="q-title">9. Which of these represent the value of 0.4? (Select ALL that apply) <span class="translation">(Mana yang mewakili nilai 0,4? Pilih semua yang benar)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g1q9" value="4tenths"> 4 tenths / 4 persepuluhan</label>
+                            <label><input type="checkbox" class="g1q9" value="4hundredths"> 4 hundredths / 4 perseratusan</label>
+                            <label><input type="checkbox" class="g1q9" value="40hundredths"> 40 hundredths / 40 perseratusan</label>
+                        </div>
+                        <div class="explanation" id="g1q9-exp"></div>
+                    </div>
+
+                    <!-- Q10: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">10. Add 0.05 to 2. What is the result? <span class="translation">(Tambahkan 0,05 ke 2. Berapa hasilnya?)</span></div>
+                        <input type="text" id="g1q10" placeholder="Answer...">
+                        <div class="explanation" id="g1q10-exp"></div>
+                    </div>
+
+                    <button class="btn btn-check" onclick="submitGroup1()">Submit Group 1</button>
+                    <div id="group1-score" style="font-weight:bold; margin-top:10px;"></div>
+                </div>
+
+                <!-- GROUP 2: MEDIUM -->
+                <h3 style="color:var(--coral); margin-top:40px;">Group 2: Medium Questions <span class="translation" style="font-size:0.8em; color:#ccc;">(Soal Menengah)</span></h3>
+                <div class="assessment-box" id="group2">
+                    
+                    <!-- Q11: Dropdown -->
+                    <div class="question-block">
+                        <div class="q-title">1. What is the place value of 4 in 4,120,500? <span class="translation">(Apa nilai tempat 4 pada 4.120.500?)</span></div>
+                        <select id="g2q1">
+                            <option value="">-- Select --</option>
+                            <option value="hundthousands">Hundred Thousands / Ratus Ribu</option>
+                            <option value="millions">Millions / Jutaan</option>
+                            <option value="tenthousands">Ten Thousands / Puluh Ribu</option>
+                        </select>
+                        <div class="explanation" id="g2q1-exp"></div>
+                    </div>
+
+                    <!-- Q12: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">2. Write 3,000,000 + 20,000 + 50 + 0.04 in standard form. <span class="translation">(Tulis 3.000.000 + 20.000 + 50 + 0,04 dalam bentuk standar.)</span></div>
+                        <input type="text" id="g2q2" placeholder="Answer...">
+                        <div class="explanation" id="g2q2-exp"></div>
+                    </div>
+
+                    <!-- Q13: Radio -->
+                    <div class="question-block">
+                        <div class="q-title">3. Which is larger: 0.55 or 0.6? <span class="translation">(Mana yang lebih besar: 0,55 atau 0,6?)</span></div>
+                        <div class="options-group">
+                            <label><input type="radio" name="g2q3" value="0.55"> 0.55</label>
+                            <label><input type="radio" name="g2q3" value="0.6"> 0.6</label>
+                        </div>
+                        <div class="explanation" id="g2q3-exp"></div>
+                    </div>
+
+                    <!-- Q14: Checkbox -->
+                    <div class="question-block">
+                        <div class="q-title">4. Which digits are in the hundredths place? (Select ALL that apply) <span class="translation">(Angka mana yang berada di tempat perseratusan? Pilih semua yang benar)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g2q4" value="4in124"> The 4 in 1.24</label>
+                            <label><input type="checkbox" class="g2q4" value="9in089"> The 9 in 0.89</label>
+                            <label><input type="checkbox" class="g2q4" value="3in033"> The first 3 in 0.33</label>
+                        </div>
+                        <div class="explanation" id="g2q4-exp"></div>
+                    </div>
+
+                    <!-- Q15: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">5. What is the value of the digit 7 in 7,005,200? <span class="translation">(Berapa nilai angka 7 pada 7.005.200?)</span></div>
+                        <input type="text" id="g2q5" placeholder="Value...">
+                        <div class="explanation" id="g2q5-exp"></div>
+                    </div>
+
+                    <!-- Q16: Radio -->
+                    <div class="question-block">
+                        <div class="q-title">6. How many times greater is 500 than 5? <span class="translation">(Berapa kali lipat lebih besar 500 dibandingkan 5?)</span></div>
+                        <div class="options-group">
+                            <label><input type="radio" name="g2q6" value="10"> 10 times</label>
+                            <label><input type="radio" name="g2q6" value="100"> 100 times</label>
+                            <label><input type="radio" name="g2q6" value="1000"> 1,000 times</label>
+                        </div>
+                        <div class="explanation" id="g2q6-exp"></div>
+                    </div>
+
+                    <!-- Q17: Dropdown -->
+                    <div class="question-block">
+                        <div class="q-title">7. What place is the 9 in 12.09? <span class="translation">(Di tempat apa angka 9 pada 12,09?)</span></div>
+                        <select id="g2q7">
+                            <option value="">-- Select --</option>
+                            <option value="ones">Ones / Satuan</option>
+                            <option value="tenths">Tenths / Persepuluhan</option>
+                            <option value="hundredths">Hundredths / Perseratusan</option>
+                        </select>
+                        <div class="explanation" id="g2q7-exp"></div>
+                    </div>
+
+                    <!-- Q18: Checkbox -->
+                    <div class="question-block">
+                        <div class="q-title">8. Which statements are true about the number 4,500,000.75? (Select ALL) <span class="translation">(Pernyataan mana yang benar tentang 4.500.000,75? Pilih semua)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g2q8" value="4isM"> 4 is in the millions place / 4 di tempat jutaan</label>
+                            <label><input type="checkbox" class="g2q8" value="5isT"> 5 is in the thousands place / 5 di tempat ribuan</label>
+                            <label><input type="checkbox" class="g2q8" value="7isTenth"> 7 is in the tenths place / 7 di tempat persepuluhan</label>
+                        </div>
+                        <div class="explanation" id="g2q8-exp"></div>
+                    </div>
+
+                    <!-- Q19: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">9. Write "Four million two hundred thirty thousand five hundred two and one tenth" in standard form. <span class="translation">(Tulis "Empat juta dua ratus tiga puluh ribu lima ratus dua koma satu" dalam bentuk standar.)</span></div>
+                        <input type="text" id="g2q9" placeholder="Answer...">
+                        <div class="explanation" id="g2q9-exp"></div>
+                    </div>
+
+                    <!-- Q20: Input Text -->
+                    <div class="question-block">
+                        <div class="q-title">10. Expand 3,000,400.05. <span class="translation">(Uraikan 3.000.400,05.)</span></div>
+                        <input type="text" id="g2q10" placeholder="e.g: 1000 + 20 + 0.3">
+                        <div class="explanation" id="g2q10-exp"></div>
+                    </div>
+
+                    <button class="btn btn-check" onclick="submitGroup2()">Submit Group 2</button>
+                    <div id="group2-score" style="font-weight:bold; margin-top:10px;"></div>
+                </div>
+
+                <!-- GROUP 3: HARD -->
+                <h3 style="color:var(--coral); margin-top:40px;">Group 3: Hard Questions <span class="translation" style="font-size:0.8em; color:#ccc;">(Soal Sukar)</span></h3>
+                <div class="assessment-box" id="group3">
+                    <div class="question-block">
+                        <div class="q-title">1. What is the value of the digit 4 in 5,409,100? <span class="translation">(Berapa nilai angka 4 pada 5.409.100?)</span></div>
+                        <input type="text" id="g3q1" placeholder="Value...">
+                        <div class="explanation" id="g3q1-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">2. Which is larger: 0.050 or 0.005? <span class="translation">(Mana yang lebih besar: 0,050 atau 0,005?)</span></div>
+                        <div class="options-group">
+                            <label><input type="radio" name="g3q2" value="0.050"> 0.050</label>
+                            <label><input type="radio" name="g3q2" value="0.005"> 0.005</label>
+                        </div>
+                        <div class="explanation" id="g3q2-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">3. Which statements are true about 0.4? (Select ALL) <span class="translation">(Pernyataan mana yang benar tentang 0,4? Pilih semua)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g3q3" value="4tenths"> 4 tenths / 4 persepuluhan</label>
+                            <label><input type="checkbox" class="g3q3" value="40hundredths"> 40 hundredths / 40 perseratusan</label>
+                            <label><input type="checkbox" class="g3q3" value="4hundredths"> 4 hundredths / 4 perseratusan</label>
+                        </div>
+                        <div class="explanation" id="g3q3-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">4. What is the place value of 8 in 8,120,005.25? <span class="translation">(Apa nilai tempat 8 pada 8.120.005,25?)</span></div>
+                        <select id="g3q4">
+                            <option value="">-- Select --</option>
+                            <option value="hundthousands">Hundred Thousands / Ratus Ribu</option>
+                            <option value="millions">Millions / Jutaan</option>
+                            <option value="tenths">Tenths / Persepuluhan</option>
+                        </select>
+                        <div class="explanation" id="g3q4-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">5. Calculate: 3 millions + 15 hundred thousands + 8 hundredths. <span class="translation">(Hitung: 3 juta + 15 ratus ribu + 8 perseratus)</span></div>
+                        <input type="text" id="g3q5" placeholder="Standard form...">
+                        <div class="explanation" id="g3q5-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">6. How many times greater is 7,000 than 7? <span class="translation">(Berapa kali lipat lebih besar 7.000 dibandingkan 7?)</span></div>
+                        <input type="text" id="g3q6" placeholder="Times greater...">
+                        <div class="explanation" id="g3q6-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">7. What is 1,250,000.95 + 0.05? <span class="translation">(Berapa hasil 1.250.000,95 + 0,05?)</span></div>
+                        <input type="text" id="g3q7" placeholder="Answer...">
+                        <div class="explanation" id="g3q7-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">8. A number has 5 in millions, 2 in hundred thousands, 0 in ten thousands, 9 in thousands, and 7 in tenths. Write the number. <span class="translation">(Sebuah angka memiliki 5 di jutaan, 2 di ratus ribu, 0 di puluh ribu, 9 di ribu, dan 7 di persepuluhan. Tulis angkanya.)</span></div>
+                        <input type="text" id="g3q8" placeholder="Answer...">
+                        <div class="explanation" id="g3q8-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">9. What is 100 times smaller than 1,000,000? <span class="translation">(Berapa angka yang 100 kali lebih kecil dari 1.000.000?)</span></div>
+                        <input type="text" id="g3q9" placeholder="Answer...">
+                        <div class="explanation" id="g3q9-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">10. Fix the error: "In 2,500,000.75, the 7 is in the tenths place so its value is 70." What is the actual value of 7? <span class="translation">(Perbaiki kesalahan: "Pada 2.500.000,75, 7 di tempat persepuluhan sehingga nilainya 70." Berapa nilai sebenarnya dari 7?)</span></div>
+                        <input type="text" id="g3q10" placeholder="Value of 7...">
+                        <div class="explanation" id="g3q10-exp"></div>
+                    </div>
+
+                    <button class="btn btn-check" onclick="submitGroup3()">Submit Group 3</button>
+                    <div id="group3-score" style="font-weight:bold; margin-top:10px;"></div>
+                </div>
+
+                <!-- GROUP 4: HARDER -->
+                <h3 style="color:var(--coral); margin-top:40px;">Group 4: Harder Questions <span class="translation" style="font-size:0.8em; color:#ccc;">(Soal Lebih Sukar)</span></h3>
+                <div class="assessment-box" id="group4">
+                    <div class="question-block">
+                        <div class="q-title">1. Write the number that is 1000 times smaller than 1,000,000. <span class="translation">(Tulis angka yang 1000 kali lebih kecil dari 1.000.000.)</span></div>
+                        <input type="text" id="g4q1" placeholder="Answer...">
+                        <div class="explanation" id="g4q1-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">2. In 4,004,000, how many times greater is the first 4 compared to the second 4? <span class="translation">(Pada 4.004.000, berapa kali lipat lebih besar angka 4 pertama dibandingkan angka 4 kedua?)</span></div>
+                        <select id="g4q2">
+                            <option value="">-- Select --</option>
+                            <option value="10">10 times</option>
+                            <option value="100">100 times</option>
+                            <option value="1000">1,000 times</option>
+                        </select>
+                        <div class="explanation" id="g4q2-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">3. Which is larger: 4 tens or 400 hundredths? <span class="translation">(Mana yang lebih besar: 4 puluhan atau 400 perseratusan?)</span></div>
+                        <div class="options-group">
+                            <label><input type="radio" name="g4q3" value="4tens"> 4 tens / 4 puluhan</label>
+                            <label><input type="radio" name="g4q3" value="400hund"> 400 hundredths / 400 perseratusan</label>
+                            <label><input type="radio" name="g4q3" value="equal"> They are equal / Sama besar</label>
+                        </div>
+                        <div class="explanation" id="g4q3-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">4. Expand 9,040,070.08. <span class="translation">(Uraikan 9.040.070,08.)</span></div>
+                        <input type="text" id="g4q4" placeholder="Expanded form...">
+                        <div class="explanation" id="g4q4-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">5. Which represent 0.025? (Select ALL) <span class="translation">(Mana yang mewakili 0,025? Pilih semua)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g4q5" value="25thousandths"> 25 thousandths / 25 perseribu</label>
+                            <label><input type="checkbox" class="g4q5" value="2hund5thous"> 2 hundredths + 5 thousandths</label>
+                            <label><input type="checkbox" class="g4q5" value="250hund"> 250 hundredths / 250 perseratusan</label>
+                        </div>
+                        <div class="explanation" id="g4q5-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">6. What is the value of the 0 in 6,048? <span class="translation">(Berapa nilai angka 0 pada 6.048?)</span></div>
+                        <input type="text" id="g4q6" placeholder="Value...">
+                        <div class="explanation" id="g4q6-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">7. Subtract 0.05 from 2,500,000.90. <span class="translation">(Kurangi 0,05 dari 2.500.000,90.)</span></div>
+                        <input type="text" id="g4q7" placeholder="Answer...">
+                        <div class="explanation" id="g4q7-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">8. A number has 9 in the millions, 4 in the tenths, and 1 in the thousands. What is the smallest possible number? <span class="translation">(Sebuah angka memiliki 9 di jutaan, 4 di persepuluhan, dan 1 di ribuan. Berapa angka terkecil yang mungkin?)</span></div>
+                        <input type="text" id="g4q8" placeholder="Answer...">
+                        <div class="explanation" id="g4q8-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">9. In 7,890,123.45, what is the place value of 1? <span class="translation">(Pada 7.890.123,45, apa nilai tempat 1?)</span></div>
+                        <select id="g4q9">
+                            <option value="">-- Select --</option>
+                            <option value="tens">Tens / Puluhan</option>
+                            <option value="hundreds">Hundreds / Ratusan</option>
+                            <option value="thousands">Thousands / Ribuan</option>
+                        </select>
+                        <div class="explanation" id="g4q9-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">10. How many times greater is 5,000,000 than 50? <span class="translation">(Berapa kali lipat lebih besar 5.000.000 dibandingkan 50?)</span></div>
+                        <input type="text" id="g4q10" placeholder="Answer...">
+                        <div class="explanation" id="g4q10-exp"></div>
+                    </div>
+
+                    <button class="btn btn-check" onclick="submitGroup4()">Submit Group 4</button>
+                    <div id="group4-score" style="font-weight:bold; margin-top:10px;"></div>
+                </div>
+
+                <!-- GROUP 5: HARDEST -->
+                <h3 style="color:var(--coral); margin-top:40px;">Group 5: Hardest Questions <span class="translation" style="font-size:0.8em; color:#ccc;">(Soal Paling Sukar)</span></h3>
+                <div class="assessment-box" id="group5">
+                    <div class="question-block">
+                        <div class="q-title">1. The digit 3 is in the millions place of 3,456,000. If you move the 3 two places to the right, what is its new value? <span class="translation">(Angka 3 berada di tempat jutaan pada 3.456.000. Jika kamu memindahkan 3 dua tempat ke kanan, berapa nilai barunya?)</span></div>
+                        <input type="text" id="g5q1" placeholder="New value...">
+                        <div class="explanation" id="g5q1-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">2. If a number is multiplied by 100, the digit 3 moves from the tenths place to the ___ place. <span class="translation">(Jika sebuah angka dikalikan 100, angka 3 berpindah dari tempat persepuluhan ke tempat ___)</span></div>
+                        <select id="g5q2">
+                            <option value="">-- Select --</option>
+                            <option value="ones">Ones / Satuan</option>
+                            <option value="tens">Tens / Puluhan</option>
+                            <option value="hundreds">Hundreds / Ratusan</option>
+                        </select>
+                        <div class="explanation" id="g5q2-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">3. Which statements about 0.050 are correct? (Select ALL) <span class="translation">(Pernyataan mana tentang 0,050 yang benar? Pilih semua)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g5q3" value="5hund"> It equals 5 hundredths / Sama dengan 5 perseratusan</label>
+                            <label><input type="checkbox" class="g5q3" value="50thous"> It equals 50 thousandths / Sama dengan 50 perseribu</label>
+                            <label><input type="checkbox" class="g5q3" value="larger"> It is larger than 0.005 / Lebih besar dari 0,005</label>
+                        </div>
+                        <div class="explanation" id="g5q3-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">4. A number has 6 in the hundredths, 2 in the millions, 0 in the thousands, and 9 in the tens. What is the number? <span class="translation">(Sebuah angka memiliki 6 di perseratusan, 2 di jutaan, 0 di ribuan, dan 9 di puluhan. Berapa angkanya?)</span></div>
+                        <input type="text" id="g5q4" placeholder="Answer...">
+                        <div class="explanation" id="g5q4-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">5. What is 1/10th of 0.5? <span class="translation">(Berapa 1/10 dari 0,5?)</span></div>
+                        <input type="text" id="g5q5" placeholder="Answer...">
+                        <div class="explanation" id="g5q5-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">6. How many times greater is the 4 in 4,000 than the 4 in 40? <span class="translation">(Berapa kali lipat lebih besar angka 4 pada 4.000 dibandingkan 4 pada 40?)</span></div>
+                        <input type="text" id="g5q6" placeholder="Answer...">
+                        <div class="explanation" id="g5q6-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">7. Which are equal to 45,000? (Select ALL) <span class="translation">(Mana yang sama dengan 45.000? Pilih semua)</span></div>
+                        <div class="options-group">
+                            <label><input type="checkbox" class="g5q7" value="450hund"> 450 hundreds / 450 ratusan</label>
+                            <label><input type="checkbox" class="g5q7" value="45thou"> 45 thousands / 45 ribuan</label>
+                            <label><input type="checkbox" class="g5q7" value="4500tens"> 4,500 tens / 4.500 puluhan</label>
+                        </div>
+                        <div class="explanation" id="g5q7-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">8. In 1,000,005,600, what is the value of the digit 5? <span class="translation">(Pada 1.000.005.600, berapa nilai angka 5?)</span></div>
+                        <input type="text" id="g5q8" placeholder="Value...">
+                        <div class="explanation" id="g5q8-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">9. A number is divided by 10. The digit 8 was in the millions place. Where is it now? <span class="translation">(Sebuah angka dibagi 10. Angka 8 awalnya di tempat jutaan. Di mana posisinya sekarang?)</span></div>
+                        <select id="g5q9">
+                            <option value="">-- Select --</option>
+                            <option value="hundthou">Hundred Thousands / Ratus Ribu</option>
+                            <option value="tenthou">Ten Thousands / Puluh Ribu</option>
+                            <option value="thou">Thousands / Ribuan</option>
+                        </select>
+                        <div class="explanation" id="g5q9-exp"></div>
+                    </div>
+                    <div class="question-block">
+                        <div class="q-title">10. The sum of the digits in the thousands place of 4,567,890 and 1,234,567 is... <span class="translation">(Jumlah angka di tempat ribuan dari 4.567.890 dan 1.234.567 adalah...)</span></div>
+                        <input type="text" id="g5q10" placeholder="Sum...">
+                        <div class="explanation" id="g5q10-exp"></div>
+                    </div>
+
+                    <button class="btn btn-check" onclick="submitGroup5()">Submit Group 5</button>
+                    <div id="group5-score" style="font-weight:bold; margin-top:10px;"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-check" style="font-size: 1.2em; padding: 15px 30px;" onclick="printAssessment()">🖨️ Print as PDF / Cetak sebagai PDF</button>
+                    <div id="final-score" style="margin-top: 15px; font-size: 1.5em; font-weight: bold; color: var(--coral);"></div>
+                </div>
+
+            </div> <!-- End of Assessment Section Box -->
+
+            <!-- FOOTER -->
+            <div class="section-box" style="text-align: center; border-left: none; border-top: 5px solid var(--aqua); margin-top: 40px;">
+                <h3>🌟 Great Job Today! / Kerja Bagus Hari Ini!</h3>
+                <p>Don't forget to give your learning feedback at:<br><span class="translation">Jangan lupa berikan feedback pembelajaranmu di:</span></p>
+                <a href="https://learn.algonova.id/login" target="_blank" style="color: var(--aqua); font-size: 1.5em; font-weight: bold;">learn.algonova.id</a>
+            </div>
+
+        </div> <!-- End of main-content -->
+    </div> <!-- End of container -->
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR CANVAS AREA (1/4) -->
+        <div class="sidebar">
+            <div class="canvas-wrapper">
+                <h4>📝 Scratchpad <br><span style="font-size:0.8em; color: gray;">(Corat-coret)</span></h4>
+                <canvas id="scratchpad" width="300" height="400"></canvas>
+                <div class="canvas-tools">
+                    <div class="color-btn" style="background: black;" onclick="setColor('black')"></div>
+                    <div class="color-btn" style="background: red;" onclick="setColor('red')"></div>
+                    <div class="color-btn" style="background: blue;" onclick="setColor('blue')"></div>
+                    <div class="color-btn" style="background: green;" onclick="setColor('green')"></div>
+                    <button class="tool-btn" onclick="eraser()">Eraser</button>
+                    <button class="tool-btn" onclick="clearCanvas()">Erase All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- CANVAS LOGIC ---
+        const canvas = document.getElementById('scratchpad');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+        let currentColor = 'black';
+        let currentWidth = 3;
+
+        function setColor(color) {
+            currentColor = color;
+            currentWidth = 3;
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function eraser() {
+            currentColor = 'white';
+            currentWidth = 20;
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function startPosition(e) {
+            painting = true;
+            draw(e);
+        }
+
+        function finishedPosition() {
+            painting = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!painting) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            
+            ctx.lineWidth = currentWidth;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = currentColor;
+            
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', finishedPosition);
+        canvas.addEventListener('mouseleave', finishedPosition);
+        // Touch support
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+        canvas.addEventListener('touchend', finishedPosition);
+
+
+        // --- SECTION 1 GAME LOGIC ---
+        function checkGame1() {
+            const ans = document.getElementById('g1ans').value.trim();
+            const fb = document.getElementById('g1fb');
+            if(ans === '27') {
+                fb.innerHTML = "<span class='correct'>Correct! Volume = 3 x 3 x 3 = 27 cm³</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: Cube volume is side x side x side.</span>";
+            }
+        }
+        function resetGame1() {
+            document.getElementById('g1ans').value = '';
+            document.getElementById('g1fb').innerHTML = '';
+        }
+
+        // --- SECTION 2 GAME LOGIC ---
+        function checkGame2() {
+            const ans = document.getElementById('g2ans').value;
+            const fb = document.getElementById('g2fb');
+            if(ans === '0.7') {
+                fb.innerHTML = "<span class='correct'>Correct! 0.7 is 7 tenths, which is bigger than 9 hundredths (0.09).</span>";
+            } else if (ans === '0.09') {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: 0.7 means 7/10. 0.09 means 9/100.</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Please select an answer.</span>";
+            }
+        }
+        function resetGame2() {
+            document.getElementById('g2ans').value = '';
+            document.getElementById('g2fb').innerHTML = '';
+        }
+
+        // --- SECTION 3 GAME LOGIC ---
+        function checkGame3() {
+            const ans = document.getElementById('g3ans').value.trim();
+            const fb = document.getElementById('g3fb');
+            if(ans.toLowerCase() === '500') {
+                fb.innerHTML = "<span class='correct'>Correct! The digit 5 is in the hundreds place, so its value is 500.</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: 5 is in the hundreds place. 5 x 100 = ?</span>";
+            }
+        }
+        function resetGame3() {
+            document.getElementById('g3ans').value = '';
+            document.getElementById('g3fb').innerHTML = '';
+        }
+
+        // --- SECTION 4 GAME LOGIC ---
+        function checkGame4() {
+            const ans = document.getElementById('g4ans').value;
+            const fb = document.getElementById('g4fb');
+            if(ans === 'hundredths') {
+                fb.innerHTML = "<span class='correct'>Correct! 5 is in the hundredths place, so its value is 0.05.</span>";
+            } else if (ans === 'tenths') {
+                fb.innerHTML = "<span class='incorrect'>Close! 2 is in the tenths place. 5 is one step to the right, which is hundredths.</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: Look at the digits after the decimal point. Tenths, then Hundredths.</span>";
+            }
+        }
+        function resetGame4() {
+            document.getElementById('g4ans').value = '';
+            document.getElementById('g4fb').innerHTML = '';
+        }
+
+        // --- SECTION 5 GAME LOGIC ---
+        function checkGame5() {
+            const ans = document.getElementById('g5ans').value.trim().toLowerCase();
+            const fb = document.getElementById('g5fb');
+            if(ans === '0.04' || ans === '4/100' || ans === '0,04') {
+                fb.innerHTML = "<span class='correct'>Correct! The digit 4 is in the hundredths place, so its value is 0.04.</span>";
+            } else if (ans === '4') {
+                fb.innerHTML = "<span class='incorrect'>That's the digit, but not its value. 4 in the hundredths place means 4 x 0.01 = ?</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: It is the first digit after the decimal (tenths), and the second one (hundredths). 4 is in the hundredths place.</span>";
+            }
+        }
+        function resetGame5() {
+            document.getElementById('g5ans').value = '';
+            document.getElementById('g5fb').innerHTML = '';
+        }
+
+        // --- SECTION 6 GAME LOGIC ---
+        function checkGame6() {
+            const ans = document.getElementById('g6ans').value;
+            const fb = document.getElementById('g6fb');
+            if(ans === 'hundredths') {
+                fb.innerHTML = "<span class='correct'>Correct! 0.25 is twenty-five hundredths because the 5 goes to the hundredths place.</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: The farthest digit to the right after the decimal is 5, which is in the hundredths place.</span>";
+            }
+        }
+        function resetGame6() {
+            document.getElementById('g6ans').value = '';
+            document.getElementById('g6fb').innerHTML = '';
+        }
+
+        // --- SECTION 7 GAME LOGIC ---
+        function checkGame7() {
+            const ans = document.getElementById('g7ans').value.trim();
+            const fb = document.getElementById('g7fb');
+            if(ans === '10') {
+                fb.innerHTML = "<span class='correct'>Correct! Our number system is Base 10, so moving left multiplies the value by 10.</span>";
+            } else {
+                fb.innerHTML = "<span class='incorrect'>Incorrect. Hint: Think about going from 1 to 10, or 10 to 100. How many times larger is it?</span>";
+            }
+        }
+        function resetGame7() {
+            document.getElementById('g7ans').value = '';
+            document.getElementById('g7fb').innerHTML = '';
+        }
+      
+        // --- DRAG AND DROP LOGIC ---
+        let draggedId = "";
+        function dragStart(e) {
+            draggedId = e.target.id;
+            e.dataTransfer.setData("text", e.target.id);
+            setTimeout(() => e.target.classList.add('dragging'), 0);
+        }
+        function allowDrop(e) {
+            e.preventDefault();
+            e.target.classList.add('over');
+        }
+        function dragLeave(e) {
+            e.target.classList.remove('over');
+        }
+        function drop(e) {
+            e.preventDefault();
+            e.target.classList.remove('over');
+            if(e.target.innerText === "") { // Only drop if empty
+                let data = e.dataTransfer.getData("text");
+                e.target.appendChild(document.getElementById(data));
+            }
+        }
+        function resetDrag(prefix) {
+            let bank = document.getElementById(prefix + "-bank");
+            let zones = document.querySelectorAll(`[id^="${prefix}"] .drop-zone`);
+            zones.forEach(zone => {
+                if(zone.hasChildNodes()) {
+                    bank.appendChild(zone.firstChild);
+                }
+            });
+        }
+
+        // --- ASSESSMENT VALIDATION LOGIC ---
+
+        function showExp(id, isCorrect, msg) {
+            const el = document.getElementById(id);
+            el.style.display = "block";
+            if(isCorrect) {
+                el.className = "explanation correct-exp";
+                el.innerHTML = "✔️ Correct! " + msg;
+            } else {
+                el.className = "explanation incorrect-exp";
+                el.innerHTML = "❌ Incorrect. " + msg;
+            }
+        }
+
+        let group1Score = 0;
+        function submitGroup1() {
+            group1Score = 0;
+            let totalQ = 10;
+
+            // Q1
+            let g1q1 = document.getElementById("g1q1").value;
+            if(g1q1 === "tens") { group1Score++; showExp("g1q1-exp", true, "5 is in the tens place."); }
+            else { showExp("g1q1-exp", false, "5 is in the tens place (50)."); }
+
+            // Q2
+            let g1q2 = document.getElementById("g1q2").value.replace(/,/g, '').replace(/\./g, '');
+            if(g1q2 === "234") { group1Score++; showExp("g1q2-exp", true, "Standard form is 234."); }
+            else { showExp("g1q2-exp", false, "The correct standard form is 234."); }
+
+            // Q3
+            let g1q3 = document.querySelector('input[name="g1q3"]:checked');
+            if(g1q3 && g1q3.value === "0.3") { group1Score++; showExp("g1q3-exp", true, "0.3 (3 tenths) is larger than 0.03 (3 hundredths)."); }
+            else { showExp("g1q3-exp", false, "0.3 is larger. Tenths are bigger than hundredths."); }
+
+            // Q4
+            let g1q4 = document.querySelectorAll('.g1q4:checked');
+            let g1q4Vals = Array.from(g1q4).map(cb => cb.value);
+            if(g1q4Vals.includes("105") && g1q4Vals.includes("702") && g1q4Vals.length === 2) { group1Score++; showExp("g1q4-exp", true, "105 and 702 have 0 in the tens place."); }
+            else { showExp("g1q4-exp", false, "105 and 702 have 0 in the tens place."); }
+
+            // Q5
+            let h = document.getElementById("g1q5-hundreds").innerText;
+            let t = document.getElementById("g1q5-tens").innerText;
+            let o = document.getElementById("g1q5-ones").innerText;
+            if(h === "6" && t === "0" && o === "7") { group1Score++; showExp("g1q5-exp", true, "Correct placement!"); }
+            else { showExp("g1q5-exp", false, "6 goes to Hundreds, 0 to Tens, 7 to Ones."); }
+
+            // Q6
+            let g1q6 = document.getElementById("g1q6").value;
+            if(g1q6 === "2000") { group1Score++; showExp("g1q6-exp", true, "2 in thousands place is 2,000."); }
+            else { showExp("g1q6-exp", false, "The value is 2,000."); }
+
+            // Q7
+            let g1q7 = document.getElementById("g1q7").value.replace(/,/g, '.').trim();
+            if(g1q7 === "45.1") { group1Score++; showExp("g1q7-exp", true, "40 + 5 + 0.1 = 45.1"); }
+            else { showExp("g1q7-exp", false, "40 + 5 + 0.1 = 45.1"); }
+
+            // Q8
+            let g1q8 = document.querySelector('input[name="g1q8"]:checked');
+            if(g1q8 && g1q8.value === "wholes") { group1Score++; showExp("g1q8-exp", true, "Decimal point separates whole numbers and fractions."); }
+            else { showExp("g1q8-exp", false, "It separates whole numbers and fractions."); }
+
+            // Q9
+            let g1q9 = document.querySelectorAll('.g1q9:checked');
+            let g1q9Vals = Array.from(g1q9).map(cb => cb.value);
+            if(g1q9Vals.includes("4tenths") && g1q9Vals.includes("40hundredths") && g1q9Vals.length === 2) { group1Score++; showExp("g1q9-exp", true, "0.4 is 4 tenths or 40 hundredths."); }
+            else { showExp("g1q9-exp", false, "0.4 is 4 tenths and also 40 hundredths."); }
+
+            // Q10
+            let g1q10 = document.getElementById("g1q10").value.replace(/,/g, '.').trim();
+            if(g1q10 === "2.05") { group1Score++; showExp("g1q10-exp", true, "2 + 0.05 = 2.05"); }
+            else { showExp("g1q10-exp", false, "2 + 0.05 = 2.05"); }
+
+            document.getElementById("group1-score").innerHTML = `<span style="color:var(--aqua)">Group 1 Score: ${group1Score} / ${totalQ}</span>`;
+        }
+
+        let group2Score = 0;
+        function submitGroup2() {
+            group2Score = 0;
+            let totalQ = 10;
+
+            // Q1
+            let g2q1 = document.getElementById("g2q1").value;
+            if(g2q1 === "millions") { group2Score++; showExp("g2q1-exp", true, "4 is in the millions place."); }
+            else { showExp("g2q1-exp", false, "4 is in the millions place."); }
+
+            // Q2
+            let g2q2 = document.getElementById("g2q2").value.replace(/[.,]/g, '').trim();
+            if(g2q2 === "302005004" || g2q2 === "3 020 05004") { group2Score++; showExp("g2q2-exp", true, "Standard form: 3,020,050.04"); }
+            else { showExp("g2q2-exp", false, "The standard form is 3,020,050.04"); }
+
+            // Q3
+            let g2q3 = document.querySelector('input[name="g2q3"]:checked');
+            if(g2q3 && g2q3.value === "0.6") { group2Score++; showExp("g2q3-exp", true, "0.6 (6 tenths) is larger than 0.55 (5 tenths 5 hundredths)."); }
+            else { showExp("g2q3-exp", false, "0.6 is larger because 6 tenths > 5 tenths."); }
+
+            // Q4
+            let g2q4 = document.querySelectorAll('.g2q4:checked');
+            let g2q4Vals = Array.from(g2q4).map(cb => cb.value);
+            if(g2q4Vals.includes("4in124") && g2q4Vals.includes("9in089") && g2q4Vals.length === 2) { group2Score++; showExp("g2q4-exp", true, "4 in 1.24 and 9 in 0.89 are in hundredths."); }
+            else { showExp("g2q4-exp", false, "4 in 1.24 and 9 in 0.89 are in hundredths. First 3 in 0.33 is tenths."); }
+
+            // Q5
+            let g2q5 = document.getElementById("g2q5").value.replace(/[.,]/g, '').trim();
+            if(g2q5 === "7000000") { group2Score++; showExp("g2q5-exp", true, "7 in millions place is 7,000,000."); }
+            else { showExp("g2q5-exp", false, "The value is 7,000,000."); }
+
+            // Q6
+            let g2q6 = document.querySelector('input[name="g2q6"]:checked');
+            if(g2q6 && g2q6.value === "100") { group2Score++; showExp("g2q6-exp", true, "500 is 100 times greater than 5 (5 x 100 = 500)."); }
+            else { showExp("g2q6-exp", false, "500 / 5 = 100. So it's 100 times greater."); }
+
+            // Q7
+            let g2q7 = document.getElementById("g2q7").value;
+            if(g2q7 === "hundredths") { group2Score++; showExp("g2q7-exp", true, "9 is in the hundredths place."); }
+            else { showExp("g2q7-exp", false, "9 is the second digit after the decimal, so hundredths."); }
+
+            // Q8
+            let g2q8 = document.querySelectorAll('.g2q8:checked');
+            let g2q8Vals = Array.from(g2q8).map(cb => cb.value);
+            if(g2q8Vals.includes("4isM") && g2q8Vals.includes("7isTenth") && g2q8Vals.length === 2) { group2Score++; showExp("g2q8-exp", true, "4 is in millions, 7 is in tenths. 5 is in hundred thousands, not thousands."); }
+            else { showExp("g2q8-exp", false, "4 is in millions, 7 is in tenths. 5 is actually in hundred thousands."); }
+
+            // Q9
+            let g2q9 = document.getElementById("g2q9").value.replace(/[.,]/g, '').trim();
+            if(g2q9 === "42305021" || g2q9 === "4230502,1") { group2Score++; showExp("g2q9-exp", true, "Standard form: 4,230,502.1"); }
+            else { showExp("g2q9-exp", false, "The standard form is 4,230,502.1"); }
+
+            // Q10
+            let g2q10 = document.getElementById("g2q10").value.replace(/\s/g, '');
+            if(g2q10.includes("3000000") && g2q10.includes("400") && g2q10.includes("0,05") || g2q10.includes("0.05")) { group2Score++; showExp("g2q10-exp", true, "Expanded: 3,000,000 + 400 + 0.05"); }
+            else { showExp("g2q10-exp", false, "Expanded form is 3,000,000 + 400 + 0.05"); }
+
+            document.getElementById("group2-score").innerHTML = `<span style="color:var(--aqua)">Group 2 Score: ${group2Score} / ${totalQ}</span>`;
+        }
+
+              let group3Score = 0;
+        function submitGroup3() {
+            group3Score = 0;
+            // Q1
+            if(document.getElementById("g3q1").value.replace(/[.,]/g,'') === "400000") { group3Score++; showExp("g3q1-exp", true, "Value is 400,000."); } else { showExp("g3q1-exp", false, "Value is 400,000."); }
+            // Q2
+            let g3q2 = document.querySelector('input[name="g3q2"]:checked');
+            if(g3q2 && g3q2.value === "0.050") { group3Score++; showExp("g3q2-exp", true, "0.050 (5 hundredths) > 0.005 (5 thousandths)."); } else { showExp("g3q2-exp", false, "0.050 is larger."); }
+            // Q3
+            let g3q3 = document.querySelectorAll('.g3q3:checked');
+            let g3q3Vals = Array.from(g3q3).map(cb => cb.value);
+            if(g3q3Vals.includes("4tenths") && g3q3Vals.includes("40hundredths") && g3q3Vals.length === 2) { group3Score++; showExp("g3q3-exp", true, "0.4 is 4 tenths and 40 hundredths."); } else { showExp("g3q3-exp", false, "0.4 is 4 tenths and 40 hundredths."); }
+            // Q4
+            if(document.getElementById("g3q4").value === "millions") { group3Score++; showExp("g3q4-exp", true, "8 is in the millions place."); } else { showExp("g3q4-exp", false, "8 is in the millions place."); }
+            // Q5
+            if(document.getElementById("g3q5").value.replace(/[.,]/g,'') === "450000008" || document.getElementById("g3q5").value.replace(/[.,]/g,'') === "4500000,08") { group3Score++; showExp("g3q5-exp", true, "3m + 15hth (1.5m) = 4.5m. + 8hund = 4,500,000.08"); } else { showExp("g3q5-exp", false, "Result is 4,500,000.08"); }
+            // Q6
+            if(document.getElementById("g3q6").value.trim() === "1000") { group3Score++; showExp("g3q6-exp", true, "7,000 / 7 = 1,000."); } else { showExp("g3q6-exp", false, "7,000 is 1,000 times greater."); }
+            // Q7
+            if(document.getElementById("g3q7").value.replace(/[.,]/g,'').includes("1250001")) { group3Score++; showExp("g3q7-exp", true, "0.95 + 0.05 = 1.00. So 1,250,001."); } else { showExp("g3q7-exp", false, "1,250,001"); }
+            // Q8
+            if(document.getElementById("g3q8").value.replace(/[.,]/g,'').includes("5209000") && document.getElementById("g3q8").value.replace(/[.,]/g,'').includes("7")) { group3Score++; showExp("g3q8-exp", true, "Number is 5,209,000.7"); } else { showExp("g3q8-exp", false, "Number is 5,209,000.7"); }
+            // Q9
+            if(document.getElementById("g3q9").value.replace(/[.,]/g,'') === "10000") { group3Score++; showExp("g3q9-exp", true, "1,000,000 / 100 = 10,000."); } else { showExp("g3q9-exp", false, "Result is 10,000."); }
+            // Q10
+            if(document.getElementById("g3q10").value.replace(',','.') === "0.7") { group3Score++; showExp("g3q10-exp", true, "7 in tenths place is 0.7, not 70."); } else { showExp("g3q10-exp", false, "Actual value is 0.7."); }
+            document.getElementById("group3-score").innerHTML = `<span style="color:var(--aqua)">Group 3 Score: ${group3Score} / 10</span>`;
+        }
+
+        let group4Score = 0;
+        function submitGroup4() {
+            group4Score = 0;
+            // Q1
+            if(document.getElementById("g4q1").value.replace(/[.,]/g,'') === "1000") { group4Score++; showExp("g4q1-exp", true, "1,000,000 / 1000 = 1,000."); } else { showExp("g4q1-exp", false, "Result is 1,000."); }
+            // Q2
+            if(document.getElementById("g4q2").value === "1000") { group4Score++; showExp("g4q2-exp", true, "Millions (4,000,000) is 1000x Thousands (4,000)."); } else { showExp("g4q2-exp", false, "It is 1,000 times greater."); }
+            // Q3
+            let g4q3 = document.querySelector('input[name="g4q3"]:checked');
+            if(g4q3 && g4q3.value === "equal") { group4Score++; showExp("g4q3-exp", true, "4 tens = 40. 400 hundredths = 4.00 = 40. They are equal."); } else { showExp("g4q3-exp", false, "They are equal. 4 tens = 40. 400/100 = 40."); }
+            // Q4
+            let g4q4 = document.getElementById("g4q4").value.replace(/\s/g, '');
+            if(g4q4.includes("9000000") && g4q4.includes("40000") && g4q4.includes("70") && g4q4.includes("0,08") || g4q4.includes("0.08")) { group4Score++; showExp("g4q4-exp", true, "9,000,000 + 40,000 + 70 + 0.08"); } else { showExp("g4q4-exp", false, "9,000,000 + 40,000 + 70 + 0.08"); }
+            // Q5
+            let g4q5 = document.querySelectorAll('.g4q5:checked');
+            let g4q5Vals = Array.from(g4q5).map(cb => cb.value);
+            if(g4q5Vals.includes("25thousandths") && g4q5Vals.includes("2hund5thous") && g4q5Vals.length === 2) { group4Score++; showExp("g4q5-exp", true, "0.025 is 25 thousandths or 2 hundredths + 5 thousandths."); } else { showExp("g4q5-exp", false, "0.025 is 25 thousandths and 2 hundredths + 5 thousandths."); }
+            // Q6
+            if(document.getElementById("g4q6").value.trim() === "0") { group4Score++; showExp("g4q6-exp", true, "0 in any place holds a value of 0."); } else { showExp("g4q6-exp", false, "The value is 0."); }
+            // Q7
+            if(document.getElementById("g4q7").value.replace(/[.,]/g,'').includes("250000085")) { group4Score++; showExp("g4q7-exp", true, "2,500,000.90 - 0.05 = 2,500,000.85"); } else { showExp("g4q7-exp", false, "Result is 2,500,000.85"); }
+            // Q8
+            if(document.getElementById("g4q8").value.replace(/[.,]/g,'') === "90010004" || document.getElementById("g4q8").value.replace(/[.,]/g,'') === "9001000,4") { group4Score++; showExp("g4q8-exp", true, "Smallest is 9,001,000.4"); } else { showExp("g4q8-exp", false, "Smallest possible is 9,001,000.4"); }
+            // Q9
+            if(document.getElementById("g4q9").value === "hundreds") { group4Score++; showExp("g4q9-exp", true, "1 is in the hundreds place."); } else { showExp("g4q9-exp", false, "1 is in the hundreds place (123)."); }
+            // Q10
+            if(document.getElementById("g4q10").value.trim() === "100000") { group4Score++; showExp("g4q10-exp", true, "5,000,000 / 50 = 100,000."); } else { showExp("g4q10-exp", false, "It is 100,000 times greater."); }
+            document.getElementById("group4-score").innerHTML = `<span style="color:var(--aqua)">Group 4 Score: ${group4Score} / 10</span>`;
+        }
+
+        let group5Score = 0;
+        function submitGroup5() {
+            group5Score = 0;
+            // Q1
+            if(document.getElementById("g5q1").value.replace(/[.,]/g,'') === "30000") { group5Score++; showExp("g5q1-exp", true, "Moving 2 places right from Millions -> Hundred Thousands -> Ten Thousands. Value = 30,000."); } else { showExp("g5q1-exp", false, "New value is 30,000."); }
+            // Q2
+            if(document.getElementById("g5q2").value === "tens") { group5Score++; showExp("g5q2-exp", true, "Tenths x 100 = Tens (moves 2 places left)."); } else { showExp("g5q2-exp", false, "It moves to the Tens place."); }
+            // Q3
+            let g5q3 = document.querySelectorAll('.g5q3:checked');
+            let g5q3Vals = Array.from(g5q3).map(cb => cb.value);
+            if(g5q3Vals.includes("5hund") && g5q3Vals.includes("50thous") && g5q3Vals.includes("larger") && g5q3Vals.length === 3) { group5Score++; showExp("g5q3-exp", true, "All are true. 0.050 = 5/100 = 50/1000 > 0.005."); } else { showExp("g5q3-exp", false, "All statements are correct."); }
+            // Q4
+            if(document.getElementById("g5q4").value.replace(/[.,]/g,'').includes("20000906") || document.getElementById("g5q4").value.replace(/[.,]/g,'').includes("2000090,06")) { group5Score++; showExp("g5q4-exp", true, "Number is 2,000,090.06"); } else { showExp("g5q4-exp", false, "Number is 2,000,090.06"); }
+            // Q5
+            if(document.getElementById("g5q5").value.replace(',','.') === "0.05") { group5Score++; showExp("g5q5-exp", true, "1/10 of 0.5 is 0.05."); } else { showExp("g5q5-exp", false, "0.5 / 10 = 0.05."); }
+            // Q6
+            if(document.getElementById("g5q6").value.trim() === "100") { group5Score++; showExp("g5q6-exp", true, "4,000 / 40 = 100."); } else { showExp("g5q6-exp", false, "It is 100 times greater."); }
+            // Q7
+            let g5q7 = document.querySelectorAll('.g5q7:checked');
+            let g5q7Vals = Array.from(g5q7).map(cb => cb.value);
+            if(g5q7Vals.includes("450hund") && g5q7Vals.includes("45thou") && g5q7Vals.includes("4500tens") && g5q7Vals.length === 3) { group5Score++; showExp("g5q7-exp", true, "All equal 45,000."); } else { showExp("g5q7-exp", false, "All options equal 45,000."); }
+            // Q8
+            if(document.getElementById("g5q8").value.replace(/[.,]/g,'') === "5600") { group5Score++; showExp("g5q8-exp", true, "5 is in the thousands place, value 5,600? Wait, it's 5 thousands + 6 hundreds = 5,600. Value of 5 is 5,000."); } else { showExp("g5q8-exp", false, "Value of 5 is 5,000."); } // Correction logic
+            if(document.getElementById("g5q8").value.replace(/[.,]/g,'') === "5000") { group5Score++; showExp("g5q8-exp", true, "Value of 5 is 5,000."); } else if(document.getElementById("g5q8").value.replace(/[.,]/g,'') !== "5000") { showExp("g5q8-exp", false, "Value of 5 is 5,000."); }
+            // Q9
+            if(document.getElementById("g5q9").value === "hundthou") { group5Score++; showExp("g5q9-exp", true, "Millions divided by 10 moves left 1 place to Hundred Thousands."); } else { showExp("g5q9-exp", false, "It moves to Hundred Thousands."); }
+            // Q10
+            if(document.getElementById("g5q10").value.trim() === "11") { group5Score++; showExp("g5q10-exp", true, "7 (from 4,567,890) + 4 (from 1,234,567) = 11."); } else { showExp("g5q10-exp", false, "Thousands digits are 7 and 4. 7+4=11."); }
+            document.getElementById("group5-score").innerHTML = `<span style="color:var(--aqua)">Group 5 Score: ${group5Score} / 10</span>`;
+            
+            // Update Final Score
+            let totalScore = group1Score + group2Score + group3Score + group4Score + group5Score;
+            document.getElementById("final-score").innerHTML = `Total Score: ${totalScore} / 50`;
+        }
+
+        // --- PRINT PDF LOGIC ---
+        function printAssessment() {
+            let name = document.getElementById('studentName').value || "Student";
+            let date = document.getElementById('testDate').value || "N/A";
+            let totalScore = group1Score + group2Score + group3Score + group4Score + group5Score;
+            
+            // We just trigger the default window print. 
+            // The CSS @media print will handle the layout by hiding unnecessary buttons/canvas and showing explanations.
+            window.print();
+        }
+    </script>
+</body>
+</html>
