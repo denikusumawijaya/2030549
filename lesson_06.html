@@ -110,14 +110,15 @@
 
         /* Main Layout */
         .main-container {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
+            display: flex;
+            flex-wrap: nowrap; /* TAMBAHKAN INI */
             gap: 20px;
             padding: 20px;
             position: relative;
             z-index: 5;
             max-width: 1400px;
             margin: 0 auto;
+            align-items: flex-start;
         }
 
         /* Lesson Panel */
@@ -336,8 +337,8 @@
         .feedback.wrong { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
         .feedback.hint { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; display: block; font-size: 0.9rem;}
 
-        /* Canvas Panel */
         .canvas-panel {
+            flex: 1;
             position: sticky;
             top: 20px;
             height: fit-content;
@@ -346,6 +347,7 @@
             padding: 15px;
             border: 4px solid var(--coral);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            min-width: 0; /* UBAH INI */
         }
 
         .canvas-title {
@@ -398,17 +400,7 @@
         }
 
         .tool-btn:hover { background: #eee; }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
-            .canvas-panel {
-                position: relative;
-                top: 0;
-            }
-        }
+        
         /* Tab & Assessment Styles */
         .tab-btn {
             background: var(--sand);
@@ -697,43 +689,104 @@
 
                 <div class="game-area">
                     <div class="game-title"><i class="fas fa-gamepad"></i> Latihan Pasukan Chip</div>
-                    <p style="text-align:center; font-size:0.95rem; margin-bottom:15px;">Pilih jawaban yang tepat dengan mengklik tombolnya!</p>
-
-                    <!-- Q1 -->
-                    <div class="question-block" id="s3-q1-block">
-                        <div class="q-text">1. 4 Chip Biru (+4) bertemu 1 Chip Merah (-1). Sisanya?</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item" onclick="checkS3Q1(this, '+3')">+3</button>
-                            <button class="sort-item" onclick="checkS3Q1(this, '+5')">+5</button>
-                            <button class="sort-item" onclick="checkS3Q1(this, '-3')">-3</button>
+                    
+                    <!-- Grid 1 -->
+                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand); margin-bottom: 20px;">
+                        <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-th-large"></i> Grid 1: Hitung Chip</h4>
+                        
+                        <div class="question-block" id="s3-g1q1-block">
+                            <div class="q-text">1. 5 Chip Biru (+5) bertemu 2 Chip Merah (-2). Sisanya?</div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '+3', true)">+3</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '-3', false)">-3</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '+7', false)">+7</button>
+                            </div>
+                            <div class="feedback" id="s3-g1q1-fb"></div>
                         </div>
-                        <div class="feedback" id="s3-q1-feedback"></div>
+
+                        <div class="question-block" id="s3-g1q2-block">
+                            <div class="q-text">2. 1 Chip Biru (+1) bertemu 4 Chip Merah (-4). Sisanya?</div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '+3', false)">+3</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '-3', true)">-3</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '-5', false)">-5</button>
+                            </div>
+                            <div class="feedback" id="s3-g1q2-fb"></div>
+                        </div>
+
+                        <div class="question-block" id="s3-g1q3-block">
+                            <div class="q-text">3. 6 Chip Biru (+6) bertemu 6 Chip Merah (-6). Sisanya?</div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '12', false)">12</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '-12', false)">-12</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '0', true)">0</button>
+                            </div>
+                            <div class="feedback" id="s3-g1q3-fb"></div>
+                        </div>
+
+                        <div class="question-block" id="s3-g1q4-block">
+                            <div class="q-text">4. 3 Chip Biru (+3) bertemu 0 Chip Merah. Sisanya?</div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '+3', true)">+3</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '-3', false)">-3</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '0', false)">0</button>
+                            </div>
+                            <div class="feedback" id="s3-g1q4-fb"></div>
+                        </div>
+
+                        <div class="question-block" id="s3-g1q5-block">
+                            <div class="q-text">5. 0 Chip Biru bertemu 5 Chip Merah (-5). Sisanya?</div>
+                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '+5', false)">+5</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '-5', true)">-5</button>
+                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '0', false)">0</button>
+                            </div>
+                            <div class="feedback" id="s3-g1q5-fb"></div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-reset" onclick="resetS3Grid1()"><i class="fas fa-redo"></i> Reset Grid 1</button>
+                        </div>
                     </div>
 
-                    <!-- Q2 -->
-                    <div class="question-block" id="s3-q2-block">
-                        <div class="q-text">2. 2 Chip Biru (+2) bertemu 5 Chip Merah (-5). Sisanya?</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item" onclick="checkS3Q2(this, '+3')">+3</button>
-                            <button class="sort-item" onclick="checkS3Q2(this, '-3')">-3</button>
-                            <button class="sort-item" onclick="checkS3Q2(this, '-7')">-7</button>
+                    <!-- Grid 2 -->
+                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
+                        <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-pencil-alt"></i> Grid 2: Hitung Angka</h4>
+                        
+                        <div class="question-block">
+                            <div class="q-text">6. \( (+4) + (-1) = \dots \)</div>
+                            <input type="number" class="q-input" id="s3-g2q1" placeholder="?">
+                            <div class="feedback" id="s3-g2q1-fb"></div>
                         </div>
-                        <div class="feedback" id="s3-q2-feedback"></div>
-                    </div>
 
-                    <!-- Q3 -->
-                    <div class="question-block" id="s3-q3-block">
-                        <div class="q-text">3. 3 Chip Biru (+3) bertemu 3 Chip Merah (-3). Sisanya?</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item" onclick="checkS3Q3(this, '6')">6</button>
-                            <button class="sort-item" onclick="checkS3Q3(this, '0')">0</button>
-                            <button class="sort-item" onclick="checkS3Q3(this, '-6')">-6</button>
+                        <div class="question-block">
+                            <div class="q-text">7. \( (+2) + (-6) = \dots \)</div>
+                            <input type="number" class="q-input" id="s3-g2q2" placeholder="?">
+                            <div class="feedback" id="s3-g2q2-fb"></div>
                         </div>
-                        <div class="feedback" id="s3-q3-feedback"></div>
-                    </div>
 
-                    <div class="btn-group">
-                        <button class="btn btn-reset" onclick="resetSection3()"><i class="fas fa-redo"></i> Reset</button>
+                        <div class="question-block">
+                            <div class="q-text">8. \( (-3) + (-2) = \dots \)</div>
+                            <input type="number" class="q-input" id="s3-g2q3" placeholder="?">
+                            <div class="feedback" id="s3-g2q3-fb"></div>
+                        </div>
+
+                        <div class="question-block">
+                            <div class="q-text">9. \( (+5) + (-5) = \dots \)</div>
+                            <input type="number" class="q-input" id="s3-g2q4" placeholder="?">
+                            <div class="feedback" id="s3-g2q4-fb"></div>
+                        </div>
+
+                        <div class="question-block">
+                            <div class="q-text">10. \( 0 + (-4) = \dots \)</div>
+                            <input type="number" class="q-input" id="s3-g2q5" placeholder="?">
+                            <div class="feedback" id="s3-g2q5-fb"></div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-check" onclick="checkS3Grid2()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+                            <button class="btn btn-reset" onclick="resetS3Grid2()"><i class="fas fa-redo"></i> Reset Grid 2</button>
+                        </div>
                     </div>
                 </div>
             </div> 
@@ -1640,7 +1693,7 @@
             // Q2 Check
             const q2 = document.getElementById('q2-answer').value;
             const q2Fb = document.getElementById('q2-feedback');
-            if (q2 == 20) { // 2 cubes (24 edges) - 1 shared edge (2 edges become 1) = 24 - 4 = 20. Wait, key says 12. If they share an entire face? The prompt says "berhimpitan", usually means 1 face. Let's stick to the KEY provided in prompt: 12. Wait, 2 cubes share 1 face -> 12 edges visible (like a rectangular prism 2x1x1). Let's accept 12 based on the key.
+            if (q2 == 12) { // <--- UBAH 20 MENJADI 12
                 q2Fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar! Dua kubus yang berhimpitan memiliki 12 rusuk.';
                 q2Fb.className = 'feedback correct';
                 score++;
@@ -1733,74 +1786,49 @@
     }
 
     // ==========================================
-    // SECTION 3 LOGIC: Click Choice Game
+    // SECTION 3 LOGIC (10 SOAL GRID)
     // ==========================================
-    function checkS3Q1(btn, answer) {
-        const fb = document.getElementById('s3-q1-feedback');
-        const parent = document.getElementById('s3-q1-block');
-        disableBtns(parent);
-        if (answer === '+3') {
-            fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar! 4 biru, 1 hancur, sisa 3 biru (+3).';
+    function checkS3Btn(btn, fbId, answer, isCorrect) {
+        const fb = document.getElementById(fbId);
+        const parent = btn.parentElement;
+        // Nonaktifkan tombol lain di soal yang sama
+        parent.querySelectorAll('.sort-item').forEach(b => b.style.pointerEvents = 'none');
+        
+        if (isCorrect) {
+            fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar!';
             fb.className = 'feedback correct';
             btn.style.background = 'var(--seaweed)';
         } else {
-            fb.innerHTML = '<i class="fas fa-times-circle"></i> Kurang tepat. Ingat, 1 biru menghancurkan 1 merah, sisa 3 biru.';
+            fb.innerHTML = `<i class="fas fa-times-circle"></i> Kurang tepat. Jawaban yang benar adalah ${answer}.`;
             fb.className = 'feedback wrong';
             btn.style.background = 'var(--coral)';
         }
     }
 
-    function checkS3Q2(btn, answer) {
-        const fb = document.getElementById('s3-q2-feedback');
-        const parent = document.getElementById('s3-q2-block');
-        disableBtns(parent);
-        if (answer === '-3') {
-            fb.innerHTML = '<i class="fas fa-check-circle"></i> Sip! 2 pasangan hancur, sisa 3 merah (-3).';
-            fb.className = 'feedback correct';
-            btn.style.background = 'var(--seaweed)';
-        } else {
-            fb.innerHTML = '<i class="fas fa-times-circle"></i> Hati-hati. 2 biru hancurkan 2 merah, dari 5 merah sisa 3 merah (-3).';
-            fb.className = 'feedback wrong';
-            btn.style.background = 'var(--coral)';
-        }
-    }
-
-    function checkS3Q3(btn, answer) {
-        const fb = document.getElementById('s3-q3-feedback');
-        const parent = document.getElementById('s3-q3-block');
-        disableBtns(parent);
-        if (answer === '0') {
-            fb.innerHTML = '<i class="fas fa-check-circle"></i> Pasangan Nol! Semua hancur, jadi 0.';
-            fb.className = 'feedback correct';
-            btn.style.background = 'var(--seaweed)';
-        } else {
-            fb.innerHTML = '<i class="fas fa-times-circle"></i> Karena jumlahnya sama, semua saling menghancurkan menjadi 0.';
-            fb.className = 'feedback wrong';
-            btn.style.background = 'var(--coral)';
-        }
-    }
-
-    function disableBtns(container) {
-        container.querySelectorAll('.sort-item').forEach(b => {
-            b.style.pointerEvents = 'none';
-        });
-    }
-
-    function resetSection3() {
-        ['s3-q1-block', 's3-q2-block', 's3-q3-block'].forEach(id => {
-            const block = document.getElementById(id);
+    function resetS3Grid1() {
+        for(let i=1; i<=5; i++) {
+            const block = document.getElementById(`s3-g1q${i}-block`);
             block.querySelectorAll('.sort-item').forEach(btn => {
                 btn.style.pointerEvents = 'auto';
                 btn.style.background = 'var(--ocean-light)';
-                btn.classList.remove('selected');
             });
-            const fbId = id.replace('-block', '-feedback');
-            const fb = document.getElementById(fbId);
+            const fb = document.getElementById(`s3-g1q${i}-fb`);
             fb.className = 'feedback';
             fb.innerHTML = '';
-        });
+        }
     }
 
+    function checkS3Grid2() {
+        checkMathQuestion('s3-g2q1', 3, 's3-g2q1-fb', 'Hebat! 4 biru, 1 hancur, sisa 3.', 'Kurang tepat. Ingat 4 biru melawan 1 merah, sisa 3 biru.');
+        checkMathQuestion('s3-g2q2', -4, 's3-g2q2-fb', 'Sip! 2 hancur, sisa 4 merah (-4).', 'Ingat, 2 biru hancurkan 2 merah. Dari 6 merah sisa 4 merah.');
+        checkMathQuestion('s3-g2q3', -5, 's3-g2q3-fb', 'Tepat! Negatif ditambah negatif jadi lebih negatif.', 'Keduanya chip merah, jadi digabungkan: -3 + -2 = -5.');
+        checkMathQuestion('s3-g2q4', 0, 's3-g2q4-fb', 'Pasangan Nol!', '5 biru dan 5 merah saling menghancurkan menjadi 0.');
+        checkMathQuestion('s3-g2q5', -4, 's3-g2q5-fb', 'Benar! Tidak ada biru, jadi sisa 4 merah.', '0 ditambah angka negatif tetap menghasilkan angka negatif itu sendiri.');
+    }
+
+    function resetS3Grid2() {
+        resetMathQuestion(['s3-g2q1', 's3-g2q2', 's3-g2q3', 's3-g2q4', 's3-g2q5'], ['s3-g2q1-fb', 's3-g2q2-fb', 's3-g2q3-fb', 's3-g2q4-fb', 's3-g2q5-fb']);
+    }
     // ==========================================
     // SECTION 4 LOGIC: Subtraction -> Addition
     // ==========================================
