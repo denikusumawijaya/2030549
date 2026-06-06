@@ -123,6 +123,7 @@
 
         /* Lesson Panel */
         .lesson-panel {
+            flex: 3; /* TAMBAHKAN INI agar porsinya 3 */
             display: flex;
             flex-direction: column;
             gap: 30px;
@@ -689,103 +690,104 @@
 
                 <div class="game-area">
                     <div class="game-title"><i class="fas fa-gamepad"></i> Latihan Pasukan Chip</div>
-                    
-                    <!-- Grid 1 -->
-                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand); margin-bottom: 20px;">
-                        <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-th-large"></i> Grid 1: Hitung Chip</h4>
-                        
-                        <div class="question-block" id="s3-g1q1-block">
-                            <div class="q-text">1. 5 Chip Biru (+5) bertemu 2 Chip Merah (-2). Sisanya?</div>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '+3', true)">+3</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '-3', false)">-3</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '+7', false)">+7</button>
+                        <div style="display: flex; gap: 20px;">
+                        <!-- Grid 1 -->
+                        <div style="flex: 1; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-th-large"></i> Grid 1: Hitung Chip</h4>
+                            
+                            <div class="question-block" id="s3-g1q1-block">
+                                <div class="q-text">1. 5 Chip Biru (+5) bertemu 2 Chip Merah (-2). Sisanya?</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '+3', true)">+3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '-3', false)">-3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q1-fb', '+7', false)">+7</button>
+                                </div>
+                                <div class="feedback" id="s3-g1q1-fb"></div>
                             </div>
-                            <div class="feedback" id="s3-g1q1-fb"></div>
-                        </div>
-
-                        <div class="question-block" id="s3-g1q2-block">
-                            <div class="q-text">2. 1 Chip Biru (+1) bertemu 4 Chip Merah (-4). Sisanya?</div>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '+3', false)">+3</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '-3', true)">-3</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '-5', false)">-5</button>
+    
+                            <div class="question-block" id="s3-g1q2-block">
+                                <div class="q-text">2. 1 Chip Biru (+1) bertemu 4 Chip Merah (-4). Sisanya?</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '+3', false)">+3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '-3', true)">-3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q2-fb', '-5', false)">-5</button>
+                                </div>
+                                <div class="feedback" id="s3-g1q2-fb"></div>
                             </div>
-                            <div class="feedback" id="s3-g1q2-fb"></div>
-                        </div>
-
-                        <div class="question-block" id="s3-g1q3-block">
-                            <div class="q-text">3. 6 Chip Biru (+6) bertemu 6 Chip Merah (-6). Sisanya?</div>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '12', false)">12</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '-12', false)">-12</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '0', true)">0</button>
+    
+                            <div class="question-block" id="s3-g1q3-block">
+                                <div class="q-text">3. 6 Chip Biru (+6) bertemu 6 Chip Merah (-6). Sisanya?</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '12', false)">12</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '-12', false)">-12</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q3-fb', '0', true)">0</button>
+                                </div>
+                                <div class="feedback" id="s3-g1q3-fb"></div>
                             </div>
-                            <div class="feedback" id="s3-g1q3-fb"></div>
-                        </div>
-
-                        <div class="question-block" id="s3-g1q4-block">
-                            <div class="q-text">4. 3 Chip Biru (+3) bertemu 0 Chip Merah. Sisanya?</div>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '+3', true)">+3</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '-3', false)">-3</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '0', false)">0</button>
+    
+                            <div class="question-block" id="s3-g1q4-block">
+                                <div class="q-text">4. 3 Chip Biru (+3) bertemu 0 Chip Merah. Sisanya?</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '+3', true)">+3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '-3', false)">-3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q4-fb', '0', false)">0</button>
+                                </div>
+                                <div class="feedback" id="s3-g1q4-fb"></div>
                             </div>
-                            <div class="feedback" id="s3-g1q4-fb"></div>
-                        </div>
-
-                        <div class="question-block" id="s3-g1q5-block">
-                            <div class="q-text">5. 0 Chip Biru bertemu 5 Chip Merah (-5). Sisanya?</div>
-                            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '+5', false)">+5</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '-5', true)">-5</button>
-                                <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '0', false)">0</button>
+    
+                            <div class="question-block" id="s3-g1q5-block">
+                                <div class="q-text">5. 0 Chip Biru bertemu 5 Chip Merah (-5). Sisanya?</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '+5', false)">+5</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '-5', true)">-5</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g1q5-fb', '0', false)">0</button>
+                                </div>
+                                <div class="feedback" id="s3-g1q5-fb"></div>
                             </div>
-                            <div class="feedback" id="s3-g1q5-fb"></div>
+    
+                            <div class="btn-group">
+                                <button class="btn btn-reset" onclick="resetS3Grid1()"><i class="fas fa-redo"></i> Reset Grid 1</button>
+                            </div>
                         </div>
 
-                        <div class="btn-group">
-                            <button class="btn btn-reset" onclick="resetS3Grid1()"><i class="fas fa-redo"></i> Reset Grid 1</button>
-                        </div>
-                    </div>
-
-                    <!-- Grid 2 -->
-                    <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
-                        <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-pencil-alt"></i> Grid 2: Hitung Angka</h4>
-                        
-                        <div class="question-block">
-                            <div class="q-text">6. \( (+4) + (-1) = \dots \)</div>
-                            <input type="number" class="q-input" id="s3-g2q1" placeholder="?">
-                            <div class="feedback" id="s3-g2q1-fb"></div>
-                        </div>
-
-                        <div class="question-block">
-                            <div class="q-text">7. \( (+2) + (-6) = \dots \)</div>
-                            <input type="number" class="q-input" id="s3-g2q2" placeholder="?">
-                            <div class="feedback" id="s3-g2q2-fb"></div>
-                        </div>
-
-                        <div class="question-block">
-                            <div class="q-text">8. \( (-3) + (-2) = \dots \)</div>
-                            <input type="number" class="q-input" id="s3-g2q3" placeholder="?">
-                            <div class="feedback" id="s3-g2q3-fb"></div>
-                        </div>
-
-                        <div class="question-block">
-                            <div class="q-text">9. \( (+5) + (-5) = \dots \)</div>
-                            <input type="number" class="q-input" id="s3-g2q4" placeholder="?">
-                            <div class="feedback" id="s3-g2q4-fb"></div>
-                        </div>
-
-                        <div class="question-block">
-                            <div class="q-text">10. \( 0 + (-4) = \dots \)</div>
-                            <input type="number" class="q-input" id="s3-g2q5" placeholder="?">
-                            <div class="feedback" id="s3-g2q5-fb"></div>
-                        </div>
-
-                        <div class="btn-group">
-                            <button class="btn btn-check" onclick="checkS3Grid2()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
-                            <button class="btn btn-reset" onclick="resetS3Grid2()"><i class="fas fa-redo"></i> Reset Grid 2</button>
+                        <!-- Grid 2 -->
+                        <div style="flex: 1; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-pencil-alt"></i> Grid 2: Hitung Angka</h4>
+                            
+                            <div class="question-block">
+                                <div class="q-text">6. \( (+4) + (-1) = \dots \)</div>
+                                <input type="number" class="q-input" id="s3-g2q1" placeholder="?">
+                                <div class="feedback" id="s3-g2q1-fb"></div>
+                            </div>
+    
+                            <div class="question-block">
+                                <div class="q-text">7. \( (+2) + (-6) = \dots \)</div>
+                                <input type="number" class="q-input" id="s3-g2q2" placeholder="?">
+                                <div class="feedback" id="s3-g2q2-fb"></div>
+                            </div>
+    
+                            <div class="question-block">
+                                <div class="q-text">8. \( (-3) + (-2) = \dots \)</div>
+                                <input type="number" class="q-input" id="s3-g2q3" placeholder="?">
+                                <div class="feedback" id="s3-g2q3-fb"></div>
+                            </div>
+    
+                            <div class="question-block">
+                                <div class="q-text">9. \( (+5) + (-5) = \dots \)</div>
+                                <input type="number" class="q-input" id="s3-g2q4" placeholder="?">
+                                <div class="feedback" id="s3-g2q4-fb"></div>
+                            </div>
+    
+                            <div class="question-block">
+                                <div class="q-text">10. \( 0 + (-4) = \dots \)</div>
+                                <input type="number" class="q-input" id="s3-g2q5" placeholder="?">
+                                <div class="feedback" id="s3-g2q5-fb"></div>
+                            </div>
+    
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS3Grid2()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+                                <button class="btn btn-reset" onclick="resetS3Grid2()"><i class="fas fa-redo"></i> Reset Grid 2</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1518,11 +1520,25 @@
                         <i class="fas fa-external-link-alt"></i> learn.algonova.id
                     </a>
                 </div>
-            </div>
+            </div> 
             <!-- End Section 8 -->
 
         </div> 
         <!-- End Lesson Panel -->
+
+        <!-- Right Panel: Canvas (1/4) -->
+        <div class="canvas-panel">
+            <div class="canvas-title"><i class="fas fa-paint-brush"></i> Canvas Corat-coret</div>
+            <canvas id="doodleCanvas" width="300" height="400"></canvas>
+            <div class="canvas-tools">
+                <div class="color-btn active" style="background: #000000;" onclick="setColor('#000000', this)"></div>
+                <div class="color-btn" style="background: #FF0000;" onclick="setColor('#FF0000', this)"></div>
+                <div class="color-btn" style="background: #0000FF;" onclick="setColor('#0000FF', this)"></div>
+                <div class="color-btn" style="background: #00FF00;" onclick="setColor('#00FF00', this)"></div>
+                <div class="tool-btn" onclick="setEraser()"><i class="fas fa-eraser"></i> Eraser</div>
+                <div class="tool-btn" onclick="eraseAll()"><i class="fas fa-trash"></i> Erase All</div>
+            </div>
+        </div>
 
     </div>
     <!-- End Main Container -->
@@ -1550,24 +1566,6 @@
                 <!-- Populated by JS -->
             </tbody>
         </table>
-    </div>
-        </div> 
-        <!-- End Lesson Panel -->
-
-        <!-- Right Panel: Canvas (1/4) -->
-        <div class="canvas-panel">
-            <div class="canvas-title"><i class="fas fa-paint-brush"></i> Canvas Corat-coret</div>
-            <canvas id="doodleCanvas" width="300" height="400"></canvas>
-            <div class="canvas-tools">
-                <div class="color-btn active" style="background: #000000;" onclick="setColor('#000000', this)"></div>
-                <div class="color-btn" style="background: #FF0000;" onclick="setColor('#FF0000', this)"></div>
-                <div class="color-btn" style="background: #0000FF;" onclick="setColor('#0000FF', this)"></div>
-                <div class="color-btn" style="background: #00FF00;" onclick="setColor('#00FF00', this)"></div>
-                <div class="tool-btn" onclick="setEraser()"><i class="fas fa-eraser"></i> Eraser</div>
-                <div class="tool-btn" onclick="eraseAll()"><i class="fas fa-trash"></i> Erase All</div>
-            </div>
-        </div>
-
     </div>
 
     <script>
