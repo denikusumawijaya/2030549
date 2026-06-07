@@ -752,40 +752,59 @@
 
                         <!-- Grid 2 -->
                         <div style="flex: 1; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
-                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-pencil-alt"></i> Grid 2: Hitung Angka</h4>
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-calculator"></i> Grid 2: Hitung Angka</h4>
                             
-                            <div class="question-block">
+                            <div class="question-block" id="s3-g2q1-block">
                                 <div class="q-text">6. \( (+4) + (-1) = \dots \)</div>
-                                <input type="number" class="q-input" id="s3-g2q1" placeholder="?">
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q1-fb', '+3', true)">+3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q1-fb', '-3', false)">-3</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q1-fb', '+5', false)">+5</button>
+                                </div>
                                 <div class="feedback" id="s3-g2q1-fb"></div>
                             </div>
     
-                            <div class="question-block">
+                            <div class="question-block" id="s3-g2q2-block">
                                 <div class="q-text">7. \( (+2) + (-6) = \dots \)</div>
-                                <input type="number" class="q-input" id="s3-g2q2" placeholder="?">
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q2-fb', '-4', true)">-4</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q2-fb', '+4', false)">+4</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q2-fb', '-8', false)">-8</button>
+                                </div>
                                 <div class="feedback" id="s3-g2q2-fb"></div>
                             </div>
     
-                            <div class="question-block">
+                            <div class="question-block" id="s3-g2q3-block">
                                 <div class="q-text">8. \( (-3) + (-2) = \dots \)</div>
-                                <input type="number" class="q-input" id="s3-g2q3" placeholder="?">
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q3-fb', '-5', true)">-5</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q3-fb', '+5', false)">+5</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q3-fb', '-1', false)">-1</button>
+                                </div>
                                 <div class="feedback" id="s3-g2q3-fb"></div>
                             </div>
     
-                            <div class="question-block">
+                            <div class="question-block" id="s3-g2q4-block">
                                 <div class="q-text">9. \( (+5) + (-5) = \dots \)</div>
-                                <input type="number" class="q-input" id="s3-g2q4" placeholder="?">
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q4-fb', '0', true)">0</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q4-fb', '10', false)">10</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q4-fb', '-10', false)">-10</button>
+                                </div>
                                 <div class="feedback" id="s3-g2q4-fb"></div>
                             </div>
     
-                            <div class="question-block">
+                            <div class="question-block" id="s3-g2q5-block">
                                 <div class="q-text">10. \( 0 + (-4) = \dots \)</div>
-                                <input type="number" class="q-input" id="s3-g2q5" placeholder="?">
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q5-fb', '-4', true)">-4</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q5-fb', '+4', false)">+4</button>
+                                    <button class="sort-item" onclick="checkS3Btn(this, 's3-g2q5-fb', '0', false)">0</button>
+                                </div>
                                 <div class="feedback" id="s3-g2q5-fb"></div>
                             </div>
     
                             <div class="btn-group">
-                                <button class="btn btn-check" onclick="checkS3Grid2()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
                                 <button class="btn btn-reset" onclick="resetS3Grid2()"><i class="fas fa-redo"></i> Reset Grid 2</button>
                             </div>
                         </div>
@@ -823,61 +842,127 @@
 
                 <div class="game-area">
                     <div class="game-title"><i class="fas fa-puzzle-piece"></i> Game: Ubah Pengurangan Jadi Penjumlahan!</div>
-                    <p style="text-align:center; font-size:0.95rem; margin-bottom:15px;">Klik lawan dari angka yang dikurangkan!</p>
+                    
+                    <div style="display: flex; gap: 20px;">
+                        <!-- Grid 1: 2 Bilangan -->
+                        <div style="flex: 1; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-th-large"></i> Grid 1: 2 Bilangan</h4>
+                            
+                            <!-- Q1 -->
+                            <div class="question-block">
+                                <div class="q-text">1. \( 8 - (-2) = 8 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q1-feedback', '2', true)">2</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q1-feedback', '-2', false)">-2</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q1-feedback', '8', false)">8</button>
+                                </div>
+                                <div class="feedback" id="s4-q1-feedback"></div>
+                            </div>
 
-                    <!-- Q1 -->
-                    <div class="question-block">
-                        <div class="q-text">1. \( 8 - (-2) = 8 + \) ...</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '2', true)">2</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '-2', false)">-2</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '8', false)">8</button>
-                        </div>
-                        <div class="feedback" id="s4-q1-feedback"></div>
-                    </div>
+                            <!-- Q2 -->
+                            <div class="question-block">
+                                <div class="q-text">2. \( -5 - 3 = -5 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q2-feedback', '3', false)">3</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q2-feedback', '-3', true)">-3</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q2-feedback', '5', false)">5</button>
+                                </div>
+                                <div class="feedback" id="s4-q2-feedback"></div>
+                            </div>
 
-                    <!-- Q2 -->
-                    <div class="question-block">
-                        <div class="q-text">2. \( -5 - 3 = -5 + \) ...</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '3', false)">3</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '-3', true)">-3</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '5', false)">5</button>
-                        </div>
-                        <div class="feedback" id="s4-q2-feedback"></div>
-                    </div>
+                            <!-- Q3 -->
+                            <div class="question-block">
+                                <div class="q-text">3. \( 10 - (-4) = 10 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q3-feedback', '-4', false)">-4</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q3-feedback', '14', false)">14</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q3-feedback', '4', true)">4</button>
+                                </div>
+                                <div class="feedback" id="s4-q3-feedback"></div>
+                            </div>
 
-                    <!-- Q3 -->
-                    <div class="question-block">
-                        <div class="q-text">3. \( 10 - (-4) = 10 + \) ...</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '-4', false)">-4</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '14', false)">14</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '4', true)">4</button>
-                        </div>
-                        <div class="feedback" id="s4-q3-feedback"></div>
-                    </div>
+                            <!-- Q4 -->
+                            <div class="question-block">
+                                <div class="q-text">4. \( -7 - (-2) = -7 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q4-feedback', '2', true)">2</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q4-feedback', '-2', false)">-2</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q4-feedback', '7', false)">7</button>
+                                </div>
+                                <div class="feedback" id="s4-q4-feedback"></div>
+                            </div>
 
-                    <!-- Q4 -->
-                    <div class="question-block">
-                        <div class="q-text">4. \( -7 - (-2) = -7 + \) ...</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '2', true)">2</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '-2', false)">-2</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '7', false)">7</button>
+                            <!-- Q5 -->
+                            <div class="question-block">
+                                <div class="q-text">5. \( 0 - (-9) = 0 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q5-feedback', '-9', false)">-9</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q5-feedback', '9', true)">9</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q5-feedback', '0', false)">0</button>
+                                </div>
+                                <div class="feedback" id="s4-q5-feedback"></div>
+                            </div>
                         </div>
-                        <div class="feedback" id="s4-q4-feedback"></div>
-                    </div>
 
-                    <!-- Q5 -->
-                    <div class="question-block">
-                        <div class="q-text">5. \( 0 - (-9) = 0 + \) ...</div>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '-9', false)">-9</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '9', true)">9</button>
-                            <button class="sort-item s4-opt" onclick="checkS4(this, '0', false)">0</button>
+                        <!-- Grid 2: 3 Bilangan -->
+                        <div style="flex: 1; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-calculator"></i> Grid 2: 3 Bilangan</h4>
+                            
+                            <!-- Q6 -->
+                            <div class="question-block">
+                                <div class="q-text">6. \( 7 - 2 - (-4) = 7 - 2 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q6-feedback', '4', true)">4</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q6-feedback', '-4', false)">-4</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q6-feedback', '2', false)">2</button>
+                                </div>
+                                <div class="feedback" id="s4-q6-feedback"></div>
+                            </div>
+
+                            <!-- Q7 -->
+                            <div class="question-block">
+                                <div class="q-text">7. \( -3 - 5 - (-2) = -3 - 5 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q7-feedback', '2', true)">2</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q7-feedback', '-2', false)">-2</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q7-feedback', '5', false)">5</button>
+                                </div>
+                                <div class="feedback" id="s4-q7-feedback"></div>
+                            </div>
+
+                            <!-- Q8 -->
+                            <div class="question-block">
+                                <div class="q-text">8. \( 12 - (-3) - 5 = 12 + 3 - \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q8-feedback', '3', true)">3</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q8-feedback', '-3', false)">-3</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q8-feedback', '5', false)">5</button>
+                                </div>
+                                <div class="feedback" id="s4-q8-feedback"></div>
+                            </div>
+
+                            <!-- Q9 -->
+                            <div class="question-block">
+                                <div class="q-text">9. \( 15 - 8 - (-5) = 15 - 8 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q9-feedback', '-5', false)">-5</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q9-feedback', '5', true)">5</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q9-feedback', '8', false)">8</button>
+                                </div>
+                                <div class="feedback" id="s4-q9-feedback"></div>
+                            </div>
+
+                            <!-- Q10 -->
+                            <div class="question-block">
+                                <div class="q-text">10. \( 0 - 6 - (-8) = 0 - 6 + \) ...</div>
+                                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q10-feedback', '6', false)">6</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q10-feedback', '-8', false)">-8</button>
+                                    <button class="sort-item s4-opt" onclick="checkS4(this, 's4-q10-feedback', '8', true)">8</button>
+                                </div>
+                                <div class="feedback" id="s4-q10-feedback"></div>
+                            </div>
                         </div>
-                        <div class="feedback" id="s4-q5-feedback"></div>
                     </div>
 
                     <div class="btn-group">
@@ -1816,23 +1901,21 @@
         }
     }
 
-    function checkS3Grid2() {
-        checkMathQuestion('s3-g2q1', 3, 's3-g2q1-fb', 'Hebat! 4 biru, 1 hancur, sisa 3.', 'Kurang tepat. Ingat 4 biru melawan 1 merah, sisa 3 biru.');
-        checkMathQuestion('s3-g2q2', -4, 's3-g2q2-fb', 'Sip! 2 hancur, sisa 4 merah (-4).', 'Ingat, 2 biru hancurkan 2 merah. Dari 6 merah sisa 4 merah.');
-        checkMathQuestion('s3-g2q3', -5, 's3-g2q3-fb', 'Tepat! Negatif ditambah negatif jadi lebih negatif.', 'Keduanya chip merah, jadi digabungkan: -3 + -2 = -5.');
-        checkMathQuestion('s3-g2q4', 0, 's3-g2q4-fb', 'Pasangan Nol!', '5 biru dan 5 merah saling menghancurkan menjadi 0.');
-        checkMathQuestion('s3-g2q5', -4, 's3-g2q5-fb', 'Benar! Tidak ada biru, jadi sisa 4 merah.', '0 ditambah angka negatif tetap menghasilkan angka negatif itu sendiri.');
-    }
-
     function resetS3Grid2() {
-        resetMathQuestion(['s3-g2q1', 's3-g2q2', 's3-g2q3', 's3-g2q4', 's3-g2q5'], ['s3-g2q1-fb', 's3-g2q2-fb', 's3-g2q3-fb', 's3-g2q4-fb', 's3-g2q5-fb']);
-    }
-    // ==========================================
+        for(let i=1; i<=5; i++) {
+            const block = document.getElementById(`s3-g2q${i}-block`);
+            block.querySelectorAll('.sort-item').forEach(btn => {
+                btn.style.pointerEvents = 'auto';
+                btn.style.background = 'var(--ocean-light)';
+            });
+            const fb = document.getElementById(`s3-g2q${i}-fb`);
+            fb.className = 'feedback';
+            fb.innerHTML = '';
+        }
+    }    // ==========================================
     // SECTION 4 LOGIC: Subtraction -> Addition
     // ==========================================
-    let s4QCount = 1; // To track feedback IDs
-    function checkS4(btn, answer, isCorrect) {
-        const fbId = `s4-q${s4QCount}-feedback`;
+    function checkS4(btn, fbId, answer, isCorrect) {
         const fb = document.getElementById(fbId);
         const parent = btn.parentElement;
         
@@ -1844,27 +1927,24 @@
             fb.className = 'feedback correct';
             btn.style.background = 'var(--seaweed)';
         } else {
-            fb.innerHTML = `<i class="fas fa-times-circle"></i> Ingat cerita penjahat! Lawan dari ${answer} adalah ${-parseInt(answer)}. Jadi hasilnya ${-parseInt(answer)}.`;
+            fb.innerHTML = `<i class="fas fa-times-circle"></i> Ingat cerita penjahat! Jawaban yang benar adalah ${answer}.`;
             fb.className = 'feedback wrong';
             btn.style.background = 'var(--coral)';
         }
-        s4QCount++;
     }
 
     function resetSection4() {
-        s4QCount = 1;
-        document.querySelectorAll('.s4-opt').forEach(btn => {
-            btn.style.pointerEvents = 'auto';
-            btn.style.background = 'var(--ocean-light)';
-            btn.classList.remove('selected');
-        });
-        for(let i=1; i<=5; i++) {
+        for(let i=1; i<=10; i++) { // Diubah dari 5 menjadi 10
             const fb = document.getElementById(`s4-q${i}-feedback`);
             if(fb) {
                 fb.className = 'feedback';
                 fb.innerHTML = '';
             }
         }
+        document.querySelectorAll('.s4-opt').forEach(btn => {
+            btn.style.pointerEvents = 'auto';
+            btn.style.background = 'var(--ocean-light)';
+        });
     }
 
     // Re-render KaTeX for dynamic content
