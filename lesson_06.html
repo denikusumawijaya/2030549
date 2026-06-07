@@ -553,49 +553,95 @@
 
                 <!-- Interactive Game Area -->
                 <div class="game-area">
-                    <div class="game-title"><i class="fas fa-bolt"></i> Misi Kilat: Pemanasan Otak <i class="fas fa-bolt"></i></div>
+                    <div class="game-title"><i class="fas fa-bolt"></i> Misi Kilat: Pemanasan Otak (10 Soal) <i class="fas fa-bolt"></i></div>
                     
-                    <!-- Q1 -->
-                    <div class="question-block" id="q1-block">
-                        <div class="q-text">1. Volume gabungan kubus (sisi 3cm) dan balok (4x3x2cm) adalah ... cm³</div>
-                        <input type="number" class="q-input" id="q1-answer" placeholder="?">
-                        <div class="feedback" id="q1-feedback"></div>
-                    </div>
-
-                    <!-- Q2 -->
-                    <div class="question-block" id="q2-block">
-                        <div class="q-text">2. Jika 2 kubus berhimpitan di 1 rusuk, jumlah rusuk gabungannya ada ...</div>
-                        <input type="number" class="q-input" id="q2-answer" placeholder="?">
-                        <div class="feedback" id="q2-feedback"></div>
-                    </div>
-
-                    <!-- Q3 -->
-                    <div class="question-block" id="q3-block">
-                        <div class="q-text">3. Pola: +5, -2, +5, -2. Jika dimulai dari 17, angka berikutnya adalah ...</div>
-                        <input type="number" class="q-input" id="q3-answer" placeholder="?">
-                        <div class="feedback" id="q3-feedback"></div>
-                    </div>
-
-                    <!-- Q4 Sort Interactive -->
-                    <div class="question-block" id="q4-block">
-                        <div class="q-text">4. Urutkan angka dari yang terkecil ke terbesar (Klik berurutan!):</div>
-                        <div class="sort-container">
-                            <div class="sort-item" onclick="selectSort(this, 'q4')">-5</div>
-                            <div class="sort-item" onclick="selectSort(this, 'q4')">2</div>
-                            <div class="sort-item" onclick="selectSort(this, 'q4')">-10</div>
-                            <div class="sort-item" onclick="selectSort(this, 'q4')">0</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                        <!-- Grid 1: Bangun Ruang -->
+                        <div id="S1-A" style="flex: 1; min-width: 300px; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-cube"></i> Grid 1: Bangun Ruang</h4>
+                            
+                            <div class="question-block" data-type="text" data-answer="51">
+                                <div class="q-text">1. Volume kubus (sisi 3cm) + balok (4x3x2cm) = ... cm³</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="12">
+                                <div class="q-text">2. 2 kubus berhimpitan di 1 rusuk. Jumlah rusuk gabungannya ada ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="64">
+                                <div class="q-text">3. Volume kubus yang memiliki rusuk 4 cm adalah ... cm³</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="radio" data-answer="12">
+                                <div class="q-text">4. Jumlah rusuk pada satu buah balok adalah ...</div>
+                                <label><input type="radio" name="s1q4" value="8" data-correct="false"> 8</label>
+                                <label><input type="radio" name="s1q4" value="12" data-correct="true"> 12</label>
+                                <label><input type="radio" name="s1q4" value="6" data-correct="false"> 6</label>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="dropdown" data-answer="9">
+                                <div class="q-text">5. Luas satu sisi kubus dengan rusuk 3 cm adalah ... cm²</div>
+                                <select class="q-input-assess" style="padding:5px; border:2px solid var(--ocean-light); border-radius:5px;">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="6">6</option>
+                                    <option value="9">9</option>
+                                    <option value="12">12</option>
+                                    <option value="27">27</option>
+                                </select>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS1Group('S1-A')"><i class="fas fa-check-circle"></i> Cek</button>
+                                <button class="btn btn-reset" onclick="resetS1Group('S1-A')"><i class="fas fa-redo"></i> Reset</button>
+                            </div>
                         </div>
-                        <div style="display:flex; align-items:center; margin-top:10px;">
-                            <strong>Jawaban:</strong>
-                            <div class="sort-result" id="q4-result"></div>
-                        </div>
-                        <input type="hidden" id="q4-answer" value="">
-                        <div class="feedback" id="q4-feedback"></div>
-                    </div>
 
-                    <div class="btn-group">
-                        <button class="btn btn-check" onclick="checkSection1()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
-                        <button class="btn btn-reset" onclick="resetSection1()"><i class="fas fa-redo"></i> Reset</button>
+                        <!-- Grid 2: Logika Angka -->
+                        <div id="S1-B" style="flex: 1; min-width: 300px; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-sort-numeric-down"></i> Grid 2: Logika Angka</h4>
+                            
+                            <div class="question-block" data-type="text" data-answer="22">
+                                <div class="q-text">6. Pola: +5, -2, +5, -2. Dari 17, angka berikutnya adalah ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="7">
+                                <div class="q-text">7. Pola: \(\times2, +1, \times2, +1\). Dari 3, angka ketiga adalah ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="dropdown" data-answer="+5">
+                                <div class="q-text">8. Barisan: -10, -5, 0, 5, 10. Polanya adalah ...</div>
+                                <select class="q-input-assess" style="padding:5px; border:2px solid var(--ocean-light); border-radius:5px;">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="+5">+5</option>
+                                    <option value="-5">-5</option>
+                                    <option value="+10">+10</option>
+                                    <option value="-10">-10</option>
+                                </select>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="radio" data-answer="-25">
+                                <div class="q-text">9. Manakah bilangan terkecil?</div>
+                                <label><input type="radio" name="s1q9" value="0" data-correct="false"> 0</label>
+                                <label><input type="radio" name="s1q9" value="-5" data-correct="false"> -5</label>
+                                <label><input type="radio" name="s1q9" value="-25" data-correct="true"> -25</label>
+                                <label><input type="radio" name="s1q9" value="10" data-correct="false"> 10</label>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="5">
+                                <div class="q-text">10. Urutan terbesar ke terkecil: -2, 5, -8, 0. Angka pertama adalah ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS1Group('S1-B')"><i class="fas fa-check-circle"></i> Cek</button>
+                                <button class="btn btn-reset" onclick="resetS1Group('S1-B')"><i class="fas fa-redo"></i> Reset</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div> 
@@ -989,41 +1035,180 @@
                 </div>
 
                 <div class="game-area">
-                    <div class="game-title"><i class="fas fa-pencil-alt"></i> Latihan Terbimbing</div>
+                    <div class="game-title"><i class="fas fa-pencil-alt"></i> Latihan Terbimbing (20 Soal)</div>
                     
-                    <!-- Q1 -->
-                    <div class="question-block">
-                        <div class="q-text">1. \( -15 + 20 = \dots \)</div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-weight:700;">Jawab:</span> 
-                            <input type="number" class="q-input" id="s5-q1" placeholder="?">
+                    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                        <!-- Grid 1: Penjumlahan & Pengurangan Dasar -->
+                        <div id="S5-A" style="flex: 1; min-width: 300px; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-plus-circle"></i> Grid 1: Dasar</h4>
+                            
+                            <div class="question-block" data-type="text" data-answer="-5">
+                                <div class="q-text">1. \( (-20) + 15 = \dots \)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="-6">
+                                <div class="q-text">2. \( 14 + (-20) = \dots \)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="radio" data-answer="-40">
+                                <div class="q-text">3. Hasil dari \( (-30) - 10 \) adalah ...</div>
+                                <label><input type="radio" name="s5q3" value="-40" data-correct="true"> -40</label>
+                                <label><input type="radio" name="s5q3" value="-20" data-correct="false"> -20</label>
+                                <label><input type="radio" name="s5q3" value="40" data-correct="false"> 40</label>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="25">
+                                <div class="q-text">4. \( 50 + (-25) = \dots \)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="dropdown" data-answer="-6">
+                                <div class="q-text">5. \( (-11) - (-5) = \dots \)</div>
+                                <select class="q-input-assess" style="padding:5px; border:2px solid var(--ocean-light); border-radius:5px;">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="-16">-16</option>
+                                    <option value="-6">-6</option>
+                                    <option value="6">6</option>
+                                    <option value="16">16</option>
+                                </select>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS5Group('S5-A')"><i class="fas fa-check-circle"></i> Cek</button>
+                                <button class="btn btn-reset" onclick="resetS5Group('S5-A')"><i class="fas fa-redo"></i> Reset</button>
+                            </div>
                         </div>
-                        <div class="feedback" id="s5-q1-fb"></div>
-                    </div>
 
-                    <!-- Q2 -->
-                    <div class="question-block">
-                        <div class="q-text">2. \( -8 - 5 = \dots \) <span style="color:var(--coral); font-size:0.85rem;">*(Hati-hati, hutang makin banyak!)*</span></div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-weight:700;">Jawab:</span> 
-                            <input type="number" class="q-input" id="s5-q2" placeholder="?">
+                        <!-- Grid 2: Pengurangan Negatif & Campuran -->
+                        <div id="S5-B" style="flex: 1; min-width: 300px; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-minus-circle"></i> Grid 2: Campuran</h4>
+                            
+                            <div class="question-block" data-type="text" data-answer="20">
+                                <div class="q-text">6. \( 8 - (-12) = \dots \)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="5">
+                                <div class="q-text">7. \( -15 - (-20) = \dots \)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="radio" data-answer="-5">
+                                <div class="q-text">8. Hasil dari \( 20 - 35 + 10 \) adalah ...</div>
+                                <label><input type="radio" name="s5q8" value="-5" data-correct="true"> -5</label>
+                                <label><input type="radio" name="s5q8" value="5" data-correct="false"> 5</label>
+                                <label><input type="radio" name="s5q8" value="-25" data-correct="false"> -25</label>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="5">
+                                <div class="q-text">9. \( -40 + 55 - 10 = \dots \)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="dropdown" data-answer="-4">
+                                <div class="q-text">10. Jika \( x = -8 \) dan \( y = 4 \), nilai \( x + y = \dots \)</div>
+                                <select class="q-input-assess" style="padding:5px; border:2px solid var(--ocean-light); border-radius:5px;">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="-12">-12</option>
+                                    <option value="-4">-4</option>
+                                    <option value="4">4</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS5Group('S5-B')"><i class="fas fa-check-circle"></i> Cek</button>
+                                <button class="btn btn-reset" onclick="resetS5Group('S5-B')"><i class="fas fa-redo"></i> Reset</button>
+                            </div>
                         </div>
-                        <div class="feedback" id="s5-q2-fb"></div>
-                    </div>
 
-                    <!-- Q3 -->
-                    <div class="question-block">
-                        <div class="q-text">3. \( 12 - (-4) = \dots \)</div>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-weight:700;">Jawab:</span> 
-                            <input type="number" class="q-input" id="s5-q3" placeholder="?">
+                        <!-- Grid 3: Soal Cerita Suhu -->
+                        <div id="S5-C" style="flex: 1; min-width: 300px; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--sand);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-thermometer-half"></i> Grid 3: Suhu</h4>
+                            
+                            <div class="question-block" data-type="text" data-answer="-7">
+                                <div class="q-text">11. Suhu pagi \(5^\circ\)C, sore turun \(12^\circ\)C. Suhu sore ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="-2">
+                                <div class="q-text">12. Suhu \(-10^\circ\)C naik \(8^\circ\)C. Suhu sekarang ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="radio" data-answer="-5">
+                                <div class="q-text">13. Suhu ruang \(25^\circ\)C, AC turun \(30^\circ\)C. Suhu akhir ...</div>
+                                <label><input type="radio" name="s5q13" value="-5" data-correct="true"> -5</label>
+                                <label><input type="radio" name="s5q13" value="5" data-correct="false"> 5</label>
+                                <label><input type="radio" name="s5q13" value="-55" data-correct="false"> -55</label>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="dropdown" data-answer="-20">
+                                <div class="q-text">14. Suhu \(-15^\circ\)C turun lagi \(5^\circ\)C. Suhu sekarang ...</div>
+                                <select class="q-input-assess" style="padding:5px; border:2px solid var(--ocean-light); border-radius:5px;">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="-20">-20</option>
+                                    <option value="-10">-10</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="-14">
+                                <div class="q-text">15. Perubahan suhu dari \(10^\circ\)C ke \(-4^\circ\)C adalah ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS5Group('S5-C')"><i class="fas fa-check-circle"></i> Cek</button>
+                                <button class="btn btn-reset" onclick="resetS5Group('S5-C')"><i class="fas fa-redo"></i> Reset</button>
+                            </div>
                         </div>
-                        <div class="feedback" id="s5-q3-fb"></div>
-                    </div>
 
-                    <div class="btn-group">
-                        <button class="btn btn-check" onclick="checkSection5()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
-                        <button class="btn btn-reset" onclick="resetSection5()"><i class="fas fa-redo"></i> Reset</button>
+                        <!-- Grid 4: Soal Cerita Utang/Piutang -->
+                        <div id="S5-D" style="flex: 1; min-width: 300px; background: white; padding: 15px; border-radius: 10px; border: 2px solid var(--seaweed);">
+                            <h4 style="color:var(--ocean-deep); margin-bottom:10px;"><i class="fas fa-money-bill-wave"></i> Grid 4: Utang/Piutang</h4>
+                            
+                            <div class="question-block" data-type="text" data-answer="-6">
+                                <div class="q-text">16. Utang 10 ribu, bayar 4 ribu. Sisa hutang ... (Gunakan angka negatif)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="-10">
+                                <div class="q-text">17. Punya uang 15 ribu, belanja 25 ribu. Kondisi uang ... (Gunakan angka negatif)</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="radio" data-answer="-15">
+                                <div class="q-text">18. Rugi 30 ribu, lalu untung 15 ribu. Hasil akhir ...</div>
+                                <label><input type="radio" name="s5q18" value="-45" data-correct="false"> -45 ribu</label>
+                                <label><input type="radio" name="s5q18" value="-15" data-correct="true"> -15 ribu</label>
+                                <label><input type="radio" name="s5q18" value="15" data-correct="false"> 15 ribu</label>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="dropdown" data-answer="-10">
+                                <div class="q-text">19. Tabungan 50 ribu, diambil 60 ribu. Kondisi uang ...</div>
+                                <select class="q-input-assess" style="padding:5px; border:2px solid var(--ocean-light); border-radius:5px;">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="-110">-110 ribu</option>
+                                    <option value="-10">-10 ribu</option>
+                                    <option value="10">10 ribu</option>
+                                    <option value="110">110 ribu</option>
+                                </select>
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="question-block" data-type="text" data-answer="-15">
+                                <div class="q-text">20. Utang 20 ribu, pinjam lagi 10 ribu, bayar 15 ribu. Sisa hutang ...</div>
+                                <input type="number" class="q-input" placeholder="?">
+                                <div class="feedback"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-check" onclick="checkS5Group('S5-D')"><i class="fas fa-check-circle"></i> Cek</button>
+                                <button class="btn btn-reset" onclick="resetS5Group('S5-D')"><i class="fas fa-redo"></i> Reset</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div> 
@@ -1863,95 +2048,69 @@
         // ==========================================
         // SECTION 1 GAME LOGIC
         // ==========================================
-        
-        // Sort logic for Question 4
-        let q4Order = [];
-        function selectSort(element, qId) {
-            element.classList.add('selected');
-            const value = element.innerText;
-            q4Order.push(value);
-            
-            const resultDiv = document.getElementById(`${qId}-result`);
-            const span = document.createElement('div');
-            span.className = 'sort-result-item';
-            span.innerText = value;
-            resultDiv.appendChild(span);
-            
-            document.getElementById(`${qId}-answer`).value = q4Order.join(',');
-        }
-
-        function checkSection1() {
+        function checkS1Group(groupId) {
             let score = 0;
+            let totalQ = 0;
+            const group = document.getElementById(groupId);
+            const questions = group.querySelectorAll('.question-block');
+            
+            questions.forEach(q => {
+                totalQ++;
+                const type = q.dataset.type;
+                const correctAnswer = q.dataset.answer;
+                const fb = q.querySelector('.feedback');
+                let isCorrect = false;
+                let userAnswerStr = "";
 
-            // Q1 Check
-            const q1 = document.getElementById('q1-answer').value;
-            const q1Fb = document.getElementById('q1-feedback');
-            if (q1 == 51) { // 3^3 (27) + 4*3*2 (24) = 51. Note: The prompt's key said 120, but the math problem said 3cm cube and 4x3x2 block. I'm fixing the math logic here.
-                q1Fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar! Volume kubus (27) + balok (24) = 51';
-                q1Fb.className = 'feedback correct';
-                score++;
-            } else {
-                q1Fb.innerHTML = '<i class="fas fa-times-circle"></i> Kurang tepat. Ingat rumus: Kubus \(s \\times s \\times s\) = 27, Balok \(p \\times l \\times t\) = 24. Total = 51.';
-                q1Fb.className = 'feedback wrong';
-                renderMathInElement(q1Fb, {delimiters: [{left: '\\(', right: '\\)', display: false}]});
-            }
+                if (type === 'text') {
+                    const input = q.querySelector('input[type="number"]');
+                    userAnswerStr = input.value.trim();
+                    isCorrect = (userAnswerStr !== "" && parseInt(userAnswerStr) === parseInt(correctAnswer));
+                } else if (type === 'dropdown') {
+                    const select = q.querySelector('select');
+                    userAnswerStr = select.value;
+                    isCorrect = (userAnswerStr === correctAnswer);
+                } else if (type === 'radio') {
+                    const selected = q.querySelector('input[type="radio"]:checked');
+                    if (selected) {
+                        userAnswerStr = selected.value;
+                        isCorrect = (selected.dataset.correct === 'true');
+                    } else {
+                        userAnswerStr = "(Kosong)";
+                    }
+                }
 
-            // Q2 Check
-            const q2 = document.getElementById('q2-answer').value;
-            const q2Fb = document.getElementById('q2-feedback');
-            if (q2 == 12) { // <--- UBAH 20 MENJADI 12
-                q2Fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar! Dua kubus yang berhimpitan memiliki 12 rusuk.';
-                q2Fb.className = 'feedback correct';
-                score++;
-            } else {
-                q2Fb.innerHTML = '<i class="fas fa-times-circle"></i> Ingat, jika berhimpitan, rusuk yang menyatu tidak terhitung. Jawabannya 12.';
-                q2Fb.className = 'feedback wrong';
-            }
+                if (isCorrect) {
+                    score++;
+                    fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar!';
+                    fb.className = 'feedback correct';
+                } else {
+                    fb.innerHTML = `<i class="fas fa-times-circle"></i> Salah. Jawaban benar: ${correctAnswer}`;
+                    fb.className = 'feedback wrong';
+                }
+            });
 
-            // Q3 Check
-            const q3 = document.getElementById('q3-answer').value;
-            const q3Fb = document.getElementById('q3-feedback');
-            if (q3 == 22) { // 17 + 5 = 22
-                q3Fb.innerHTML = '<i class="fas fa-check-circle"></i> Keren! Polanya +5. Jadi 17 + 5 = 22.';
-                q3Fb.className = 'feedback correct';
-                score++;
-            } else {
-                q3Fb.innerHTML = '<i class="fas fa-times-circle"></i> Perhatikan pola +5, -2. Dari 17, langkah selanjutnya adalah +5.';
-                q3Fb.className = 'feedback wrong';
-            }
-
-            // Q4 Check
-            const q4 = document.getElementById('q4-answer').value;
-            const q4Fb = document.getElementById('q4-feedback');
-            if (q4 === '-10,-5,0,2') {
-                q4Fb.innerHTML = '<i class="fas fa-check-circle"></i> Sip! Urutan dari terkecil ke terbesar: -10, -5, 0, 2.';
-                q4Fb.className = 'feedback correct';
-                score++;
-            } else {
-                q4Fb.innerHTML = '<i class="fas fa-times-circle"></i> Urutan yang benar dimulai dari negatif terkecil. Jawaban: -10, -5, 0, 2.';
-                q4Fb.className = 'feedback wrong';
-            }
-
-            // Overall feedback
-            if(score === 4) {
-                alert("Luar biasa! Semua Misi Kilat berhasil diselesaikan! 🌟");
-            }
+            alert(`Skor Sementara Grup ini: ${score} / ${totalQ}`);
         }
 
-        function resetSection1() {
-            // Reset inputs
-            document.querySelectorAll('.q-input').forEach(input => input.value = '');
+        function resetS1Group(groupId) {
+            const group = document.getElementById(groupId);
+            const questions = group.querySelectorAll('.question-block');
             
-            // Reset sort game
-            q4Order = [];
-            document.querySelectorAll('.sort-item').forEach(item => item.classList.remove('selected'));
-            document.getElementById('q4-result').innerHTML = '';
-            document.getElementById('q4-answer').value = '';
-            
-            // Reset feedback
-            document.querySelectorAll('.feedback').forEach(fb => {
+            questions.forEach(q => {
+                const type = q.dataset.type;
+                const fb = q.querySelector('.feedback');
                 fb.className = 'feedback';
                 fb.innerHTML = '';
+
+                if (type === 'text') {
+                    q.querySelector('input[type="number"]').value = '';
+                } else if (type === 'dropdown') {
+                    q.querySelector('select').value = '';
+                } else if (type === 'radio') {
+                    const radios = q.querySelectorAll('input[type="radio"]');
+                    radios.forEach(r => r.checked = false);
+                }
             });
         }
     // ==========================================
@@ -2079,28 +2238,70 @@
     // ==========================================
     // SECTION 5 LOGIC: Guided Practice
     // ==========================================
-    function checkSection5() {
-        // Q1: -15 + 20 = 5
-        checkMathQuestion('s5-q1', 5, 's5-q1-fb', 
-            'Hebat! 20 biru melawan 15 merah, sisa 5 biru (+5).', 
-            'Ingat, 15 chip merah dihancurkan oleh 15 chip biru. Dari 20 biru, sisa berapa?'
-        );
+    function checkS5Group(groupId) {
+        let score = 0;
+        let totalQ = 0;
+        const group = document.getElementById(groupId);
+        const questions = group.querySelectorAll('.question-block');
+        
+        questions.forEach(q => {
+            totalQ++;
+            const type = q.dataset.type;
+            const correctAnswer = q.dataset.answer;
+            const fb = q.querySelector('.feedback');
+            let isCorrect = false;
+            let userAnswerStr = "";
 
-        // Q2: -8 - 5 = -13
-        checkMathQuestion('s5-q2', -13, 's5-q2-fb', 
-            'Tepat! Hutang 8 ditambah hutang 5, jadi hutang 13 (-13).', 
-            'Ini hutang bertambah. -8 dikurangi 5 sama dengan -8 ditambah -5. Berapa totalnya?'
-        );
+            if (type === 'text') {
+                const input = q.querySelector('input[type="number"]');
+                userAnswerStr = input.value.trim();
+                isCorrect = (userAnswerStr !== "" && parseInt(userAnswerStr) === parseInt(correctAnswer));
+            } else if (type === 'dropdown') {
+                const select = q.querySelector('select');
+                userAnswerStr = select.value;
+                isCorrect = (userAnswerStr === correctAnswer);
+            } else if (type === 'radio') {
+                const selected = q.querySelector('input[type="radio"]:checked');
+                if (selected) {
+                    userAnswerStr = selected.value;
+                    isCorrect = (selected.dataset.correct === 'true');
+                } else {
+                    userAnswerStr = "(Kosong)";
+                }
+            }
 
-        // Q3: 12 - (-4) = 16
-        checkMathQuestion('s5-q3', 16, 's5-q3-fb', 
-            'Sip! Mengurangi negatif jadi tambah. 12 + 4 = 16.', 
-            'Ingat kisah penjahat? Mengeluarkan -4 sama dengan menambah +4. Jadi 12 + 4 = ?'
-        );
+            if (isCorrect) {
+                score++;
+                fb.innerHTML = '<i class="fas fa-check-circle"></i> Benar!';
+                fb.className = 'feedback correct';
+            } else {
+                fb.innerHTML = `<i class="fas fa-times-circle"></i> Salah. Jawaban benar: ${correctAnswer}`;
+                fb.className = 'feedback wrong';
+            }
+        });
+
+        alert(`Skor Sementara Grup ini: ${score} / ${totalQ}`);
     }
 
-    function resetSection5() {
-        resetMathQuestion(['s5-q1', 's5-q2', 's5-q3'], ['s5-q1-fb', 's5-q2-fb', 's5-q3-fb']);
+    function resetS5Group(groupId) {
+        const group = document.getElementById(groupId);
+        const questions = group.querySelectorAll('.question-block');
+        
+        questions.forEach(q => {
+            const type = q.dataset.type;
+            const fb = q.querySelector('.feedback');
+            fb.className = 'feedback';
+            fb.innerHTML = '';
+
+            if (type === 'text') {
+                q.querySelector('input[type="number"]').value = '';
+            } else if (type === 'dropdown') {
+                q.querySelector('select').value = '';
+            } else if (type === 'radio') {
+                const radios = q.querySelectorAll('input[type="radio"]');
+                radios.forEach(r => r.checked = false);
+            }
+        });
     }
 
     // ==========================================
