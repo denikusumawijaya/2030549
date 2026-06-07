@@ -1133,7 +1133,7 @@
                     </div>
 
                     <!-- GRUP C -->
-                    <div id="S6-B" class="tabcontent" style="display:none;">
+                    <div id="S6-C" class="tabcontent" style="display:none;">
                         <div class="question-block" data-type="text" data-answer="-8">
                             <div class="q-text">11. Suhu ruangan \(2^\circ\)C. Jika suhunya turun \(10^\circ\)C, suhu sekarang ...</div>
                             <input type="number" class="q-input" placeholder="?">
@@ -1174,7 +1174,7 @@
                     </div>
 
                     <!-- GRUP D -->
-                    <div id="S6-B" class="tabcontent" style="display:none;">
+                    <div id="S6-D" class="tabcontent" style="display:none;">
                         <div class="question-block" data-type="text" data-answer="-3">
                             <div class="q-text">16. Kamu hutang 5 ribu, lalu bayar 2 ribu. Sisa hutangmu ... (Gunakan angka negatif)</div>
                             <input type="number" class="q-input" placeholder="?">
@@ -2295,6 +2295,23 @@
     // ==========================================
     // SECTION 7: PRINT LOGIC
     // ==========================================
+    
+    // Helper function to clean KaTeX duplication
+    function getCleanQuestionText(pElement) {
+        if (!pElement) return "";
+        // Sembunyikan sementara MathML (teks tersembunyi dari KaTeX) agar tidak terbaca duplikat
+        const mathmls = pElement.querySelectorAll('.katex-mathml');
+        mathmls.forEach(m => m.setAttribute('hidden', true));
+        
+        let text = pElement.innerText;
+        
+        // Tampilkan kembali MathML
+        mathmls.forEach(m => m.removeAttribute('hidden'));
+        
+        // Hapus angka awalan (misal: "1. ")
+        return text.replace(/^\d+\.\s*/, '');
+    }
+
     function printAssessment(groupId) {
         const printArea = document.getElementById('print-area');
         const nameVal = document.getElementById('studentName').value || "Anonim";
@@ -2314,9 +2331,8 @@
             const type = q.dataset.type;
             const correctAnswer = q.dataset.answer;
             
-            // Ambil teks soal, lalu hapus angka awalan agar tidak duplikat dengan kolom No
-            let questionText = q.querySelector('p').innerText;
-            questionText = questionText.replace(/^\d+\.\s*/, ''); 
+            // Gunakan helper function yang sudah bersih dari duplikasi KaTeX
+            let questionText = getCleanQuestionText(q.querySelector('p'));
 
             let userAnswerStr = "";
             let isCorrect = false;
