@@ -297,6 +297,100 @@
         }
         .grid-4-col .question-box { margin-bottom: 0; font-size: 0.9em; }
         .grid-4-col .question-box input[type="text"] { width: 80px; font-size: 0.9em; }
+        /* ==========================================
+           UI KEREN UNTUK SPIRAL REVIEW (SECTION 1)
+           ========================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .grid-4-col .question-box {
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid #ccc;
+            opacity: 0; /* Awalnya hilang untuk animasi masuk */
+            animation: fadeInUp 0.5s ease forwards;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .grid-4-col .question-box:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,90,158,0.15);
+            z-index: 2;
+        }
+
+        /* Warna Kiri Berdasarkan Kategori */
+        .q-volume { border-left-color: var(--bb-sand); }
+        .q-prima { border-left-color: var(--bb-blue); }
+        .q-pecahan { border-left-color: var(--bb-green); }
+
+        /* Ikon Besar Transparan di Background */
+        .q-icon-bg {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4em;
+            opacity: 0.08;
+            color: var(--bb-dark-blue);
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .grid-4-col .question-box:hover .q-icon-bg { opacity: 0.15; }
+
+        /* Efek Shake jika salah */
+        .input-shake {
+            animation: shake 0.4s ease;
+            border-color: #d32f2f !important;
+        }
+        /* ==========================================
+           UI KEREN UNTUK QUEST DUNIA NYATA (SECTION 2)
+           ========================================== */
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .grid-2-col .question-box {
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--bb-blue);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: linear-gradient(135deg, #ffffff 90%, #f0f8ff 100%);
+        }
+        .grid-2-col .question-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0,90,158,0.15);
+        }
+        .grid-2-col .q-icon-bg {
+            position: absolute;
+            bottom: -10px;
+            right: -5px;
+            font-size: 4.5em;
+            opacity: 0.06;
+            color: var(--bb-dark-blue);
+            pointer-events: none;
+            transform: rotate(-15deg);
+        }
+        .grid-2-col .question-box label {
+            font-size: 1.05em;
+            line-height: 1.5;
+        }
+        .grid-2-col .question-box input[type="text"] {
+            border: 2px dashed var(--bb-blue);
+            background: #f7fbff;
+            font-weight: bold;
+        }
+        .grid-2-col .question-box input[type="text"]:focus {
+            border-style: solid;
+            background: #fff;
+        }
     </style>
 </head>
 <body>
@@ -885,51 +979,156 @@
         }
 
         // ==========================================
-        // LOGIC FOR SECTION 1 (20 SOAL)
+        // LOGIC FOR SECTION 1 (20 SOAL UI KEREN)
         // ==========================================
         const s1Data = [
-            {q:"Vol Kubus s=3", ans:"27"}, {q:"Vol Kubus s=4", ans:"64"}, {q:"Vol Kubus s=6", ans:"216"}, {q:"Vol Kubus s=10", ans:"1000"},
-            {q:"Vol Balok 2x3x4", ans:"24"}, {q:"Vol Balok 5x2x3", ans:"30"}, {q:"Vol Balok 10x2x2", ans:"40"}, {q:"Vol Balok 4x4x4", ans:"64"},
-            {q:"Prima 10-20 (1)", ans:"11"}, {q:"Prima 10-20 (2)", ans:"13"}, {q:"Prima 10-20 (3)", ans:"17"}, {q:"Prima 10-20 (4)", ans:"19"},
-            {q:"Prima 30-40 (1)", ans:"31"}, {q:"Prima 30-40 (2)", ans:"37"}, {q:"Prima 40-50 (1)", ans:"41"}, {q:"Prima 40-50 (2)", ans:"43"},
-            {q:"1/2 + 1/4 = .../4", ans:"3"}, {q:"3/4 - 1/4 = .../4", ans:"2"}, {q:"2/5 + 1/5 = .../5", ans:"3"}, {q:"5/6 - 2/6 = .../6", ans:"3"}
+            // Volume (Kuning/Sand)
+            {cat:"volume", q:"Vol Kubus \\( s = 3 \\) \\( cm^3 \\)", ans:"27"}, 
+            {cat:"volume", q:"Vol Kubus \\( s = 4 \\) \\( cm^3 \\)", ans:"64"}, 
+            {cat:"volume", q:"Vol Kubus \\( s = 6 \\) \\( cm^3 \\)", ans:"216"}, 
+            {cat:"volume", q:"Vol Kubus \\( s = 10 \\) \\( cm^3 \\)", ans:"1000"},
+            {cat:"volume", q:"Vol Balok \\( 2 \\times 3 \\times 4 \\)", ans:"24"}, 
+            {cat:"volume", q:"Vol Balok \\( 5 \\times 2 \\times 3 \\)", ans:"30"}, 
+            {cat:"volume", q:"Vol Balok \\( 10 \\times 2 \\times 2 \\)", ans:"40"}, 
+            {cat:"volume", q:"Vol Balok \\( 4 \\times 4 \\times 4 \\)", ans:"64"},
+            // Prima (Biru)
+            {cat:"prima", q:"Bil. Prima antara 10-20 (#1)", ans:"11"}, 
+            {cat:"prima", q:"Bil. Prima antara 10-20 (#2)", ans:"13"}, 
+            {cat:"prima", q:"Bil. Prima antara 10-20 (#3)", ans:"17"}, 
+            {cat:"prima", q:"Bil. Prima antara 10-20 (#4)", ans:"19"},
+            {cat:"prima", q:"Bil. Prima antara 30-40 (#1)", ans:"31"}, 
+            {cat:"prima", q:"Bil. Prima antara 30-40 (#2)", ans:"37"}, 
+            {cat:"prima", q:"Bil. Prima antara 40-50 (#1)", ans:"41"}, 
+            {cat:"prima", q:"Bil. Prima antara 40-50 (#2)", ans:"43"},
+            // Pecahan (Hijau)
+            {cat:"pecahan", q:"\\( \\frac{1}{2} + \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"3"}, 
+            {cat:"pecahan", q:"\\( \\frac{3}{4} - \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"2"}, 
+            {cat:"pecahan", q:"\\( \\frac{2}{5} + \\frac{1}{5} = \\frac{\\boxed{?}}{5} \\)", ans:"3"}, 
+            {cat:"pecahan", q:"\\( \\frac{5}{6} - \\frac{2}{6} = \\frac{\\boxed{?}}{6} \\)", ans:"3"}
         ];
+
+        const catIcons = { volume: 'fa-cube', prima: 'fa-star', pecahan: 'fa-divide' };
+
         function renderS1() {
-            let h = ''; s1Data.forEach((item, i) => { h += `<div class="question-box"><label>${i+1}. ${item.q}</label><input type="text" id="s1q${i}" placeholder="..."><div class="feedback" id="fbs1q${i}"></div></div>`; });
-            document.getElementById('gridS1').innerHTML = h;
-        } renderS1();
+            let h = ''; 
+            s1Data.forEach((item, i) => { 
+                h += `<div class="question-box q-${item.cat}" style="animation-delay: ${i * 0.05}s">
+                        <div class="q-icon-bg"><i class="fas ${catIcons[item.cat]}"></i></div>
+                        <label>${item.q}</label>
+                        <input type="text" id="s1q${i}" placeholder="Jawab" autocomplete="off">
+                        <div class="feedback" id="fbs1q${i}"></div>
+                      </div>`; 
+            });
+            document.getElementById('gridS1').innerHTML = h; 
+            
+            // Render ulang MathJax agar simbol pecahan & pangkat muncul
+            if(window.MathJax) MathJax.typesetPromise();
+        } 
+        renderS1();
+
         function checkS1() {
             s1Data.forEach((item, i) => {
                 let val = document.getElementById(`s1q${i}`).value.trim();
                 let fb = document.getElementById(`fbs1q${i}`);
-                if(val === item.ans) { fb.innerHTML = "<i class='fas fa-check-circle'></i>"; fb.className = "feedback correct"; }
-                else { fb.innerHTML = `<i class='fas fa-times-circle'></i> ${item.ans}`; fb.className = "feedback incorrect"; }
+                let inputEl = document.getElementById(`s1q${i}`);
+                
+                // Hapus animasi shake sebelumnya
+                inputEl.classList.remove('input-shake');
+
+                if(val === item.ans) { 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; 
+                    fb.className = "feedback correct"; 
+                    inputEl.style.borderColor = "var(--bb-green)";
+                } else { 
+                    fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
+                    fb.className = "feedback incorrect";
+                    inputEl.style.borderColor = "#d32f2f";
+                    
+                    // Trigger animasi shake
+                    void inputEl.offsetWidth; 
+                    inputEl.classList.add('input-shake');
+                }
             });
+        } 
+
+        function resetS1() { 
+            s1Data.forEach((item, i) => { 
+                let inputEl = document.getElementById(`s1q${i}`);
+                inputEl.value = ""; 
+                inputEl.style.borderColor = "var(--bb-blue)";
+                inputEl.classList.remove('input-shake');
+                document.getElementById(`fbs1q${i}`).innerHTML = ""; 
+            }); 
         }
-        function resetS1() { s1Data.forEach((item, i) => { document.getElementById(`s1q${i}`).value = ""; document.getElementById(`fbs1q${i}`).innerHTML = ""; }); }
 
         // ==========================================
-        // LOGIC FOR SECTION 2 (10 SOAL DUNIA NYATA)
+        // LOGIC FOR SECTION 2 (10 SOAL DUNIA NYATA - PECAHAN & ESTIMASI)
         // ==========================================
         const s2Data = [
-            {q:"1/2 km = ... m", ans:"500"}, {q:"1/4 kg = ... g", ans:"250"}, {q:"1/2 jam = ... menit", ans:"30"},
-            {q:"1/4 jam = ... menit", ans:"15"}, {q:"1/3 dari 9 anak = ... anak", ans:"3"}, {q:"1/4 dari 20 apel = ... apel", ans:"5"},
-            {q:"1/2 kue + 1/2 kue = ... kue", ans:"1"}, {q:"1/2 dari Rp10.000 = Rp...", ans:"5000"},
-            {q:"3/4 liter - 1/4 liter = .../4 liter", ans:"2"}, {q:"Jarak 1km, jalan 1/2km, sisa ... km", ans:"1/2"}
+            {q:"Lari maraton 1 km. Pos air setiap \\( \\frac{1}{4} \\) km. Posisi pos ke-2 ada di titik \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"2"}, 
+            {q:"Bendera di \\( \\frac{1}{2} \\) km, pos air di \\( \\frac{1}{3} \\) km. Posisi yang lebih dekat ke start (0) adalah \\( \\frac{\\boxed{?}}{3} \\) km.", ans:"1"},
+            {q:"Jarak dari pos \\( \\frac{1}{3} \\) km ke \\( \\frac{1}{2} \\) km (KPK=6) adalah \\( \\frac{\\boxed{?}}{6} \\) km.", ans:"1"}, 
+            {q:"Tali sepanjang 1 meter dipotong di titik \\( \\frac{2}{5} \\) m. Sisa tali di kanan potongan adalah \\( \\frac{\\boxed{?}}{5} \\) m.", ans:"3"},
+            {q:"Jarak rumah ke sekolah 1 km. Sudah berjalan \\( \\frac{3}{4} \\) km, sisa jalan \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"1"}, 
+            {q:"Estimasi posisi \\( \\frac{7}{15} \\) km pada garis bilangan, paling dekat dengan titik \\( \\frac{\\boxed{?}}{2} \\) km.", ans:"1"},
+            {q:"Sepeda melaju dari 0 menuju \\( \\frac{9}{10} \\) km. Posisinya sangat dekat dengan angka ...", ans:"1"}, 
+            {q:"Jarak antara pos \\( \\frac{1}{4} \\) km dan \\( \\frac{3}{4} \\) km adalah \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"2"},
+            {q:"Pos rute di titik \\( 0, \\frac{1}{3}, \\frac{2}{3}, 1 \\). Jarak antar pos adalah \\( \\frac{\\boxed{?}}{3} \\) km.", ans:"1"}, 
+            {q:"Semut berjalan dari \\( \\frac{1}{2} \\) m ke \\( \\frac{3}{4} \\) m. Jarak tempuhnya \\( \\frac{\\boxed{?}}{4} \\) m.", ans:"1"}
         ];
+
         function renderS2() {
-            let h = ''; s2Data.forEach((item, i) => { h += `<div class="question-box"><label>${i+1}. ${item.q}</label><input type="text" id="s2q${i}" placeholder="..."><div class="feedback" id="fbs2q${i}"></div></div>`; });
-            document.getElementById('gridS2').innerHTML = h;
-        } renderS2();
+            let h = ''; 
+            s2Data.forEach((item, i) => { 
+                h += `<div class="question-box" style="animation-delay: ${i * 0.08}s">
+                        <div class="q-icon-bg"><i class="fas fa-route"></i></div>
+                        <label>${i+1}. ${item.q}</label>
+                        <input type="text" id="s2q${i}" placeholder="Isi angka" autocomplete="off">
+                        <div class="feedback" id="fbs2q${i}"></div>
+                      </div>`; 
+            });
+            document.getElementById('gridS2').innerHTML = h; 
+            
+            // Render ulang MathJax
+            if(window.MathJax) MathJax.typesetPromise();
+        } 
+        renderS2();
+
         function checkS2() {
             s2Data.forEach((item, i) => {
                 let val = document.getElementById(`s2q${i}`).value.trim();
                 let fb = document.getElementById(`fbs2q${i}`);
-                if(val === item.ans) { fb.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; fb.className = "feedback correct"; }
-                else { fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawaban: ${item.ans}`; fb.className = "feedback incorrect"; }
+                let inputEl = document.getElementById(`s2q${i}`);
+                
+                inputEl.classList.remove('input-shake');
+
+                if(val === item.ans) { 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; 
+                    fb.className = "feedback correct"; 
+                    inputEl.style.borderColor = "var(--bb-green)";
+                    inputEl.style.borderStyle = "solid";
+                } else { 
+                    fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
+                    fb.className = "feedback incorrect";
+                    inputEl.style.borderColor = "#d32f2f";
+                    inputEl.style.borderStyle = "solid";
+                    
+                    void inputEl.offsetWidth; 
+                    inputEl.classList.add('input-shake');
+                }
             });
+        } 
+
+        function resetS2() { 
+            s2Data.forEach((item, i) => { 
+                let inputEl = document.getElementById(`s2q${i}`);
+                inputEl.value = ""; 
+                inputEl.style.borderColor = "var(--bb-blue)";
+                inputEl.style.borderStyle = "dashed";
+                inputEl.classList.remove('input-shake');
+                document.getElementById(`fbs2q${i}`).innerHTML = ""; 
+            }); 
         }
-        function resetS2() { s2Data.forEach((item, i) => { document.getElementById(`s2q${i}`).value = ""; document.getElementById(`fbs2q${i}`).innerHTML = ""; }); }
 
         // ==========================================
         // LOGIC FOR SECTION 3 (20 SOAL KPK)
