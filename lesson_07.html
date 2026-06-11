@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matematika - Pecahan pada Garis Bilangan</title>
-    <!-- MathJax untuk simbol matematika -->
+    <!-- MathJax untuk simbol matematika (TANPA POLYFILL BERBAHAYA) -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -288,64 +288,88 @@
         .score-box { font-size: 1.5em; font-weight: bold; color: var(--bb-dark-blue); text-align: center; margin: 15px 0; padding: 10px; background: var(--bb-yellow); border-radius: 10px; border: 2px solid var(--bb-dark-blue); display:none; }
 
         .reflection-box textarea { width: 100%; height: 100px; border: 2px solid var(--bb-blue); border-radius: 8px; padding: 10px; font-size: 1em; resize: vertical; }
-        /* Grid 4 Kolom untuk Soal */
-        .grid-4-col {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .grid-4-col .question-box { margin-bottom: 0; font-size: 0.9em; }
-        .grid-4-col .question-box input[type="text"] { width: 80px; font-size: 0.9em; }
         /* ==========================================
-           UI KEREN UNTUK SPIRAL REVIEW (SECTION 1)
+           UI Mewah UNTUK SPIRAL REVIEW (SECTION 1)
            ========================================== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            70% { transform: scale(1.05) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
-        .grid-4-col .question-box {
+        .s1-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .s1-card {
             position: relative;
+            background: linear-gradient(135deg, #ffffff 60%, #f0f8ff 100%);
+            border-radius: 18px;
+            padding: 20px 15px 15px 15px;
+            border: 2px solid var(--bb-blue);
+            box-shadow: 0 4px 15px rgba(0, 90, 158, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
             overflow: hidden;
-            border-left: 5px solid #ccc;
-            opacity: 0; /* Awalnya hilang untuk animasi masuk */
-            animation: fadeInUp 0.5s ease forwards;
-            transition: transform 0.2s, box-shadow 0.2s;
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
         }
-        .grid-4-col .question-box:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 5px 15px rgba(0,90,158,0.15);
-            z-index: 2;
+        .s1-card:hover {
+            transform: translateY(-5px) rotate(-1deg);
+            box-shadow: 0 10px 25px rgba(0, 90, 158, 0.2);
+            border-color: var(--bb-yellow);
         }
-
-        /* Warna Kiri Berdasarkan Kategori */
-        .q-volume { border-left-color: var(--bb-sand); }
-        .q-prima { border-left-color: var(--bb-blue); }
-        .q-pecahan { border-left-color: var(--bb-green); }
-
-        /* Ikon Besar Transparan di Background */
-        .q-icon-bg {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            font-size: 4em;
-            opacity: 0.08;
+        .s1-card .q-icon-main {
+            font-size: 3em;
             color: var(--bb-dark-blue);
-            pointer-events: none;
-            transition: opacity 0.3s;
+            opacity: 0.7;
+            flex-shrink: 0;
+            animation: float 3s ease-in-out infinite;
+            transition: color 0.3s, transform 0.3s;
         }
-        .grid-4-col .question-box:hover .q-icon-bg { opacity: 0.15; }
-
-        /* Efek Shake jika salah */
+        .s1-card:hover .q-icon-main {
+            opacity: 1;
+            transform: scale(1.2) rotate(10deg);
+            color: var(--bb-sand);
+        }
+        .s1-card .q-content { flex: 1; }
+        .s1-card label { font-size: 1.1em; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 8px; }
+        .s1-card input[type="text"] {
+            border: 2px dashed var(--bb-blue) !important;
+            background: #f7fbff !important;
+            font-size: 1.1em !important;
+            font-weight: bold !important;
+            width: 80px !important;
+            text-align: center !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+            transition: all 0.3s !important;
+        }
+        .s1-card input[type="text"]:focus {
+            border-style: solid !important;
+            background: var(--bb-yellow) !important;
+            color: var(--bb-dark-blue) !important;
+            transform: scale(1.1);
+            outline: none;
+        }
         .input-shake {
-            animation: shake 0.4s ease;
+            animation: shake 0.5s ease !important;
             border-color: #d32f2f !important;
+            background-color: #ffebee !important;
         }
+        .s1-card .feedback { font-size: 1em; }
         /* ==========================================
            UI KEREN UNTUK QUEST DUNIA NYATA (SECTION 2)
            ========================================== */
@@ -390,6 +414,410 @@
             border-style: solid;
             background: #fff;
         }
+        /* ==========================================
+           UI PETUALANGAN BIKINI BOTTOM (SECTION 2)
+           ========================================== */
+        @keyframes bubbleFloat {
+            0% { bottom: -20px; transform: translateX(0) scale(1); opacity: 0.8; }
+            50% { transform: translateX(15px) scale(1.1); opacity: 0.5; }
+            100% { bottom: 110%; transform: translateX(-10px) scale(0.8); opacity: 0; }
+        }
+        @keyframes oceanWave {
+            0%, 100% { border-radius: 18px; }
+            50% { border-radius: 22px 14px 22px 14px; }
+        }
+
+        .s2-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .s2-mission-card {
+            position: relative;
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            border: 3px solid #00acc1;
+            border-radius: 18px;
+            padding: 20px 15px 15px 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 172, 193, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .s2-mission-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 172, 193, 0.3);
+            animation: oceanWave 2s ease-in-out infinite;
+        }
+        /* Animasi Gelembung */
+        .s2-mission-card .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: bubbleFloat linear infinite;
+        }
+        .s2-icon-corner {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2.5em;
+            color: #005A9E;
+            opacity: 0.15;
+            transform: rotate(-15deg);
+            transition: all 0.3s;
+        }
+        .s2-mission-card:hover .s2-icon-corner {
+            opacity: 0.4;
+            transform: rotate(0deg) scale(1.2);
+        }
+        .s2-mission-card label {
+            font-size: 1.05em; font-weight: 600; line-height: 1.5; display: block; margin-bottom: 10px; z-index: 2;
+        }
+        .s2-mission-card input[type="text"] {
+            border: 2px dashed #00acc1 !important;
+            background: #e0f7fa !important;
+            font-weight: bold !important;
+            width: 80px !important;
+            font-size: 1.1em !important;
+            text-align: center !important;
+            padding: 8px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s !important;
+        }
+        .s2-mission-card input[type="text"]:focus {
+            border-style: solid !important;
+            background: var(--bb-yellow) !important;
+            color: var(--bb-dark-blue) !important;
+            transform: scale(1.1);
+            outline: none;
+        }
+        /* SVG Interaktif */
+        .ocean-track { background: linear-gradient(180deg, #4dd0e1 0%, #e0f7fa 100%); border: 3px solid #00838f; border-radius: 15px; position: relative; overflow: hidden; }
+        .ocean-track:hover .spongebob-ship { transform: translateX(10px); }
+        .spongebob-ship { transition: transform 0.5s ease; }
+        /* ==========================================
+           UI PABRIK KRABBY PATTY (SECTION 3 - KPK)
+           ========================================== */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes smokeRise {
+            0% { bottom: 10px; opacity: 0.6; transform: translateX(0) scale(1); }
+            100% { bottom: 100%; opacity: 0; transform: translateX(20px) scale(2); }
+        }
+
+        .s3-factory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .s3-machine-card {
+            position: relative;
+            background: linear-gradient(135deg, #fffde7 0%, #ffffff 100%);
+            border: 3px solid var(--bb-sand);
+            border-radius: 18px;
+            padding: 20px 15px 15px 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(244, 164, 96, 0.2);
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .s3-machine-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(244, 164, 96, 0.4);
+        }
+        .s3-gear-icon {
+            font-size: 3.5em;
+            color: var(--bb-sand);
+            flex-shrink: 0;
+            animation: spin 6s linear infinite;
+            transition: color 0.3s, animation-duration 0.3s;
+        }
+        .s3-machine-card:hover .s3-gear-icon {
+            color: var(--bb-dark-blue);
+            animation-duration: 1s; /* Percepat putaran saat hover */
+        }
+        .s3-smoke {
+            position: absolute;
+            width: 15px; height: 15px;
+            background: rgba(200, 200, 200, 0.5);
+            border-radius: 50%;
+            top: 10px; right: 30px;
+            animation: smokeRise 3s ease-out infinite;
+            pointer-events: none;
+        }
+        .s3-machine-card .q-content { flex: 1; }
+        .s3-machine-card label { font-size: 1.1em; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 8px; }
+        .s3-machine-card input[type="text"] {
+            border: 2px dashed var(--bb-sand) !important;
+            background: #fff8e1 !important;
+            font-size: 1.2em !important;
+            font-weight: bold !important;
+            width: 80px !important;
+            text-align: center !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+            transition: all 0.3s !important;
+        }
+        .s3-machine-card input[type="text"]:focus {
+            border-style: solid !important;
+            background: var(--bb-yellow) !important;
+            transform: scale(1.1);
+            outline: none;
+        }
+        /* ==========================================
+           UI LABORATORIUM PLANKTON (SECTION 4)
+           ========================================== */
+        @keyframes potionBubble {
+            0% { bottom: 10px; transform: translateX(0) scale(1); opacity: 0.7; }
+            50% { transform: translateX(10px) scale(1.2); opacity: 0.4; }
+            100% { bottom: 90%; transform: translateX(-10px) scale(0.5); opacity: 0; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 5px #9c27b0, 0 6px 15px rgba(156, 39, 176, 0.2); }
+            50% { box-shadow: 0 0 25px #e040fb, 0 12px 30px rgba(156, 39, 176, 0.5); }
+        }
+
+        .s4-lab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .s4-potion-card {
+            position: relative;
+            background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 100%);
+            border: 3px solid #9c27b0;
+            border-radius: 18px;
+            padding: 20px 15px 15px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(156, 39, 176, 0.2);
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: transform 0.3s ease;
+        }
+        .s4-potion-card:hover {
+            transform: scale(1.05);
+            animation: glowPulse 1.5s infinite;
+        }
+        .s4-potion-card .potion-bubble {
+            position: absolute;
+            background: rgba(156, 39, 176, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: potionBubble ease-in infinite;
+        }
+        .s4-flask-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 4em;
+            opacity: 0.08;
+            color: #4a148c;
+            transition: all 0.3s;
+        }
+        .s4-potion-card:hover .s4-flask-icon {
+            opacity: 0.25;
+            transform: rotate(-25deg) scale(1.1);
+        }
+        .s4-potion-card label { font-size: 1.3em; font-weight: 600; line-height: 1.5; display: block; margin-bottom: 12px; z-index: 2; position: relative; text-align: center; }
+        .s4-potion-card input[type="text"] {
+            border: 2px dashed #9c27b0 !important;
+            background: #f3e5f5 !important;
+            font-size: 1.3em !important;
+            font-weight: bold !important;
+            width: 80px !important;
+            text-align: center !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+            margin: 0 auto;
+            display: block;
+            transition: all 0.3s !important;
+        }
+        .s4-potion-card input[type="text"]:focus {
+            border-style: solid !important;
+            background: #e1bee7 !important;
+            transform: scale(1.2);
+            outline: none;
+        }
+        .s4-potion-card .feedback { text-align: center; position: relative; z-index: 2; }
+        /* ==========================================
+           UI NAVIGASI PATRICK (SECTION 5)
+           ========================================== */
+        @keyframes patrickBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-3deg); }
+            75% { transform: translateY(-5px) rotate(3deg); }
+        }
+        @keyframes floatIsland {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .s5-step-card {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
+            border: 4px solid #8d6e63;
+            border-radius: 15px;
+            padding: 25px 20px;
+            position: relative;
+            box-shadow: 5px 5px 0px #d7ccc8;
+            margin-bottom: 25px;
+        }
+        .s5-step-card::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 2px dashed #a1887f;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+        .s5-step-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        .s5-step-icon {
+            font-size: 2.5em;
+            color: #e65100;
+            animation: patrickBounce 2s ease-in-out infinite;
+        }
+        .s5-step-card input[type="text"] {
+            border: 3px solid #8d6e63 !important;
+            background: #fff8e1 !important;
+            font-weight: bold !important;
+            font-size: 1.2em !important;
+            width: 80px !important;
+            text-align: center !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+        }
+        .s5-step-card input[type="text"]:focus {
+            background: var(--bb-yellow) !important;
+            outline: none;
+        }
+
+        /* Zona Estimasi Pulau */
+        .s5-archipelago {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            background: linear-gradient(180deg, #e0f7fa 0%, #4dd0e1 100%);
+            border-radius: 20px;
+            padding: 30px 20px 10px 20px;
+            border: 3px solid #00838f;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        .island-zone {
+            width: 110px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: floatIsland 4s ease-in-out infinite;
+        }
+        .island-zone:nth-child(2) { animation-delay: 1s; }
+        .island-zone:nth-child(3) { animation-delay: 2s; }
+        
+        .island-zone:hover { transform: scale(1.15) translateY(-10px); }
+        .island-zone.selected .island-land { box-shadow: 0 0 25px #ffeb3b; border: 4px solid #ffeb3b; }
+        
+        .island-land {
+            background: #8bc34a;
+            border: 3px solid #33691e;
+            border-radius: 50% 50% 10% 10%;
+            padding: 15px 10px;
+            transition: all 0.3s;
+        }
+        .island-icon { font-size: 2.5em; color: #5d4037; margin-bottom: 5px; display: block; }
+        .island-label { font-weight: bold; font-size: 1.2em; color: #33691e; display: block; }
+        /* ==========================================
+           UI KARATE SANDY (SECTION 6)
+           ========================================== */
+        @keyframes karateChop {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(15deg) scale(1.1); }
+        }
+
+        .s6-dojo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .s6-wood-card {
+            position: relative;
+            background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+            border: 3px solid var(--bb-green);
+            border-radius: 15px;
+            padding: 20px 15px 15px 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(27, 94, 32, 0.15);
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+        }
+        .s6-wood-card::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 2px;
+            background: rgba(139, 69, 19, 0.1);
+            pointer-events: none;
+        }
+        .s6-wood-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(27, 94, 32, 0.3);
+            border-color: #8bc34a;
+        }
+        .s6-chop-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 3em;
+            color: #1b5e20;
+            opacity: 0.1;
+            transition: all 0.3s;
+        }
+        .s6-wood-card:hover .s6-chop-icon {
+            opacity: 0.4;
+            animation: karateChop 0.6s ease-in-out;
+        }
+        .s6-wood-card label { font-size: 1.1em; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 10px; z-index: 2; }
+        .s6-wood-card input[type="text"], .s6-wood-card select {
+            border: 2px dashed #4caf50 !important;
+            background: #e8f5e9 !important;
+            font-weight: bold !important;
+            font-size: 1.1em !important;
+            padding: 8px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s !important;
+            width: auto !important;
+            min-width: 100px;
+        }
+        .s6-wood-card input[type="text"]:focus, .s6-wood-card select:focus {
+            border-style: solid !important;
+            background: #c8e6c9 !important;
+            transform: scale(1.05);
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -425,63 +853,96 @@
                 </div>
 
                 <div class="visual-box">
-                    <!-- Visualisasi SVG Sederhana Kubus & Balok -->
-                    <svg width="200" height="150" viewBox="0 0 200 150">
-                        <!-- Kubus -->
-                        <rect x="20" y="50" width="50" height="50" fill="#FFE135" stroke="#005A9E" stroke-width="2"/>
-                        <polygon points="20,50 40,30 90,30 70,50" fill="#FFF176" stroke="#005A9E" stroke-width="2"/>
-                        <polygon points="70,50 90,30 90,80 70,100" fill="#FBC02D" stroke="#005A9E" stroke-width="2"/>
-                        <text x="35" y="80" font-size="10">5cm</text>
-                        
-                        <!-- Balok -->
-                        <rect x="110" y="60" width="60" height="30" fill="#87CEEB" stroke="#005A9E" stroke-width="2"/>
-                        <polygon points="110,60 130,40 190,40 170,60" fill="#B3E5FC" stroke="#005A9E" stroke-width="2"/>
-                        <polygon points="170,60 190,40 190,70 170,90" fill="#0288D1" stroke="#005A9E" stroke-width="2"/>
-                        <text x="120" y="78" font-size="8">10x5x2</text>
+                    <svg width="150" height="180" viewBox="0 0 150 180">
+                        <!-- Nanas Spongebob -->
+                        <path d="M50,80 L100,80 L110,160 L40,160 Z" fill="#FFD54F" stroke="#F57F17" stroke-width="3"/>
+                        <path d="M40,160 L110,160 L105,175 L45,175 Z" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>
+                        <line x1="75" y1="80" x2="75" y2="160" stroke="#F57F17" stroke-width="2" stroke-dasharray="5,5"/>
+                        <!-- Daun Nanas -->
+                        <path d="M75,80 Q65,30 75,10 Q85,30 75,80 Z" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/>
+                        <path d="M75,50 Q50,20 40,30 Q60,40 75,50 Z" fill="#66BB6A" stroke="#2E7D32" stroke-width="1"/>
+                        <path d="M75,50 Q100,20 110,30 Q90,40 75,50 Z" fill="#66BB6A" stroke="#2E7D32" stroke-width="1"/>
+                        <!-- Mata -->
+                        <circle cx="60" cy="105" r="8" fill="white" stroke="#333" stroke-width="2"/>
+                        <circle cx="65" cy="105" r="4" fill="#2196F3"/>
+                        <circle cx="90" cy="105" r="8" fill="white" stroke="#333" stroke-width="2"/>
+                        <circle cx="85" cy="105" r="4" fill="#2196F3"/>
+                        <!-- Hidung -->
+                        <ellipse cx="75" cy="118" rx="4" ry="5" fill="#FFB74D" stroke="#E65100" stroke-width="1"/>
+                        <!-- Senyum -->
+                        <path d="M60,130 Q75,145 90,130" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Lubang Nanas -->
+                        <ellipse cx="55" cy="140" rx="3" ry="2" fill="#F57F17" opacity="0.6"/>
+                        <ellipse cx="95" cy="135" rx="2" ry="3" fill="#F57F17" opacity="0.6"/>
                     </svg>
-                    <p style="font-size:0.9em; margin:0;"><i>Visualisasi Bangun Ruang</i></p>
+                    <p style="font-size:0.9em; margin:10px 0 0 0; font-weight:bold;"><i class="fas fa-lightbulb" style="color:var(--bb-sand)"></i> Siap menghidupkan sel-sel otakmu?</p>
                 </div>
 
                 <div class="game-area" id="game1">
-                    <h4><i class="fas fa-gamepad"></i> Misi Pancaran Otak (20 Soal)</h4>
-                    <div class="grid-4-col" id="gridS1"></div>
+                    <h4><i class="fas fa-gamepad"></i> Misi Pancaran Otak (10 Soal)</h4>
+                    <div class="s1-grid" id="gridS1"></div>
                     <button class="btn-check" onclick="checkS1()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
                     <button class="btn-reset" onclick="resetS1()"><i class="fas fa-redo"></i> Reset</button>
                 </div>
             </div>
 
             <!-- SECTION 2: INTRODUCTION -->
-                <div class="section" id="section2">
-                    <div class="section-header">
-                        <h3 class="section-title"><i class="fas fa-running"></i> 2. Introduction & Real-World</h3>
-                        <span class="timer"><i class="far fa-clock"></i> 00:05 - 00:08</span>
-                    </div>
-                    <div class="theory">
-                        <p>Bayangkan kamu sedang merancang rute lari maraton sejauh 1 km. Kamu ingin menaruh pos air setiap \( \frac{1}{3} \) km, tapi sponsor ingin ada bendera setiap \( \frac{1}{2} \) km. Nah, bagaimana cara kita tahu posisi mereka di lintasan yang sama? Itulah gunanya <b>garis bilangan pecahan</b>!</p>
-                    </div>
-                    <div class="visual-box">
-                        <h4><i class="fas fa-road"></i> Lintasan Maraton 1 km</h4>
-                        <div style="position:relative; height:100px; background:#87CEEB; border-radius:10px; border-bottom:5px solid #F4A460;">
-                            <!-- SVG Lintasan -->
-                            <svg width="100%" height="100%">
-                                <line x1="5%" y1="70%" x2="95%" y2="70%" stroke="#333" stroke-width="3"/>
-                                <!-- Ikon Posis 1/2 -->
-                                <circle cx="50%" cy="70%" r="8" fill="#FF6347" onclick="alert('Ini posisi 1/2 km!')" style="cursor:pointer"/>
-                                <text x="50%" y="90%" text-anchor="middle" font-size="12" fill="#333">1/2 km</text>
-                                <!-- Ikon Posis 1/3 -->
-                                <rect x="30%" y="60%" width="10" height="20" fill="#3CB371" onclick="alert('Ini posisi 1/3 km!')" style="cursor:pointer"/>
-                                <text x="33%" y="55%" text-anchor="middle" font-size="12" fill="#333">1/3 km</text>
-                            </svg>
-                        </div>
-                        <p style="font-size:0.9em"><i>Klik ikon bendera (merah) dan pohon (hijau) untuk melihat posisinya!</i></p>
-                    </div>
-                    <div class="game-area" id="game2">
-                        <h4><i class="fas fa-gamepad"></i> Quest Dunia Nyata (10 Soal)</h4>
-                        <div id="gridS2"></div>
-                        <button class="btn-check" onclick="checkS2()"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
-                        <button class="btn-reset" onclick="resetS2()"><i class="fas fa-redo"></i> Reset</button>
-                    </div>
+            <div class="section" id="section2">
+                <div class="section-header">
+                    <h3 class="section-title"><i class="fas fa-running"></i> 2. Introduction & Real-World</h3>
+                    <span class="timer"><i class="far fa-clock"></i> 00:05 - 00:08</span>
                 </div>
+                <div class="theory">
+                    <p>Bayangkan kamu sedang mengikuti <b>Maraton Menangkap Ubur-ubur</b> di Bikini Bottom sejauh 1 km! Kamu ingin menaruh jaring di setiap \( \frac{1}{3} \) km, tapi Sandy ingin menaruh Krabby Patty di setiap \( \frac{1}{2} \) km. Nah, bagaimana cara kita tahu posisi mereka di lintasan yang sama? Itulah gunanya <b>garis bilangan pecahan</b>!</p>
+                </div>
+                
+                <div class="visual-box ocean-track" style="padding:0; border:none;">
+                    <h4 style="background:#00838f; color:white; margin:0; padding:10px;"><i class="fas fa-water"></i> Lintasan Ubur-ubur 1 km</h4>
+                    <div style="position:relative; height:120px; padding: 20px;">
+                        <svg width="100%" height="100%" viewBox="0 0 800 120">
+                            <!-- Lintasan Jalan -->
+                            <path d="M 50 90 L 750 90" stroke="#d32f2f" stroke-width="4" stroke-dasharray="20,10" fill="none"/>
+                            <text x="40" y="95" font-size="14" fill="#333" font-weight="bold">0</text>
+                            <text x="745" y="95" font-size="14" fill="#333" font-weight="bold">1 km</text>
+                            
+                            <!-- Kapal Spongebob (Start) -->
+                            <g class="spongebob-ship" transform="translate(40, 30)">
+                                <rect x="0" y="20" width="40" height="20" fill="#FFEB3B" stroke="#F57F17" stroke-width="2" rx="3"/>
+                                <rect x="10" y="10" width="20" height="15" fill="#81D4FA" stroke="#0288D1" stroke-width="2"/>
+                                <circle cx="20" cy="17" r="3" fill="#FFEB3B"/>
+                                <path d="M 20 10 L 20 -10 L 40 0 Z" fill="#F44336"/>
+                            </g>
+
+                            <!-- Pos 1/3 (Ubur-ubur) -->
+                            <g transform="translate(250, 20)" style="cursor:pointer" onclick="alert('Ini posisi 1/3 km!')">
+                                <path d="M 15 20 Q 5 5 15 -10 Q 25 5 15 20 Z" fill="#E040FB" stroke="#7B1FA2" stroke-width="2"/>
+                                <line x1="10" y1="-5" x2="5" y2="-10" stroke="#7B1FA2" stroke-width="2"/>
+                                <line x1="20" y1="0" x2="25" y2="-5" stroke="#7B1FA2" stroke-width="2"/>
+                                <circle cx="12" cy="8" r="2" fill="white"/>
+                                <circle cx="18" cy="8" r="2" fill="white"/>
+                                <text x="5" y="40" font-size="14" fill="#4A148C" font-weight="bold">1/3 km</text>
+                            </g>
+
+                            <!-- Pos 1/2 (Krabby Patty) -->
+                            <g transform="translate(390, 30)" style="cursor:pointer" onclick="alert('Ini posisi 1/2 km!')">
+                                <ellipse cx="20" cy="15" rx="20" ry="10" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>
+                                <ellipse cx="20" cy="10" rx="18" ry="6" fill="#4CAF50"/>
+                                <ellipse cx="20" cy="8" rx="18" ry="4" fill="#F44336"/>
+                                <ellipse cx="20" cy="5" rx="15" ry="5" fill="#FFEB3B" stroke="#FBC02D" stroke-width="1"/>
+                                <text x="5" y="40" font-size="14" fill="#BF360C" font-weight="bold">1/2 km</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <p style="font-size:0.9em; margin:0; padding:10px; background:rgba(255,255,255,0.7);"><i class="fas fa-hand-pointer"></i> <i>Klik Ubur-ubur & Krabby Patty untuk melihat posisinya!</i></p>
+                </div>
+
+                <div class="game-area" id="game2" style="background: #e0f7fa; border-color: #00acc1; margin-top: 20px;">
+                    <h4><i class="fas fa-compass"></i> Quest Laut Dalam (10 Soal)</h4>
+                    <div class="s2-grid" id="gridS2"></div>
+                    <button class="btn-check" onclick="checkS2()" style="background-color: #00838f;"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+                    <button class="btn-reset" onclick="resetS2()"><i class="fas fa-redo"></i> Reset</button>
+                </div>
+            </div>
     
                 <!-- SECTION 3: REVIEW PRIOR KNOWLEDGE -->
                 <div class="section" id="section3">
@@ -494,9 +955,9 @@
                     </div>
                     
                     <div class="game-area" id="game3">
-                        <h4><i class="fas fa-puzzle-piece"></i> Tebak KPK (20 Soal)</h4>
-                        <div class="grid-4-col" id="gridS3"></div>
-                        <button class="btn-check" onclick="checkS3()"><i class="fas fa-check"></i> Cek</button>
+                        <h4><i class="fas fa-industry"></i> Mesin Pabrik KPK (10 Soal)</h4>
+                        <div class="s3-factory-grid" id="gridS3"></div>
+                        <button class="btn-check" onclick="checkS3()" style="background-color: #e65100;"><i class="fas fa-check"></i> Cek Mesin</button>
                         <button class="btn-reset" onclick="resetS3()"><i class="fas fa-redo"></i> Reset</button>
                     </div>
                 </div>
@@ -510,20 +971,37 @@
                     <div class="theory">
                         <p>Pecahan \( \frac{1}{2} \) dan \( \frac{2}{3} \) tidak bisa langsung diletakkan pada satu garis karena "ukuran potongan" (penyebutnya) berbeda. Langkah pertama: Ubah ke penyebut yang sama menggunakan KPK. KPK 2 dan 3 adalah 6. Maka \( \frac{1}{2} = \frac{3}{6} \), dan \( \frac{2}{3} = \frac{4}{6} \). Sekarang, mudah menaruhnya di garis bilangan yang dibagi 6 bagian!</p>
                     </div>
-                    
-                    <div class="visual-box">
-                        <h4>Tabel Konversi Pecahan</h4>
-                        <table class="kpk-table">
-                            <tr><th>Pecahan Asli</th><th>Dikalikan</th><th>Penyebut Sama (KPK=6)</th></tr>
-                            <tr><td>\( \frac{1}{2} \)</td><td>\( \times 3 \)</td><td>\( \frac{3}{6} \)</td></tr>
-                            <tr><td>\( \frac{2}{3} \)</td><td>\( \times 2 \)</td><td>\( \frac{4}{6} \)</td></tr>
-                        </table>
+                    <div class="visual-box" style="background: linear-gradient(180deg, #e1bee7 0%, #ffffff 100%); border-color: #9c27b0;">
+                        <h4 style="color: #4a148c;"><i class="fas fa-flask"></i> Laboratorium Plankton</h4>
+                        <svg width="250" height="180" viewBox="0 0 250 180" style="max-width:100%;">
+                            <!-- Plankton Body -->
+                            <ellipse cx="125" cy="130" rx="30" ry="40" fill="#8BC34A" stroke="#33691E" stroke-width="3"/>
+                            <!-- Eye -->
+                            <circle cx="125" cy="110" r="15" fill="white" stroke="#33691E" stroke-width="2"/>
+                            <circle cx="127" cy="110" r="8" fill="#F44336"/>
+                            <circle cx="129" cy="108" r="3" fill="white"/>
+                            <!-- Eyestalk -->
+                            <line x1="125" y1="95" x2="125" y2="80" stroke="#33691E" stroke-width="4"/>
+                            <!-- Arms -->
+                            <path d="M95 130 Q75 120 70 140" fill="none" stroke="#33691E" stroke-width="3"/>
+                            <path d="M155 130 Q175 120 180 140" fill="none" stroke="#33691E" stroke-width="3"/>
+                            <!-- Magnifying Glass -->
+                            <g transform="translate(160, 50) rotate(20)">
+                                <circle cx="0" cy="0" r="30" fill="rgba(255,255,255,0.4)" stroke="#FF9800" stroke-width="5"/>
+                                <line x1="22" y1="22" x2="45" y2="45" stroke="#795548" stroke-width="8" stroke-linecap="round"/>
+                                <!-- Fractions inside magnifying glass -->
+                                <text x="-15" y="5" font-size="14" fill="#9C27B0" font-weight="bold">1/2</text>
+                                <text x="5" y="5" font-size="14" fill="#333">=</text>
+                                <text x="15" y="5" font-size="14" fill="#4CAF50" font-weight="bold">3/6</text>
+                            </g>
+                        </svg>
+                        <p style="font-size:0.9em; margin:10px 0 0 0; color:#4a148c; font-weight:bold;"><i class="fas fa-microscope"></i> Plankton menyamakan penyebut untuk memecahkan kode rahasia!</p>
                     </div>
-    
-                    <div class="game-area" id="game4">
-                        <h4><i class="fas fa-gamepad"></i> Penyebut Berbeda (20 Soal)</h4>
-                        <div id="gridS4"></div>
-                        <button class="btn-check" onclick="checkS4()"><i class="fas fa-check"></i> Cek</button>
+        
+                    <div class="game-area" id="game4" style="background: #f3e5f5; border-color: #9c27b0; margin-top: 20px;">
+                        <h4><i class="fas fa-vial"></i> Eksperimen Penyebut (10 Soal)</h4>
+                        <div class="s4-lab-grid" id="gridS4"></div>
+                        <button class="btn-check" onclick="checkS4()" style="background-color: #7b1fa2;"><i class="fas fa-check"></i> Cek Eksperimen</button>
                         <button class="btn-reset" onclick="resetS4()"><i class="fas fa-redo"></i> Reset</button>
                     </div>
                 </div>
@@ -540,33 +1018,109 @@
                     </div>
                     
                     <div class="game-area" id="game5">
-                        <h4><i class="fas fa-bullseye"></i> Game Estimasi: Di mana posisinya?</h4>
-                        <p>Klik zona (0, 1/2, atau 1) yang paling dekat dengan pecahan berikut:</p>
+                        <div class="theory">
+                            <p>Mari kita bantu Patrick menemukan jalan! Dia ingin meletakkan kerang di titik \\( \\frac{1}{4} \\) dan \\( \\frac{3}{5} \\). Karena penyebutnya berbeda, Patrick bingung. Kita harus samakan penyebutnya menggunakan KPK!</p>
+                            <p>Selain menghitung, Patrick juga harus berlatih <b>estimasi</b>. Jika dia melihat kerang di \\( \\frac{6}{17} \\), dia harus menebak kira-kira dekat dengan pulau mana?</p>
+                        </div>
                         
-                        <div class="question-box">
-                            <label>1. Pecahan \( \frac{7}{15} \) lebih dekat ke mana?</label>
-                            <div class="zone-container" id="zones1">
-                                <div class="zone" onclick="selectZone(this, 'zones1', 0)">0</div>
-                                <div class="zone" onclick="selectZone(this, 'zones1', 1)">1/2</div>
-                                <div class="zone" onclick="selectZone(this, 'zones1', 2)">1</div>
-                            </div>
-                            <input type="hidden" id="zoneVal1" value="">
-                            <div class="feedback" id="fbz1"></div>
+                        <div class="visual-box" style="background: #fff3e0; border-color: #8d6e63;">
+                            <svg width="150" height="180" viewBox="0 0 150 180" style="max-width:100%;">
+                                <!-- Patrick Star -->
+                                <path d="M75,30 Q95,10 110,30 Q120,50 110,70 Q130,80 110,100 Q100,120 75,110 Q50,120 40,100 Q20,80 40,70 Q30,50 40,30 Q55,10 75,30 Z" fill="#FF8A80" stroke="#D32F2F" stroke-width="3"/>
+                                <!-- Pants -->
+                                <path d="M40,85 L110,85 L105,110 Q75,120 45,110 Z" fill="#7C4DFF" stroke="#512DA8" stroke-width="2"/>
+                                <!-- Eyes -->
+                                <circle cx="60" cy="55" r="10" fill="white" stroke="#333" stroke-width="2"/>
+                                <circle cx="90" cy="55" r="10" fill="white" stroke="#333" stroke-width="2"/>
+                                <circle cx="62" cy="57" r="4" fill="#333"/>
+                                <circle cx="88" cy="57" r="4" fill="#333"/>
+                                <!-- Eyebrows -->
+                                <path d="M48 45 Q60 38 70 45" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M80 45 Q90 38 102 45" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Mouth -->
+                                <path d="M60 75 Q75 90 90 75" fill="#D32F2F" stroke="#333" stroke-width="2"/>
+                                <!-- Compass in Hand -->
+                                <g transform="translate(100, 95) rotate(15)">
+                                    <circle cx="0" cy="0" r="12" fill="#FFEB3B" stroke="#333" stroke-width="2"/>
+                                    <polygon points="0,-8 3,0 0,8 -3,0" fill="#F44336"/>
+                                    <polygon points="0,-8 3,0 0,8 -3,0" fill="#2196F3" transform="rotate(180)"/>
+                                </g>
+                            </svg>
+                            <p style="font-size:0.9em; margin:10px 0 0 0; color:#5d4037; font-weight:bold;"><i class="fas fa-compass"></i> Patrick butuh petunjuk arah!</p>
                         </div>
-    
-                        <div class="question-box">
-                            <label>2. Pecahan \( \frac{9}{10} \) lebih dekat ke mana?</label>
-                            <div class="zone-container" id="zones2">
-                                <div class="zone" onclick="selectZone(this, 'zones2', 0)">0</div>
-                                <div class="zone" onclick="selectZone(this, 'zones2', 1)">1/2</div>
-                                <div class="zone" onclick="selectZone(this, 'zones2', 2)">1</div>
+        
+                        <div class="game-area" id="game5" style="background: #fff8e1; border-color: #8d6e63; margin-top: 20px;">
+                            <h4><i class="fas fa-map-signs"></i> Peta Navigasi Patrick</h4>
+                            
+                            <!-- STEP 1: KPK & Conversion -->
+                            <div class="s5-step-card">
+                                <div class="s5-step-row">
+                                    <div class="s5-step-icon"><i class="fas fa-shoe-prints"></i></div>
+                                    <div>
+                                        <label><b>Langkah 1:</b> Berapa KPK dari 4 dan 5?</label><br>
+                                        <input type="text" id="step_kpk" placeholder="KPK...">
+                                        <div class="feedback" id="fb_step_kpk"></div>
+                                    </div>
+                                </div>
+                                <div class="s5-step-row">
+                                    <div class="s5-step-icon"><i class="fas fa-sync-alt"></i></div>
+                                    <div>
+                                        <label><b>Langkah 2:</b> Ubah \\( \frac{1}{4} = \frac{\boxed{?}}{20} \\)</label><br>
+                                        <input type="text" id="step_conv1" placeholder="Pembilang">
+                                        <div class="feedback" id="fb_step_conv1"></div>
+                                    </div>
+                                </div>
+                                <div class="s5-step-row">
+                                    <div class="s5-step-icon"><i class="fas fa-sync-alt"></i></div>
+                                    <div>
+                                        <label><b>Langkah 3:</b> Ubah \\( \frac{3}{5} = \frac{\boxed{?}}{20} \\)</label><br>
+                                        <input type="text" id="step_conv2" placeholder="Pembilang">
+                                        <div class="feedback" id="fb_step_conv2"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <input type="hidden" id="zoneVal2" value="">
-                            <div class="feedback" id="fbz2"></div>
+        
+                            <!-- STEP 2: Estimation Archipelago -->
+                            <h4 style="margin-top:30px;"><i class="fas fa-island-tropical"></i> Game Estimasi: Patrick mendarat di pulau mana?</h4>
+                            <p>Klik pulau (0, 1/2, atau 1) yang paling dekat dengan pecahan ini:</p>
+                            
+                            <div class="question-box" style="background: transparent; border: none; box-shadow: none;">
+                                <label style="font-size: 1.2em; color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">1. Pecahan \\( \frac{7}{15} \\) lebih dekat ke pulau mana?</label>
+                                <div class="s5-archipelago" id="island_zones1">
+                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 0)">
+                                        <div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div>
+                                    </div>
+                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 1)">
+                                        <div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div>
+                                    </div>
+                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 2)">
+                                        <div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="islandVal1" value="">
+                                <div class="feedback" id="fb_island1" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center;"></div>
+                            </div>
+        
+                            <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-top: 20px;">
+                                <label style="font-size: 1.2em; color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">2. Pecahan \\( \frac{9}{10} \\) lebih dekat ke pulau mana?</label>
+                                <div class="s5-archipelago" id="island_zones2">
+                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 0)">
+                                        <div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div>
+                                    </div>
+                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 1)">
+                                        <div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div>
+                                    </div>
+                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 2)">
+                                        <div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="islandVal2" value="">
+                                <div class="feedback" id="fb_island2" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center;"></div>
+                            </div>
+        
+                            <button class="btn-check" onclick="checkS5()" style="background-color: #e65100;"><i class="fas fa-check"></i> Cek Navigasi</button>
+                            <button class="btn-reset" onclick="resetS5()"><i class="fas fa-redo"></i> Reset</button>
                         </div>
-    
-                        <button class="btn-check" onclick="checkS5()"><i class="fas fa-check"></i> Cek</button>
-                        <button class="btn-reset" onclick="resetS5()"><i class="fas fa-redo"></i> Reset</button>
                     </div>
                 </div>
     
@@ -581,28 +1135,43 @@
                     </div>
     
                     <div class="game-area" id="game6">
-                        <div class="question-box">
-                            <label>1. Berapa KPK dari 3 dan 4?</label><br>
-                            <input type="text" id="ind1" placeholder="KPK...">
-                            <div class="feedback" id="fbi1"></div>
+                        <div class="theory">
+                            <p>Sekarang waktunya ujian kekuatan! Sandy siap memecahkan papan karate, tapi dia butuh jawaban yang tepat. Coba hitung sendiri jarak dan estimasi pecahan berikut. Gunakan KPK untuk menyamakan penyebutnya!</p>
                         </div>
-                        <div class="question-box">
-                            <label>2. Berapa selisih (jarak) antara \( \frac{3}{4} \) dan \( \frac{2}{3} \)? (Tulis dalam bentuk pecahan, misal 1/12)</label><br>
-                            <input type="text" id="ind2" placeholder="Jarak...">
-                            <div class="feedback" id="fbi2"></div>
+        
+                        <div class="visual-box" style="background: #e8f5e9; border-color: var(--bb-green);">
+                            <svg width="200" height="180" viewBox="0 0 200 180" style="max-width:100%;">
+                                <!-- Sandy Cheeks Karate -->
+                                <!-- Helmet -->
+                                <ellipse cx="100" cy="90" rx="40" ry="45" fill="none" stroke="#FFEB3B" stroke-width="4"/>
+                                <path d="M60 90 Q60 40 100 40 Q140 40 140 90" fill="rgba(255,255,255,0.2)" stroke="#FFEB3B" stroke-width="3"/>
+                                <!-- Face -->
+                                <circle cx="100" cy="110" r="35" fill="#F4A460"/>
+                                <!-- Eyes -->
+                                <circle cx="85" cy="105" r="8" fill="white" stroke="#333" stroke-width="2"/>
+                                <circle cx="87" cy="106" r="4" fill="#2196F3"/>
+                                <circle cx="115" cy="105" r="8" fill="white" stroke="#333" stroke-width="2"/>
+                                <circle cx="113" cy="106" r="4" fill="#2196F3"/>
+                                <!-- Karate Headband -->
+                                <path d="M65 95 L135 95 L130 85 L70 85 Z" fill="#F44336"/>
+                                <path d="M130 90 Q150 80 160 95 Q150 110 130 100" fill="#F44336"/>
+                                <!-- Mouth -->
+                                <path d="M85 125 Q100 140 115 125" fill="none" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Karate Suit -->
+                                <path d="M65 145 L135 145 L140 180 L60 180 Z" fill="#8BC34A" stroke="#33691E" stroke-width="2"/>
+                                <path d="M90 145 L100 180 L110 145" fill="#33691E"/>
+                                <!-- Belt -->
+                                <rect x="65" y="150" width="70" height="8" fill="#212121"/>
+                            </svg>
+                            <p style="font-size:0.9em; margin:10px 0 0 0; color:#1b5e20; font-weight:bold;"><i class="fas fa-hand-fist"></i> Hiyaa! Siap mengerjakan misi sendiri?</p>
                         </div>
-                        <div class="question-box">
-                            <label>3. Estimasi posisi \( \frac{12}{25} \), apakah lebih dekat ke 0, 1/2, atau 1?</label><br>
-                            <select id="ind3" style="padding:5px; font-size:1em;">
-                                <option value="">-- Pilih --</option>
-                                <option value="0">Dekat ke 0</option>
-                                <option value="1/2">Dekat ke 1/2</option>
-                                <option value="1">Dekat ke 1</option>
-                            </select>
-                            <div class="feedback" id="fbi3"></div>
+            
+                        <div class="game-area" id="game6" style="background: #e8f5e9; border-color: var(--bb-green); margin-top: 20px;">
+                            <h4><i class="fas fa-hand-fist"></i> Latihan Karate Mandiri (10 Soal)</h4>
+                            <div class="s6-dojo-grid" id="gridS6"></div>
+                            <button class="btn-check" onclick="checkS6()" style="background-color: #2e7d32;"><i class="fas fa-check"></i> Cek Pukulan</button>
+                            <button class="btn-reset" onclick="resetS6()"><i class="fas fa-redo"></i> Reset</button>
                         </div>
-                        <button class="btn-check" onclick="checkS6()"><i class="fas fa-check"></i> Cek</button>
-                        <button class="btn-reset" onclick="resetS6()"><i class="fas fa-redo"></i> Reset</button>
                     </div>
                 </div>
             <!-- SECTION 7: ASSESSMENT -->
@@ -978,49 +1547,36 @@
         }
 
         // ==========================================
-        // LOGIC FOR SECTION 1 (20 SOAL UI KEREN)
+        // LOGIC FOR SECTION 1 (10 SOAL UI MEWAH)
         // ==========================================
         const s1Data = [
-            // Volume (Kuning/Sand)
-            {cat:"volume", q:"Vol Kubus \\( s = 3 \\) \\( cm^3 \\)", ans:"27"}, 
-            {cat:"volume", q:"Vol Kubus \\( s = 4 \\) \\( cm^3 \\)", ans:"64"}, 
-            {cat:"volume", q:"Vol Kubus \\( s = 6 \\) \\( cm^3 \\)", ans:"216"}, 
-            {cat:"volume", q:"Vol Kubus \\( s = 10 \\) \\( cm^3 \\)", ans:"1000"},
-            {cat:"volume", q:"Vol Balok \\( 2 \\times 3 \\times 4 \\)", ans:"24"}, 
-            {cat:"volume", q:"Vol Balok \\( 5 \\times 2 \\times 3 \\)", ans:"30"}, 
-            {cat:"volume", q:"Vol Balok \\( 10 \\times 2 \\times 2 \\)", ans:"40"}, 
-            {cat:"volume", q:"Vol Balok \\( 4 \\times 4 \\times 4 \\)", ans:"64"},
-            // Prima (Biru)
-            {cat:"prima", q:"Bil. Prima antara 10-20 (#1)", ans:"11"}, 
-            {cat:"prima", q:"Bil. Prima antara 10-20 (#2)", ans:"13"}, 
-            {cat:"prima", q:"Bil. Prima antara 10-20 (#3)", ans:"17"}, 
-            {cat:"prima", q:"Bil. Prima antara 10-20 (#4)", ans:"19"},
-            {cat:"prima", q:"Bil. Prima antara 30-40 (#1)", ans:"31"}, 
-            {cat:"prima", q:"Bil. Prima antara 30-40 (#2)", ans:"37"}, 
-            {cat:"prima", q:"Bil. Prima antara 40-50 (#1)", ans:"41"}, 
-            {cat:"prima", q:"Bil. Prima antara 40-50 (#2)", ans:"43"},
-            // Pecahan (Hijau)
-            {cat:"pecahan", q:"\\( \\frac{1}{2} + \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"3"}, 
-            {cat:"pecahan", q:"\\( \\frac{3}{4} - \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"2"}, 
-            {cat:"pecahan", q:"\\( \\frac{2}{5} + \\frac{1}{5} = \\frac{\\boxed{?}}{5} \\)", ans:"3"}, 
-            {cat:"pecahan", q:"\\( \\frac{5}{6} - \\frac{2}{6} = \\frac{\\boxed{?}}{6} \\)", ans:"3"}
+            {cat:"volume", icon:"fa-cube", q:"Vol Kubus \\( s = 4 \\) \\( cm^3 \\)", ans:"64"}, 
+            {cat:"volume", icon:"fa-box-open", q:"Vol Balok \\( 5 \\times 2 \\times 3 \\)", ans:"30"},
+            {cat:"volume", icon:"fa-cube", q:"Vol Kubus \\( s = 10 \\) \\( cm^3 \\)", ans:"1000"},
+            {cat:"prima", icon:"fa-star", q:"Sebutkan bilangan prima antara 10 dan 20 (#1)", ans:"11"}, 
+            {cat:"prima", icon:"fa-star", q:"Sebutkan bilangan prima antara 10 dan 20 (#2)", ans:"13"},
+            {cat:"prima", icon:"fa-star", q:"Sebutkan bilangan prima antara 30 dan 40", ans:"31"}, 
+            {cat:"pecahan", icon:"fa-pie-chart", q:"\\( \\frac{1}{2} + \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"3"}, 
+            {cat:"pecahan", icon:"fa-pie-chart", q:"\\( \\frac{3}{4} - \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"2"}, 
+            {cat:"pecahan", icon:"fa-pizza-slice", q:"\\( \\frac{2}{5} + \\frac{1}{5} = \\frac{\\boxed{?}}{5} \\)", ans:"3"}, 
+            {cat:"pecahan", icon:"fa-pizza-slice", q:"\\( \\frac{5}{6} - \\frac{2}{6} = \\frac{\\boxed{?}}{6} \\)", ans:"3"}
         ];
-
-        const catIcons = { volume: 'fa-cube', prima: 'fa-star', pecahan: 'fa-divide' };
 
         function renderS1() {
             let h = ''; 
             s1Data.forEach((item, i) => { 
-                h += `<div class="question-box q-${item.cat}" style="animation-delay: ${i * 0.05}s">
-                        <div class="q-icon-bg"><i class="fas ${catIcons[item.cat]}"></i></div>
-                        <label>${item.q}</label>
-                        <input type="text" id="s1q${i}" placeholder="Jawab" autocomplete="off">
-                        <div class="feedback" id="fbs1q${i}"></div>
+                h += `<div class="s1-card" style="animation-delay: ${i * 0.1}s">
+                        <div class="q-icon-main"><i class="fas ${item.icon}"></i></div>
+                        <div class="q-content">
+                            <label>${item.q}</label>
+                            <input type="text" id="s1q${i}" placeholder="?" autocomplete="off">
+                            <div class="feedback" id="fbs1q${i}"></div>
+                        </div>
                       </div>`; 
             });
             document.getElementById('gridS1').innerHTML = h; 
             
-            // Render ulang MathJax agar simbol pecahan & pangkat muncul
+            // Render ulang MathJax
             if(window.MathJax) MathJax.typesetPromise();
         } 
         renderS1();
@@ -1031,20 +1587,17 @@
                 let fb = document.getElementById(`fbs1q${i}`);
                 let inputEl = document.getElementById(`s1q${i}`);
                 
-                // Hapus animasi shake sebelumnya
                 inputEl.classList.remove('input-shake');
+                void inputEl.offsetWidth; 
 
                 if(val === item.ans) { 
-                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Keren!"; 
                     fb.className = "feedback correct"; 
                     inputEl.style.borderColor = "var(--bb-green)";
+                    inputEl.style.background = "#e8f5e9";
                 } else { 
                     fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
                     fb.className = "feedback incorrect";
-                    inputEl.style.borderColor = "#d32f2f";
-                    
-                    // Trigger animasi shake
-                    void inputEl.offsetWidth; 
                     inputEl.classList.add('input-shake');
                 }
             });
@@ -1055,40 +1608,51 @@
                 let inputEl = document.getElementById(`s1q${i}`);
                 inputEl.value = ""; 
                 inputEl.style.borderColor = "var(--bb-blue)";
+                inputEl.style.background = "#f7fbff";
                 inputEl.classList.remove('input-shake');
                 document.getElementById(`fbs1q${i}`).innerHTML = ""; 
             }); 
         }
 
         // ==========================================
-        // LOGIC FOR SECTION 2 (10 SOAL DUNIA NYATA - PECAHAN & ESTIMASI)
+        // LOGIC FOR SECTION 2 (QUEST LAUT DALAM)
         // ==========================================
         const s2Data = [
-            {q:"Lari maraton 1 km. Pos air setiap \\( \\frac{1}{4} \\) km. Posisi pos ke-2 ada di titik \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"2"}, 
-            {q:"Bendera di \\( \\frac{1}{2} \\) km, pos air di \\( \\frac{1}{3} \\) km. Posisi yang lebih dekat ke start (0) adalah \\( \\frac{\\boxed{?}}{3} \\) km.", ans:"1"},
-            {q:"Jarak dari pos \\( \\frac{1}{3} \\) km ke \\( \\frac{1}{2} \\) km (KPK=6) adalah \\( \\frac{\\boxed{?}}{6} \\) km.", ans:"1"}, 
-            {q:"Tali sepanjang 1 meter dipotong di titik \\( \\frac{2}{5} \\) m. Sisa tali di kanan potongan adalah \\( \\frac{\\boxed{?}}{5} \\) m.", ans:"3"},
-            {q:"Jarak rumah ke sekolah 1 km. Sudah berjalan \\( \\frac{3}{4} \\) km, sisa jalan \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"1"}, 
-            {q:"Estimasi posisi \\( \\frac{7}{15} \\) km pada garis bilangan, paling dekat dengan titik \\( \\frac{\\boxed{?}}{2} \\) km.", ans:"1"},
-            {q:"Sepeda melaju dari 0 menuju \\( \\frac{9}{10} \\) km. Posisinya sangat dekat dengan angka ...", ans:"1"}, 
-            {q:"Jarak antara pos \\( \\frac{1}{4} \\) km dan \\( \\frac{3}{4} \\) km adalah \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"2"},
-            {q:"Pos rute di titik \\( 0, \\frac{1}{3}, \\frac{2}{3}, 1 \\). Jarak antar pos adalah \\( \\frac{\\boxed{?}}{3} \\) km.", ans:"1"}, 
-            {q:"Semut berjalan dari \\( \\frac{1}{2} \\) m ke \\( \\frac{3}{4} \\) m. Jarak tempuhnya \\( \\frac{\\boxed{?}}{4} \\) m.", ans:"1"}
+            {q:"Maraton 1 km. Jaring di setiap \\( \\frac{1}{4} \\) km. Posisi jaring ke-2 ada di titik \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"2", icon:"fa-fish"}, 
+            {q:"Krabby Patty di \\( \\frac{1}{2} \\) km, jaring di \\( \\frac{1}{3} \\) km. Posisi lebih dekat ke start (0) adalah \\( \\frac{\\boxed{?}}{3} \\) km.", ans:"1", icon:"fa-anchor"},
+            {q:"Jarak dari pos \\( \\frac{1}{3} \\) km ke \\( \\frac{1}{2} \\) km (KPK=6) adalah \\( \\frac{\\boxed{?}}{6} \\) km.", ans:"1", icon:"fa-ruler"}, 
+            {q:"Tali rumput laut sepanjang 1 m dipotong di \\( \\frac{2}{5} \\) m. Sisa tali di kanan adalah \\( \\frac{\\boxed{?}}{5} \\) m.", ans:"3", icon:"fa-cut"},
+            {q:"Jarak ke Krusty Krab 1 km. Sudah berjalan \\( \\frac{3}{4} \\) km, sisa jalan \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"1", icon:"fa-store"}, 
+            {q:"Estimasi posisi \\( \\frac{7}{15} \\) km, paling dekat dengan titik \\( \\frac{\\boxed{?}}{2} \\) km.", ans:"1", icon:"fa-binoculars"},
+            {q:"Spongebob lari dari 0 menuju \\( \\frac{9}{10} \\) km. Posisinya sangat dekat dengan angka ...", ans:"1", icon:"fa-person-running"}, 
+            {q:"Jarak antara pos \\( \\frac{1}{4} \\) km dan \\( \\frac{3}{4} \\) km adalah \\( \\frac{\\boxed{?}}{4} \\) km.", ans:"2", icon:"fa-arrows-left-right"},
+            {q:"Rute patroli di titik \\( 0, \\frac{1}{3}, \\frac{2}{3}, 1 \\). Jarak antar pos adalah \\( \\frac{\\boxed{?}}{3} \\) km.", ans:"1", icon:"fa-route"}, 
+            {q:"Semut berjalan dari \\( \\frac{1}{2} \\) m ke \\( \\frac{3}{4} \\) m. Jarak tempuhnya \\( \\frac{\\boxed{?}}{4} \\) m.", ans:"1", icon:"fa-bug"}
         ];
 
         function renderS2() {
             let h = ''; 
             s2Data.forEach((item, i) => { 
-                h += `<div class="question-box" style="animation-delay: ${i * 0.08}s">
-                        <div class="q-icon-bg"><i class="fas fa-route"></i></div>
+                // Membuat beberapa bubble random di tiap kartu
+                let bubbles = '';
+                for(let b=0; b<3; b++) {
+                    let size = Math.random() * 15 + 5;
+                    let left = Math.random() * 90;
+                    let delay = Math.random() * 5;
+                    let dur = Math.random() * 4 + 4;
+                    bubbles += `<div class="bubble" style="width:${size}px; height:${size}px; left:${left}%; animation-duration:${dur}s; animation-delay:${delay}s;"></div>`;
+                }
+
+                h += `<div class="s2-mission-card" style="animation-delay: ${i * 0.1}s">
+                        ${bubbles}
+                        <div class="s2-icon-corner"><i class="fas ${item.icon}"></i></div>
                         <label>${i+1}. ${item.q}</label>
-                        <input type="text" id="s2q${i}" placeholder="Isi angka" autocomplete="off">
+                        <input type="text" id="s2q${i}" placeholder="?" autocomplete="off">
                         <div class="feedback" id="fbs2q${i}"></div>
                       </div>`; 
             });
             document.getElementById('gridS2').innerHTML = h; 
             
-            // Render ulang MathJax
             if(window.MathJax) MathJax.typesetPromise();
         } 
         renderS2();
@@ -1100,19 +1664,16 @@
                 let inputEl = document.getElementById(`s2q${i}`);
                 
                 inputEl.classList.remove('input-shake');
+                void inputEl.offsetWidth; 
 
                 if(val === item.ans) { 
-                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Mantap!"; 
                     fb.className = "feedback correct"; 
                     inputEl.style.borderColor = "var(--bb-green)";
-                    inputEl.style.borderStyle = "solid";
+                    inputEl.style.background = "#e8f5e9";
                 } else { 
                     fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
                     fb.className = "feedback incorrect";
-                    inputEl.style.borderColor = "#d32f2f";
-                    inputEl.style.borderStyle = "solid";
-                    
-                    void inputEl.offsetWidth; 
                     inputEl.classList.add('input-shake');
                 }
             });
@@ -1122,143 +1683,306 @@
             s2Data.forEach((item, i) => { 
                 let inputEl = document.getElementById(`s2q${i}`);
                 inputEl.value = ""; 
-                inputEl.style.borderColor = "var(--bb-blue)";
-                inputEl.style.borderStyle = "dashed";
+                inputEl.style.borderColor = "#00acc1";
+                inputEl.style.background = "#e0f7fa";
                 inputEl.classList.remove('input-shake');
                 document.getElementById(`fbs2q${i}`).innerHTML = ""; 
             }); 
         }
 
         // ==========================================
-        // LOGIC FOR SECTION 3 (20 SOAL KPK)
+        // LOGIC FOR SECTION 3 (MESIN PABRIK KPK)
         // ==========================================
         const s3Data = [
-            {q:"KPK 2 & 3", ans:"6"}, {q:"KPK 3 & 4", ans:"12"}, {q:"KPK 4 & 5", ans:"20"}, {q:"KPK 5 & 6", ans:"30"},
-            {q:"KPK 6 & 7", ans:"42"}, {q:"KPK 2 & 5", ans:"10"}, {q:"KPK 3 & 5", ans:"15"}, {q:"KPK 4 & 6", ans:"12"},
-            {q:"KPK 8 & 9", ans:"72"}, {q:"KPK 6 & 8", ans:"24"}, {q:"KPK 9 & 12", ans:"36"}, {q:"KPK 10 & 15", ans:"30"},
-            {q:"KPK 4 & 10", ans:"20"}, {q:"KPK 6 & 9", ans:"18"}, {q:"KPK 3 & 7", ans:"21"}, {q:"KPK 5 & 10", ans:"10"},
-            {q:"KPK 4 & 12", ans:"12"}, {q:"KPK 8 & 12", ans:"24"}, {q:"KPK 9 & 15", ans:"45"}, {q:"KPK 7 & 8", ans:"56"}
+            {q:"KPK dari \\( 2 \\) dan \\( 3 \\)", ans:"6", icon:"fa-gear"}, 
+            {q:"KPK dari \\( 3 \\) dan \\( 4 \\)", ans:"12", icon:"fa-gears"},
+            {q:"KPK dari \\( 4 \\) dan \\( 5 \\)", ans:"20", icon:"fa-gear"}, 
+            {q:"KPK dari \\( 5 \\) dan \\( 6 \\)", ans:"30", icon:"fa-gears"},
+            {q:"KPK dari \\( 2 \\) dan \\( 5 \\)", ans:"10", icon:"fa-gear"}, 
+            {q:"KPK dari \\( 3 \\) dan \\( 5 \\)", ans:"15", icon:"fa-gears"},
+            {q:"KPK dari \\( 4 \\) dan \\( 6 \\)", ans:"12", icon:"fa-gear"}, 
+            {q:"KPK dari \\( 6 \\) dan \\( 8 \\)", ans:"24", icon:"fa-gears"},
+            {q:"KPK dari \\( 4 \\) dan \\( 10 \\)", ans:"20", icon:"fa-gear"}, 
+            {q:"KPK dari \\( 3 \\) dan \\( 7 \\)", ans:"21", icon:"fa-gears"}
         ];
+
         function renderS3() {
-            let h = ''; s3Data.forEach((item, i) => { h += `<div class="question-box"><label>${i+1}. ${item.q}</label><input type="text" id="s3q${i}" placeholder="..."><div class="feedback" id="fbs3q${i}"></div></div>`; });
-            document.getElementById('gridS3').innerHTML = h;
-        } renderS3();
+            let h = ''; 
+            s3Data.forEach((item, i) => { 
+                // Variasi posisi asap agar natural
+                let smokeDelay = Math.random() * 2;
+                let smokeLeft = 20 + Math.random() * 40;
+
+                h += `<div class="s3-machine-card" style="animation-delay: ${i * 0.1}s">
+                        <div class="s3-smoke" style="left:${smokeLeft}px; animation-delay:${smokeDelay}s;"></div>
+                        <div class="s3-gear-icon"><i class="fas ${item.icon}"></i></div>
+                        <div class="q-content">
+                            <label>${i+1}. ${item.q}</label>
+                            <input type="text" id="s3q${i}" placeholder="?" autocomplete="off">
+                            <div class="feedback" id="fbs3q${i}"></div>
+                        </div>
+                      </div>`; 
+            });
+            document.getElementById('gridS3').innerHTML = h; 
+            
+            if(window.MathJax) MathJax.typesetPromise();
+        } 
+        renderS3();
+
         function checkS3() {
             s3Data.forEach((item, i) => {
                 let val = document.getElementById(`s3q${i}`).value.trim();
                 let fb = document.getElementById(`fbs3q${i}`);
-                if(val === item.ans) { fb.innerHTML = "<i class='fas fa-check-circle'></i>"; fb.className = "feedback correct"; }
-                else { fb.innerHTML = `<i class='fas fa-times-circle'></i> ${item.ans}`; fb.className = "feedback incorrect"; }
+                let inputEl = document.getElementById(`s3q${i}`);
+                let cardEl = inputEl.closest('.s3-machine-card');
+                
+                inputEl.classList.remove('input-shake');
+                void inputEl.offsetWidth; 
+
+                if(val === item.ans) { 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Sinkron!"; 
+                    fb.className = "feedback correct"; 
+                    inputEl.style.borderColor = "var(--bb-green)";
+                    inputEl.style.background = "#e8f5e9";
+                    cardEl.style.borderColor = "var(--bb-green)";
+                } else { 
+                    fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
+                    fb.className = "feedback incorrect";
+                    inputEl.classList.add('input-shake');
+                    cardEl.style.borderColor = "#d32f2f";
+                }
             });
+        } 
+
+        function resetS3() { 
+            s3Data.forEach((item, i) => { 
+                let inputEl = document.getElementById(`s3q${i}`);
+                let cardEl = inputEl.closest('.s3-machine-card');
+                inputEl.value = ""; 
+                inputEl.style.borderColor = "var(--bb-sand)";
+                inputEl.style.background = "#fff8e1";
+                inputEl.classList.remove('input-shake');
+                cardEl.style.borderColor = "var(--bb-sand)";
+                document.getElementById(`fbs3q${i}`).innerHTML = ""; 
+            }); 
         }
-        function resetS3() { s3Data.forEach((item, i) => { document.getElementById(`s3q${i}`).value = ""; document.getElementById(`fbs3q${i}`).innerHTML = ""; }); }
 
         // ==========================================
-        // LOGIC FOR SECTION 4 (20 SOAL PENYEBUT BERBEDA)
+        // LOGIC FOR SECTION 4 (LABORATORIUM PENYEBUT)
         // ==========================================
         const s4Data = [
-            {q:"KPK 2 & 3", ans:"6"}, {q:"1/2 = .../6", ans:"3"}, {q:"2/3 = .../6", ans:"4"},
-            {q:"KPK 3 & 4", ans:"12"}, {q:"1/3 = .../12", ans:"4"}, {q:"3/4 = .../12", ans:"9"},
-            {q:"KPK 2 & 5", ans:"10"}, {q:"1/2 = .../10", ans:"5"}, {q:"2/5 = .../10", ans:"4"},
-            {q:"KPK 3 & 5", ans:"15"}, {q:"2/3 = .../15", ans:"10"}, {q:"3/5 = .../15", ans:"9"},
-            {q:"KPK 4 & 5", ans:"20"}, {q:"3/4 = .../20", ans:"15"}, {q:"2/5 = .../20", ans:"8"},
-            {q:"KPK 2 & 7", ans:"14"}, {q:"1/2 = .../14", ans:"7"}, {q:"3/7 = .../14", ans:"6"},
-            {q:"KPK 3 & 8", ans:"24"}, {q:"1/3 = .../24", ans:"8"}
+            {q:"\\( \\frac{1}{2} = \\frac{\\boxed{?}}{6} \\)", ans:"3", icon:"fa-flask"}, 
+            {q:"\\( \\frac{2}{3} = \\frac{\\boxed{?}}{6} \\)", ans:"4", icon:"fa-vial"},
+            {q:"\\( \\frac{1}{3} = \\frac{\\boxed{?}}{12} \\)", ans:"4", icon:"fa-flask"}, 
+            {q:"\\( \\frac{3}{4} = \\frac{\\boxed{?}}{12} \\)", ans:"9", icon:"fa-vial"},
+            {q:"\\( \\frac{1}{2} = \\frac{\\boxed{?}}{10} \\)", ans:"5", icon:"fa-flask"}, 
+            {q:"\\( \\frac{2}{5} = \\frac{\\boxed{?}}{10} \\)", ans:"4", icon:"fa-vial"},
+            {q:"\\( \\frac{2}{3} = \\frac{\\boxed{?}}{15} \\)", ans:"10", icon:"fa-flask"}, 
+            {q:"\\( \\frac{3}{5} = \\frac{\\boxed{?}}{15} \\)", ans:"9", icon:"fa-vial"},
+            {q:"\\( \\frac{3}{4} = \\frac{\\boxed{?}}{20} \\)", ans:"15", icon:"fa-flask"}, 
+            {q:"\\( \\frac{1}{2} = \\frac{\\boxed{?}}{14} \\)", ans:"7", icon:"fa-vial"}
         ];
+
         function renderS4() {
-            let h = ''; s4Data.forEach((item, i) => { h += `<div class="question-box"><label>${i+1}. ${item.q}</label><input type="text" id="s4q${i}" placeholder="..."><div class="feedback" id="fbs4q${i}"></div></div>`; });
-            document.getElementById('gridS4').innerHTML = h;
-        } renderS4();
+            let h = ''; 
+            s4Data.forEach((item, i) => { 
+                // Variasi posisi dan ukuran gelembung racun
+                let bubbles = '';
+                for(let b=0; b<4; b++) {
+                    let size = Math.random() * 12 + 4;
+                    let left = Math.random() * 80 + 10;
+                    let delay = Math.random() * 4;
+                    let dur = Math.random() * 3 + 4;
+                    bubbles += `<div class="potion-bubble" style="width:${size}px; height:${size}px; left:${left}%; animation-duration:${dur}s; animation-delay:${delay}s;"></div>`;
+                }
+
+                h += `<div class="s4-potion-card" style="animation-delay: ${i * 0.1}s">
+                        ${bubbles}
+                        <div class="s4-flask-icon"><i class="fas ${item.icon}"></i></div>
+                        <label>${i+1}. ${item.q}</label>
+                        <input type="text" id="s4q${i}" placeholder="?" autocomplete="off">
+                        <div class="feedback" id="fbs4q${i}" style="margin-top:10px;"></div>
+                      </div>`; 
+            });
+            document.getElementById('gridS4').innerHTML = h; 
+            
+            if(window.MathJax) MathJax.typesetPromise();
+        } 
+        renderS4();
+
         function checkS4() {
             s4Data.forEach((item, i) => {
                 let val = document.getElementById(`s4q${i}`).value.trim();
                 let fb = document.getElementById(`fbs4q${i}`);
-                if(val === item.ans) { fb.innerHTML = "<i class='fas fa-check-circle'></i>"; fb.className = "feedback correct"; }
-                else { fb.innerHTML = `<i class='fas fa-times-circle'></i> ${item.ans}`; fb.className = "feedback incorrect"; }
+                let inputEl = document.getElementById(`s4q${i}`);
+                let cardEl = inputEl.closest('.s4-potion-card');
+                
+                inputEl.classList.remove('input-shake');
+                void inputEl.offsetWidth; 
+
+                if(val === item.ans) { 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Berhasil!"; 
+                    fb.className = "feedback correct"; 
+                    inputEl.style.borderColor = "var(--bb-green)";
+                    inputEl.style.background = "#e8f5e9";
+                    cardEl.style.borderColor = "var(--bb-green)";
+                } else { 
+                    fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
+                    fb.className = "feedback incorrect";
+                    inputEl.classList.add('input-shake');
+                    cardEl.style.borderColor = "#d32f2f";
+                }
             });
+        } 
+
+        function resetS4() { 
+            s4Data.forEach((item, i) => { 
+                let inputEl = document.getElementById(`s4q${i}`);
+                let cardEl = inputEl.closest('.s4-potion-card');
+                inputEl.value = ""; 
+                inputEl.style.borderColor = "#9c27b0";
+                inputEl.style.background = "#f3e5f5";
+                inputEl.classList.remove('input-shake');
+                cardEl.style.borderColor = "#9c27b0";
+                document.getElementById(`fbs4q${i}`).innerHTML = ""; 
+            }); 
         }
-        function resetS4() { s4Data.forEach((item, i) => { document.getElementById(`s4q${i}`).value = ""; document.getElementById(`fbs4q${i}`).innerHTML = ""; }); }
 
         // ==========================================
-        // LOGIC FOR SECTION 5 (ESTIMASI ZONA)
+        // LOGIC FOR SECTION 5 (NAVIGASI PATRICK)
         // ==========================================
-        function selectZone(element, parentId, value) {
+        function selectIsland(element, parentId, value) {
             let parent = document.getElementById(parentId);
-            parent.querySelectorAll('.zone').forEach(z => z.classList.remove('selected'));
+            parent.querySelectorAll('.island-zone').forEach(z => z.classList.remove('selected'));
             element.classList.add('selected');
-            document.getElementById('zoneVal' + parentId.charAt(parentId.length-1)).value = value;
+            document.getElementById('islandVal' + parentId.charAt(parentId.length-1)).value = value;
         }
 
         function checkS5() {
-            let v1 = document.getElementById('zoneVal1').value;
-            let v2 = document.getElementById('zoneVal2').value;
-            let fb1 = document.getElementById('fbz1');
-            let fb2 = document.getElementById('fbz2');
+            // Cek Langkah KPK
+            let kpk = document.getElementById('step_kpk').value.trim();
+            let fb_kpk = document.getElementById('fb_step_kpk');
+            if(kpk === "20") { fb_kpk.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; fb_kpk.className = "feedback correct"; }
+            else { fb_kpk.innerHTML = "<i class='fas fa-times-circle'></i> Kelipatan 4: 4,8,12,16,20. Kelipatan 5: 5,10,15,20."; fb_kpk.className = "feedback incorrect"; }
 
-            if(v1 === "1") {
-                fb1.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 7/15 itu hampir setengah (7.5/15).";
-                fb1.className = "feedback correct";
-            } else {
-                fb1.innerHTML = "<i class='fas fa-times-circle'></i> Kurang tepat. Setengah dari 15 adalah 7.5. Jadi 7/15 sangat dekat dengan 1/2.";
-                fb1.className = "feedback incorrect";
-            }
+            // Cek Konversi 1
+            let c1 = document.getElementById('step_conv1').value.trim();
+            let fb_c1 = document.getElementById('fb_step_conv1');
+            if(c1 === "5") { fb_c1.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 1/4 = 5/20"; fb_c1.className = "feedback correct"; }
+            else { fb_c1.innerHTML = "<i class='fas fa-times-circle'></i> 1/4 dikali 5/5 = ?/20"; fb_c1.className = "feedback incorrect"; }
 
-            if(v2 === "2") {
-                fb2.innerHTML = "<i class='fas fa-check-circle'></i> Tepat! 9/10 sangat dekat dengan 1 utuh.";
-                fb2.className = "feedback correct";
-            } else {
-                fb2.innerHTML = "<i class='fas fa-times-circle'></i> Ingat, 9 dari 10 bagian sudah hampir penuh, jadi sangat dekat ke 1.";
-                fb2.className = "feedback incorrect";
-            }
+            // Cek Konversi 2
+            let c2 = document.getElementById('step_conv2').value.trim();
+            let fb_c2 = document.getElementById('fb_step_conv2');
+            if(c2 === "12") { fb_c2.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 3/5 = 12/20"; fb_c2.className = "feedback correct"; }
+            else { fb_c2.innerHTML = "<i class='fas fa-times-circle'></i> 3/5 dikali 4/4 = ?/20"; fb_c2.className = "feedback incorrect"; }
+
+            // Cek Estimasi 1
+            let v1 = document.getElementById('islandVal1').value;
+            let fb_i1 = document.getElementById('fb_island1');
+            if(v1 === "1") { fb_i1.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 7/15 itu hampir setengah (7.5/15)."; fb_i1.className = "feedback correct"; }
+            else { fb_i1.innerHTML = "<i class='fas fa-times-circle'></i> Setengah dari 15 adalah 7.5. Jadi 7/15 dekat 1/2."; fb_i1.className = "feedback incorrect"; }
+
+            // Cek Estimasi 2
+            let v2 = document.getElementById('islandVal2').value;
+            let fb_i2 = document.getElementById('fb_island2');
+            if(v2 === "2") { fb_i2.innerHTML = "<i class='fas fa-check-circle'></i> Tepat! 9/10 sangat dekat dengan 1 utuh."; fb_i2.className = "feedback correct"; }
+            else { fb_i2.innerHTML = "<i class='fas fa-times-circle'></i> Ingat, 9 dari 10 bagian sudah hampir penuh, jadi dekat 1."; fb_i2.className = "feedback incorrect"; }
+
+            // Render MathJax lagi untuk feedback
+            if(window.MathJax) MathJax.typesetPromise();
         }
+
         function resetS5() {
-            document.querySelectorAll('.zone').forEach(z => z.classList.remove('selected'));
-            document.getElementById('zoneVal1').value = "";
-            document.getElementById('zoneVal2').value = "";
-            document.getElementById('fbz1').innerHTML = "";
-            document.getElementById('fbz2').innerHTML = "";
+            document.querySelectorAll('.s5-step-card input').forEach(el => el.value = "");
+            document.querySelectorAll('.s5-step-card .feedback').forEach(el => el.innerHTML = "");
+            
+            document.querySelectorAll('.island-zone').forEach(z => z.classList.remove('selected'));
+            document.getElementById('islandVal1').value = "";
+            document.getElementById('islandVal2').value = "";
+            document.getElementById('fb_island1').innerHTML = "";
+            document.getElementById('fb_island2').innerHTML = "";
         }
 
         // ==========================================
-        // LOGIC FOR SECTION 6 (INDEPENDENT)
+        // LOGIC FOR SECTION 6 (KARATE SANDY)
         // ==========================================
+        const s6Data = [
+            {type:"text", q:"KPK dari 3 dan 4 adalah...", ans:"12", icon:"fa-calculator"}, 
+            {type:"text", q:"KPK dari 2 dan 5 adalah...", ans:"10", icon:"fa-calculator"},
+            {type:"text", q:"Jarak \\( \\frac{3}{4} - \\frac{2}{3} = \\frac{\\boxed{?}}{12} \\)", ans:"1", icon:"fa-ruler-horizontal"}, 
+            {type:"text", q:"Jarak \\( \\frac{5}{6} - \\frac{1}{3} = \\frac{\\boxed{?}}{6} \\)", ans:"3", icon:"fa-ruler-horizontal"},
+            {type:"text", q:"Selisih \\( \\frac{7}{8} - \\frac{3}{4} = \\frac{\\boxed{?}}{8} \\)", ans:"1", icon:"fa-arrows-left-right"}, 
+            {type:"text", q:"Jarak dari \\( \\frac{1}{4} \\) ke \\( \\frac{3}{4} \\) adalah \\( \\frac{\\boxed{?}}{4} \\)", ans:"2", icon:"fa-arrows-left-right"},
+            {type:"select", q:"Estimasi \\( \\frac{11}{20} \\) dekat ke...", opts:["0","1/2","1"], ans:"1/2", icon:"fa-crosshairs"}, 
+            {type:"select", q:"Estimasi \\( \\frac{1}{8} \\) dekat ke...", opts:["0","1/2","1"], ans:"0", icon:"fa-crosshairs"},
+            {type:"select", q:"Estimasi \\( \\frac{8}{9} \\) dekat ke...", opts:["0","1/2","1"], ans:"1", icon:"fa-crosshairs"}, 
+            {type:"select", q:"Estimasi \\( \\frac{12}{25} \\) dekat ke...", opts:["0","1/2","1"], ans:"1/2", icon:"fa-crosshairs"}
+        ];
+
+        function renderS6() {
+            let h = ''; 
+            s6Data.forEach((item, i) => { 
+                let inputHtml = '';
+                if (item.type === "text") {
+                    inputHtml = `<input type="text" id="s6q${i}" placeholder="?" autocomplete="off">`;
+                } else if (item.type === "select") {
+                    inputHtml = `<select id="s6q${i}"><option value="">-- Pilih --</option>`;
+                    item.opts.forEach(opt => { inputHtml += `<option value="${opt}">${opt}</option>`; });
+                    inputHtml += `</select>`;
+                }
+
+                h += `<div class="s6-wood-card" style="animation-delay: ${i * 0.1}s">
+                        <div class="s6-chop-icon"><i class="fas ${item.icon}"></i></div>
+                        <label>${i+1}. ${item.q}</label>
+                        ${inputHtml}
+                        <div class="feedback" id="fbs6q${i}" style="margin-top:8px;"></div>
+                      </div>`; 
+            });
+            document.getElementById('gridS6').innerHTML = h; 
+            
+            if(window.MathJax) MathJax.typesetPromise();
+        } 
+        renderS6();
+
         function checkS6() {
-            let a1 = document.getElementById('ind1').value.trim();
-            let a2 = document.getElementById('ind2').value.trim();
-            let a3 = document.getElementById('ind3').value;
-            let f1 = document.getElementById('fbi1');
-            let f2 = document.getElementById('fbi2');
-            let f3 = document.getElementById('fbi3');
+            s6Data.forEach((item, i) => {
+                let val = document.getElementById(`s6q${i}`).value.trim();
+                let fb = document.getElementById(`fbs6q${i}`);
+                let inputEl = document.getElementById(`s6q${i}`);
+                let cardEl = inputEl.closest('.s6-wood-card');
+                
+                if(item.type === "text") inputEl.classList.remove('input-shake');
+                void inputEl.offsetWidth; 
 
-            if(a1 === "12") {
-                f1.innerHTML = "<i class='fas fa-check-circle'></i> Benar! KPK 3 dan 4 adalah 12.";
-                f1.className = "feedback correct";
-            } else {
-                f1.innerHTML = "<i class='fas fa-times-circle'></i> Kelipatan 3: 3,6,9,12. Kelipatan 4: 4,8,12. KPKnya 12.";
-                f1.className = "feedback incorrect";
-            }
+                if(val === item.ans) { 
+                    fb.innerHTML = "<i class='fas fa-check-circle'></i> Hiyaa!"; 
+                    fb.className = "feedback correct"; 
+                    inputEl.style.borderColor = "var(--bb-green)";
+                    inputEl.style.background = "#c8e6c9";
+                    cardEl.style.borderColor = "#1b5e20";
+                } else { 
+                    fb.innerHTML = `<i class='fas fa-times-circle'></i> Jawab: ${item.ans}`; 
+                    fb.className = "feedback incorrect";
+                    if(item.type === "text") inputEl.classList.add('input-shake');
+                    inputEl.style.borderColor = "#d32f2f";
+                    inputEl.style.background = "#ffebee";
+                    cardEl.style.borderColor = "#d32f2f";
+                }
+            });
+        } 
 
-            if(a2 === "1/12") {
-                f2.innerHTML = "<i class='fas fa-check-circle'></i> Hebat! 3/4(9/12) - 2/3(8/12) = 1/12.";
-                f2.className = "feedback correct";
-            } else {
-                f2.innerHTML = "<i class='fas fa-times-circle'></i> Ubah ke KPK 12. 3/4 jadi 9/12, 2/3 jadi 8/12. Selisihnya 9/12 - 8/12 = 1/12.";
-                f2.className = "feedback incorrect";
-            }
-
-            if(a3 === "1/2") {
-                f3.innerHTML = "<i class='fas fa-check-circle'></i> Pintar! 12/24 itu 1/2, jadi 12/25 sangat dekat dengan 1/2.";
-                f3.className = "feedback correct";
-            } else {
-                f3.innerHTML = "<i class='fas fa-times-circle'></i> 12/25 sedikit lebih besar dari 12/24 (yang sama dengan 1/2). Jadi paling dekat ke 1/2.";
-                f3.className = "feedback incorrect";
-            }
-        }
-        function resetS6() {
-            document.getElementById('ind1').value = "";
-            document.getElementById('ind2').value = "";
-            document.getElementById('ind3').value = "";
-            ['fbi1','fbi2','fbi3'].forEach(id => document.getElementById(id).innerHTML = "");
+        function resetS6() { 
+            s6Data.forEach((item, i) => { 
+                let inputEl = document.getElementById(`s6q${i}`);
+                let cardEl = inputEl.closest('.s6-wood-card');
+                inputEl.value = ""; 
+                inputEl.style.borderColor = "#4caf50";
+                inputEl.style.background = "#e8f5e9";
+                inputEl.classList.remove('input-shake');
+                cardEl.style.borderColor = "var(--bb-green)";
+                document.getElementById(`fbs6q${i}`).innerHTML = ""; 
+            }); 
         }
     </script>
 </body>
