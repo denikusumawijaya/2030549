@@ -332,7 +332,7 @@
             border-color: var(--bb-yellow);
         }
         .s1-card .q-icon-main {
-            font-size: 3em;
+            font-size: 4em;
             color: var(--bb-dark-blue);
             opacity: 0.7;
             flex-shrink: 0;
@@ -345,13 +345,13 @@
             color: var(--bb-sand);
         }
         .s1-card .q-content { flex: 1; }
-        .s1-card label { font-size: 1.1em; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 8px; }
+        .s1-card label { font-size: 1.4em; font-weight: 600; line-height: 1.4; display: block; margin-bottom: 8px; }
         .s1-card input[type="text"] {
             border: 2px dashed var(--bb-blue) !important;
             background: #f7fbff !important;
-            font-size: 1.1em !important;
+            font-size: 1.4em !important;
             font-weight: bold !important;
-            width: 80px !important;
+            width: 100px !important;
             text-align: center !important;
             border-radius: 8px !important;
             padding: 8px !important;
@@ -423,8 +423,8 @@
             100% { bottom: 110%; transform: translateX(-10px) scale(0.8); opacity: 0; }
         }
         @keyframes oceanWave {
-            0%, 100% { border-radius: 18px; }
-            50% { border-radius: 22px 14px 22px 14px; }
+            0%, 100% { border-radius: 18px; opacity: 1; }
+            50% { border-radius: 22px 14px 22px 14px; opacity: 1; }
         }
 
         .s2-grid {
@@ -448,10 +448,12 @@
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         .s2-mission-card:hover {
-            transform: translateY(-8px) scale(1.03);
+            transform: translateY(-8px); /* Kita hapus scale(1.03) agar teks tidak blur */
             box-shadow: 0 12px 30px rgba(0, 172, 193, 0.3);
-            animation: oceanWave 2s ease-in-out infinite;
+            border-color: #00acc1;
+            opacity: 1; /* PENTING: Ini yang mencegah soal hilang saat hover */
         }
+        
         /* Animasi Gelembung */
         .s2-mission-card .bubble {
             position: absolute;
@@ -583,8 +585,8 @@
             100% { bottom: 90%; transform: translateX(-10px) scale(0.5); opacity: 0; }
         }
         @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 5px #9c27b0, 0 6px 15px rgba(156, 39, 176, 0.2); }
-            50% { box-shadow: 0 0 25px #e040fb, 0 12px 30px rgba(156, 39, 176, 0.5); }
+            0%, 100% { box-shadow: 0 0 5px #9c27b0, 0 6px 15px rgba(156, 39, 176, 0.2); opacity: 1; }
+            50% { box-shadow: 0 0 25px #e040fb, 0 12px 30px rgba(156, 39, 176, 0.5); opacity: 1; }
         }
 
         .s4-lab-grid {
@@ -608,8 +610,10 @@
             transition: transform 0.3s ease;
         }
         .s4-potion-card:hover {
-            transform: scale(1.05);
-            animation: glowPulse 1.5s infinite;
+            transform: translateY(-5px); /* Kita hapus scale(1.05) agar teks tidak blur */
+            box-shadow: 0 12px 25px rgba(156, 39, 176, 0.4);
+            border-color: #e040fb;
+            opacity: 1; /* PENTING: Ini yang mencegah soal hilang saat hover */
         }
         .s4-potion-card .potion-bubble {
             position: absolute;
@@ -1049,78 +1053,104 @@
                             <p style="font-size:0.9em; margin:10px 0 0 0; color:#5d4037; font-weight:bold;"><i class="fas fa-compass"></i> Patrick butuh petunjuk arah!</p>
                         </div>
         
-                        <div class="game-area" id="game5" style="background: #fff8e1; border-color: #8d6e63; margin-top: 20px;">
-                            <h4><i class="fas fa-map-signs"></i> Peta Navigasi Patrick</h4>
-                            
-                            <!-- STEP 1: KPK & Conversion -->
-                            <div class="s5-step-card">
-                                <div class="s5-step-row">
-                                    <div class="s5-step-icon"><i class="fas fa-shoe-prints"></i></div>
-                                    <div>
-                                        <label><b>Langkah 1:</b> Berapa KPK dari 4 dan 5?</label><br>
-                                        <input type="text" id="step_kpk" placeholder="KPK...">
-                                        <div class="feedback" id="fb_step_kpk"></div>
-                                    </div>
-                                </div>
-                                <div class="s5-step-row">
-                                    <div class="s5-step-icon"><i class="fas fa-sync-alt"></i></div>
-                                    <div>
-                                        <label><b>Langkah 2:</b> Ubah \\( \frac{1}{4} = \frac{\boxed{?}}{20} \\)</label><br>
-                                        <input type="text" id="step_conv1" placeholder="Pembilang">
-                                        <div class="feedback" id="fb_step_conv1"></div>
-                                    </div>
-                                </div>
-                                <div class="s5-step-row">
-                                    <div class="s5-step-icon"><i class="fas fa-sync-alt"></i></div>
-                                    <div>
-                                        <label><b>Langkah 3:</b> Ubah \\( \frac{3}{5} = \frac{\boxed{?}}{20} \\)</label><br>
-                                        <input type="text" id="step_conv2" placeholder="Pembilang">
-                                        <div class="feedback" id="fb_step_conv2"></div>
-                                    </div>
+                    <div class="game-area" id="game5" style="background: #fff8e1; border-color: #8d6e63; margin-top: 20px;">
+                        <h4><i class="fas fa-map-signs"></i> Peta Navigasi Patrick</h4>
+                        
+                        <!-- STEP 1: KPK & Conversion -->
+                        <div class="s5-step-card">
+                            <div class="s5-step-row">
+                                <div class="s5-step-icon"><i class="fas fa-shoe-prints"></i></div>
+                                <div>
+                                    <label><b>Langkah 1:</b> Berapa KPK dari 4 dan 5?</label><br>
+                                    <input type="text" id="step_kpk" placeholder="KPK...">
+                                    <div class="feedback" id="fb_step_kpk"></div>
                                 </div>
                             </div>
-        
-                            <!-- STEP 2: Estimation Archipelago -->
-                            <h4 style="margin-top:30px;"><i class="fas fa-island-tropical"></i> Game Estimasi: Patrick mendarat di pulau mana?</h4>
-                            <p>Klik pulau (0, 1/2, atau 1) yang paling dekat dengan pecahan ini:</p>
-                            
-                            <div class="question-box" style="background: transparent; border: none; box-shadow: none;">
-                                <label style="font-size: 1.2em; color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">1. Pecahan \\( \frac{7}{15} \\) lebih dekat ke pulau mana?</label>
-                                <div class="s5-archipelago" id="island_zones1">
-                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 0)">
-                                        <div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div>
-                                    </div>
-                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 1)">
-                                        <div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div>
-                                    </div>
-                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 2)">
-                                        <div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div>
-                                    </div>
+                            <div class="s5-step-row">
+                                <div class="s5-step-icon"><i class="fas fa-sync-alt"></i></div>
+                                <div>
+                                    <label><b>Langkah 2:</b> Ubah \( \frac{1}{4} = \frac{?}{20} \)</label><br>
+                                    <input type="text" id="step_conv1" placeholder="Pembilang">
+                                    <div class="feedback" id="fb_step_conv1"></div>
                                 </div>
-                                <input type="hidden" id="islandVal1" value="">
-                                <div class="feedback" id="fb_island1" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center;"></div>
                             </div>
-        
-                            <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-top: 20px;">
-                                <label style="font-size: 1.2em; color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">2. Pecahan \\( \frac{9}{10} \\) lebih dekat ke pulau mana?</label>
-                                <div class="s5-archipelago" id="island_zones2">
-                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 0)">
-                                        <div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div>
-                                    </div>
-                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 1)">
-                                        <div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div>
-                                    </div>
-                                    <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 2)">
-                                        <div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div>
-                                    </div>
+                            <div class="s5-step-row">
+                                <div class="s5-step-icon"><i class="fas fa-sync-alt"></i></div>
+                                <div>
+                                    <label><b>Langkah 3:</b> Ubah \( \frac{3}{5} = \frac{?}{20} \)</label><br>
+                                    <input type="text" id="step_conv2" placeholder="Pembilang">
+                                    <div class="feedback" id="fb_step_conv2"></div>
                                 </div>
-                                <input type="hidden" id="islandVal2" value="">
-                                <div class="feedback" id="fb_island2" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center;"></div>
                             </div>
-        
-                            <button class="btn-check" onclick="checkS5()" style="background-color: #e65100;"><i class="fas fa-check"></i> Cek Navigasi</button>
-                            <button class="btn-reset" onclick="resetS5()"><i class="fas fa-redo"></i> Reset</button>
                         </div>
+    
+                        <!-- STEP 2: Estimation Archipelago -->
+                        <h4 style="margin-top:30px;"><i class="fas fa-water"></i> Game Estimasi: Patrick mendarat di pulau mana?</h4>
+                        <p>Klik pulau (0, 1/2, atau 1) yang paling dekat dengan pecahan ini:</p>
+                        
+                        <!-- Soal 1 -->
+                        <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-bottom: 20px;">
+                            <label style="font-size: 1.2em; color: #004d40; font-weight: bold;"><i class="fas fa-map-marker-alt"></i> 1. Pecahan \( \frac{7}{15} \) lebih dekat ke pulau mana?</label>
+                            <div class="s5-archipelago" id="island_zones1">
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 0)"><div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 1)"><div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones1', 2)"><div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div></div>
+                            </div>
+                            <input type="hidden" id="islandVal1" value="">
+                            <div class="feedback" id="fb_island1" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center; margin-top:10px;"></div>
+                        </div>
+    
+                        <!-- Soal 2 -->
+                        <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-bottom: 20px;">
+                            <label style="font-size: 1.2em; color: #004d40; font-weight: bold;"><i class="fas fa-map-marker-alt"></i> 2. Pecahan \( \frac{9}{10} \) lebih dekat ke pulau mana?</label>
+                            <div class="s5-archipelago" id="island_zones2">
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 0)"><div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 1)"><div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones2', 2)"><div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div></div>
+                            </div>
+                            <input type="hidden" id="islandVal2" value="">
+                            <div class="feedback" id="fb_island2" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center; margin-top:10px;"></div>
+                        </div>
+    
+                        <!-- Soal 3 (Baru) -->
+                        <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-bottom: 20px;">
+                            <label style="font-size: 1.2em; color: #004d40; font-weight: bold;"><i class="fas fa-map-marker-alt"></i> 3. Pecahan \( \frac{2}{19} \) lebih dekat ke pulau mana?</label>
+                            <div class="s5-archipelago" id="island_zones3">
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones3', 0)"><div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones3', 1)"><div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones3', 2)"><div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div></div>
+                            </div>
+                            <input type="hidden" id="islandVal3" value="">
+                            <div class="feedback" id="fb_island3" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center; margin-top:10px;"></div>
+                        </div>
+    
+                        <!-- Soal 4 (Baru) -->
+                        <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-bottom: 20px;">
+                            <label style="font-size: 1.2em; color: #004d40; font-weight: bold;"><i class="fas fa-map-marker-alt"></i> 4. Pecahan \( \frac{11}{20} \) lebih dekat ke pulau mana?</label>
+                            <div class="s5-archipelago" id="island_zones4">
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones4', 0)"><div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones4', 1)"><div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones4', 2)"><div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div></div>
+                            </div>
+                            <input type="hidden" id="islandVal4" value="">
+                            <div class="feedback" id="fb_island4" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center; margin-top:10px;"></div>
+                        </div>
+    
+                        <!-- Soal 5 (Baru) -->
+                        <div class="question-box" style="background: transparent; border: none; box-shadow: none; margin-bottom: 20px;">
+                            <label style="font-size: 1.2em; color: #004d40; font-weight: bold;"><i class="fas fa-map-marker-alt"></i> 5. Pecahan \( \frac{1}{8} \) lebih dekat ke pulau mana?</label>
+                            <div class="s5-archipelago" id="island_zones5">
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones5', 0)"><div class="island-land"><span class="island-icon"><i class="fas fa-mountain"></i></span><span class="island-label">0</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones5', 1)"><div class="island-land"><span class="island-icon"><i class="fas fa-home"></i></span><span class="island-label">1/2</span></div></div>
+                                <div class="island-zone" onclick="selectIsland(this, 'island_zones5', 2)"><div class="island-land"><span class="island-icon"><i class="fas fa-store"></i></span><span class="island-label">1</span></div></div>
+                            </div>
+                            <input type="hidden" id="islandVal5" value="">
+                            <div class="feedback" id="fb_island5" style="background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; text-align: center; margin-top:10px;"></div>
+                        </div>
+    
+                        <button class="btn-check" onclick="checkS5()" style="background-color: #e65100;"><i class="fas fa-check"></i> Cek Navigasi</button>
+                        <button class="btn-reset" onclick="resetS5()"><i class="fas fa-redo"></i> Reset</button>
+                    </div>
                     </div>
                 </div>
     
@@ -1550,16 +1580,19 @@
         // LOGIC FOR SECTION 1 (10 SOAL UI MEWAH)
         // ==========================================
         const s1Data = [
-            {cat:"volume", icon:"fa-cube", q:"Vol Kubus \\( s = 4 \\) \\( cm^3 \\)", ans:"64"}, 
-            {cat:"volume", icon:"fa-box-open", q:"Vol Balok \\( 5 \\times 2 \\times 3 \\)", ans:"30"},
-            {cat:"volume", icon:"fa-cube", q:"Vol Kubus \\( s = 10 \\) \\( cm^3 \\)", ans:"1000"},
-            {cat:"prima", icon:"fa-star", q:"Sebutkan bilangan prima antara 10 dan 20 (#1)", ans:"11"}, 
-            {cat:"prima", icon:"fa-star", q:"Sebutkan bilangan prima antara 10 dan 20 (#2)", ans:"13"},
-            {cat:"prima", icon:"fa-star", q:"Sebutkan bilangan prima antara 30 dan 40", ans:"31"}, 
+            // Volume (Satuan cm untuk rusuk, cm^3 untuk volume)
+            {cat:"volume", icon:"fa-cube", q:"Vol Kubus \\( s = 4 \\text{ cm} \\) = ... \\( cm^3 \\)", ans:"64"}, 
+            {cat:"volume", icon:"fa-box-open", q:"Vol Balok \\( 5 \\times 2 \\times 3 \\text{ cm} \\) = ... \\( cm^3 \\)", ans:"30"},
+            {cat:"volume", icon:"fa-cube", q:"Vol Kubus \\( s = 6 \\text{ cm} \\) = ... \\( cm^3 \\)", ans:"216"}, 
+            {cat:"volume", icon:"fa-box-open", q:"Vol Balok \\( 10 \\times 2 \\times 2 \\text{ cm} \\) = ... \\( cm^3 \\)", ans:"40"},
+            // Prima (Diperjelas agar tidak ambigu)
+            {cat:"prima", icon:"fa-star", q:"Bilangan prima terkecil antara 10 dan 20", ans:"11"}, 
+            {cat:"prima", icon:"fa-star", q:"Bilangan prima terbesar antara 10 dan 20", ans:"19"},
+            {cat:"prima", icon:"fa-star", q:"Bilangan prima terkecil antara 20 dan 30", ans:"23"}, 
+            // Pecahan
             {cat:"pecahan", icon:"fa-pie-chart", q:"\\( \\frac{1}{2} + \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"3"}, 
             {cat:"pecahan", icon:"fa-pie-chart", q:"\\( \\frac{3}{4} - \\frac{1}{4} = \\frac{\\boxed{?}}{4} \\)", ans:"2"}, 
-            {cat:"pecahan", icon:"fa-pizza-slice", q:"\\( \\frac{2}{5} + \\frac{1}{5} = \\frac{\\boxed{?}}{5} \\)", ans:"3"}, 
-            {cat:"pecahan", icon:"fa-pizza-slice", q:"\\( \\frac{5}{6} - \\frac{2}{6} = \\frac{\\boxed{?}}{6} \\)", ans:"3"}
+            {cat:"pecahan", icon:"fa-pizza-slice", q:"\\( \\frac{2}{5} + \\frac{1}{5} = \\frac{\\boxed{?}}{5} \\)", ans:"3"}
         ];
 
         function renderS1() {
@@ -1868,26 +1901,44 @@
             // Cek Konversi 1
             let c1 = document.getElementById('step_conv1').value.trim();
             let fb_c1 = document.getElementById('fb_step_conv1');
-            if(c1 === "5") { fb_c1.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 1/4 = 5/20"; fb_c1.className = "feedback correct"; }
+            if(c1 === "5") { fb_c1.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; fb_c1.className = "feedback correct"; }
             else { fb_c1.innerHTML = "<i class='fas fa-times-circle'></i> 1/4 dikali 5/5 = ?/20"; fb_c1.className = "feedback incorrect"; }
 
             // Cek Konversi 2
             let c2 = document.getElementById('step_conv2').value.trim();
             let fb_c2 = document.getElementById('fb_step_conv2');
-            if(c2 === "12") { fb_c2.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 3/5 = 12/20"; fb_c2.className = "feedback correct"; }
+            if(c2 === "12") { fb_c2.innerHTML = "<i class='fas fa-check-circle'></i> Benar!"; fb_c2.className = "feedback correct"; }
             else { fb_c2.innerHTML = "<i class='fas fa-times-circle'></i> 3/5 dikali 4/4 = ?/20"; fb_c2.className = "feedback incorrect"; }
 
-            // Cek Estimasi 1
+            // Cek Estimasi 1 (7/15 -> dekat 1/2)
             let v1 = document.getElementById('islandVal1').value;
             let fb_i1 = document.getElementById('fb_island1');
             if(v1 === "1") { fb_i1.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 7/15 itu hampir setengah (7.5/15)."; fb_i1.className = "feedback correct"; }
             else { fb_i1.innerHTML = "<i class='fas fa-times-circle'></i> Setengah dari 15 adalah 7.5. Jadi 7/15 dekat 1/2."; fb_i1.className = "feedback incorrect"; }
 
-            // Cek Estimasi 2
+            // Cek Estimasi 2 (9/10 -> dekat 1)
             let v2 = document.getElementById('islandVal2').value;
             let fb_i2 = document.getElementById('fb_island2');
             if(v2 === "2") { fb_i2.innerHTML = "<i class='fas fa-check-circle'></i> Tepat! 9/10 sangat dekat dengan 1 utuh."; fb_i2.className = "feedback correct"; }
             else { fb_i2.innerHTML = "<i class='fas fa-times-circle'></i> Ingat, 9 dari 10 bagian sudah hampir penuh, jadi dekat 1."; fb_i2.className = "feedback incorrect"; }
+
+            // Cek Estimasi 3 (2/19 -> dekat 0)
+            let v3 = document.getElementById('islandVal3').value;
+            let fb_i3 = document.getElementById('fb_island3');
+            if(v3 === "0") { fb_i3.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 2/19 pembilangnya jauh lebih kecil dari penyebutnya."; fb_i3.className = "feedback correct"; }
+            else { fb_i3.innerHTML = "<i class='fas fa-times-circle'></i> 2 dari 19 bagian sangat sedikit, jadi dekat dengan 0."; fb_i3.className = "feedback incorrect"; }
+
+            // Cek Estimasi 4 (11/20 -> dekat 1/2)
+            let v4 = document.getElementById('islandVal4').value;
+            let fb_i4 = document.getElementById('fb_island4');
+            if(v4 === "1") { fb_i4.innerHTML = "<i class='fas fa-check-circle'></i> Benar! 11/20 hampir sama dengan 10/20 atau 1/2."; fb_i4.className = "feedback correct"; }
+            else { fb_i4.innerHTML = "<i class='fas fa-times-circle'></i> 10/20 itu 1/2. Jadi 11/20 sangat dekat dengan 1/2."; fb_i4.className = "feedback incorrect"; }
+
+            // Cek Estimasi 5 (1/8 -> dekat 0)
+            let v5 = document.getElementById('islandVal5').value;
+            let fb_i5 = document.getElementById('fb_island5');
+            if(v5 === "0") { fb_i5.innerHTML = "<i class='fas fa-check-circle'></i> Tepat! 1/8 nilainya sangat kecil, mendekati 0."; fb_i5.className = "feedback correct"; }
+            else { fb_i5.innerHTML = "<i class='fas fa-times-circle'></i> 1 dari 8 bagian sangat sedikit, jadi dekat 0."; fb_i5.className = "feedback incorrect"; }
 
             // Render MathJax lagi untuk feedback
             if(window.MathJax) MathJax.typesetPromise();
@@ -1897,11 +1948,12 @@
             document.querySelectorAll('.s5-step-card input').forEach(el => el.value = "");
             document.querySelectorAll('.s5-step-card .feedback').forEach(el => el.innerHTML = "");
             
-            document.querySelectorAll('.island-zone').forEach(z => z.classList.remove('selected'));
-            document.getElementById('islandVal1').value = "";
-            document.getElementById('islandVal2').value = "";
-            document.getElementById('fb_island1').innerHTML = "";
-            document.getElementById('fb_island2').innerHTML = "";
+            for(let i=1; i<=5; i++) {
+                let zoneId = `island_zones${i}`;
+                document.getElementById(zoneId).querySelectorAll('.island-zone').forEach(z => z.classList.remove('selected'));
+                document.getElementById(`islandVal${i}`).value = "";
+                document.getElementById(`fb_island${i}`).innerHTML = "";
+            }
         }
 
         // ==========================================
