@@ -69,18 +69,25 @@
             box-shadow: 0 0 10px var(--ygo-cyan);
         }
 
-        /* Drag and Drop */
-        .drag-zone { min-height: 50px; border: 2px dashed var(--ygo-gold); border-radius: 8px; transition: all 0.3s; }
-        .drag-zone.over { background: rgba(212, 175, 55, 0.2); border-color: var(--ygo-cyan); }
-        .drag-item { cursor: grab; user-select: none; background: var(--ygo-purple); border: 1px solid #a855f7; }
-        .drag-item:active { cursor: grabbing; }
-        
         /* Animations */
         .fade-in { animation: fadeIn 0.8s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         .pulse-glow { animation: pulseGlow 2s infinite; }
         @keyframes pulseGlow { 0% { box-shadow: 0 0 5px var(--ygo-gold); } 50% { box-shadow: 0 0 20px var(--ygo-gold); } 100% { box-shadow: 0 0 5px var(--ygo-gold); } }
+
+        /* Quiz Arena Styles */
+        .opt-btn-arena {
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .opt-btn-arena:hover:not(:disabled) {
+            border-color: var(--ygo-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(34, 211, 238, 0.3);
+        }
+        .opt-correct { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.2) !important; }
+        .opt-wrong { border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.2) !important; }
 
         /* Assessment Tabs */
         .tab-btn.active { border-color: var(--ygo-cyan); color: var(--ygo-cyan); background: rgba(34, 211, 238, 0.1); }
@@ -119,68 +126,66 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8 space-y-12">
 
-        <!-- SECTION 1: SPIRAL REVIEW WARM-UP -->
+        <!-- SECTION 1: SPIRAL REVIEW WARM-UP (REDESIGNED) -->
         <section class="holo-card rounded-xl p-6 fade-in">
             <div class="holo-content">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-yellow-500"><i class="fas fa-fire mr-2"></i>Spiral Review Warm-up</h2>
+                    <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-yellow-500"><i class="fas fa-fire mr-2"></i>Spiral Review: Misi Kilat</h2>
                     <span class="timer-badge px-3 py-1 rounded-full text-sm font-bold text-white">00:00 - 00:10</span>
                 </div>
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-black/40 p-4 rounded-lg border border-purple-800">
-                        <h3 class="text-cyan-400 font-bold mb-2">Teori Singkat: Bangun Ruang & Desimal</h3>
-                        <p class="text-gray-300 mb-2">Volume gabungan adalah hasil penjumlahan dari volume masing-masing bangun ruang. Untuk kubus, volume = \( s \times s \times s \), sedangkan balok = \( p \times l \times t \).</p>
-                        <p class="text-gray-300">Angka di tengah-tengah dua desimal bisa dicari dengan mencari rata-ratanya. Misal: tengah-tengah 0.5 dan 0.6 adalah \( \frac{0.5+0.6}{2} = 0.55 \).</p>
-                    </div>
-                    <div class="bg-black/40 p-4 rounded-lg border border-purple-800 flex items-center justify-center">
-                        <!-- SVG Ilustrasi Kubus + Balok -->
-                        <svg viewBox="0 0 200 150" class="w-full max-w-[200px]">
-                            <rect x="50" y="50" width="60" height="60" fill="#4c1d95" stroke="#d4af37" stroke-width="2"/>
-                            <rect x="110" y="50" width="20" height="60" fill="#4c1d95" stroke="#d4af37" stroke-width="2" transform="skewY(-30)"/>
-                            <rect x="50" y="10" width="60" height="20" fill="#6b21a8" stroke="#d4af37" stroke-width="2" transform="skewY(30)"/>
-                            
-                            <rect x="40" y="110" width="100" height="30" fill="#1e3a8a" stroke="#22d3ee" stroke-width="2"/>
-                            <rect x="140" y="110" width="30" height="30" fill="#1e3a8a" stroke="#22d3ee" stroke-width="2" transform="skewY(-30)"/>
-                            <rect x="40" y="70" width="100" height="30" fill="#2563eb" stroke="#22d3ee" stroke-width="2" transform="skewY(30)" opacity="0.5"/>
-                            <text x="100" y="130" fill="white" font-size="10" text-anchor="middle">Gabungan</text>
-                        </svg>
-                    </div>
+                
+                <div class="bg-black/40 p-4 rounded-lg border border-purple-800 mb-6">
+                    <p class="text-gray-300 mb-2">Selamat datang di Duel Arena! Sebelum masuk ke tantangan utama, kita panaskan otak dengan 10 rintangan cepat. Volume gabungan adalah penjumlahan volume masing-masing bangun. Angka di tengah-tengah dua desimal bisa dicari dengan mencari rata-ratanya.</p>
                 </div>
 
-                <!-- Game Klik Jawaban -->
-                <div class="bg-gray-900 p-4 rounded-lg">
-                    <h3 class="text-yellow-500 font-bold mb-4"><i class="fas fa-gamepad mr-2"></i>Misi Kilat (Klik jawaban yang benar)</h3>
-                    <div id="warmup-game" class="space-y-4">
-                        <div class="question" data-answer="B">
-                            <p>1. Kubus sisi 3cm di atas balok (5x3x2cm). Volume gabungan = ...</p>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'A')">A. 33 cm³</button>
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'B')">B. 57 cm³</button>
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'C')">C. 51 cm³</button>
-                            </div>
-                            <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! Kubus (27) + Balok (30) = 57 cm³</p>
-                        </div>
-                        <div class="question" data-answer="C">
-                            <p>2. Volume kubus 64 cm³, luas satu sisi = ...</p>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'A')">A. 8 cm²</button>
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'B')">B. 16 cm²</button>
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'C')">C. 16 cm²</button>
-                            </div>
-                            <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! Sisi = √64 = 8, Luas = 8x8 = 16 cm²</p>
-                        </div>
-                        <div class="question" data-answer="A">
-                            <p>3. Tengah-tengah 0.5 dan 0.6 adalah ...</p>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'A')">A. 0.55</button>
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'B')">B. 0.56</button>
-                                <button class="opt-btn bg-gray-800 hover:bg-purple-700 px-4 py-2 rounded transition" onclick="checkWarmup(this, 'C')">C. 0.5</button>
-                            </div>
-                            <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! (0.5+0.6)/2 = 0.55</p>
-                        </div>
+                <div class="bg-gray-900 rounded-xl border border-yellow-600 overflow-hidden">
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-800 h-4 border-b border-gray-700">
+                        <div id="quiz-progress" class="bg-gradient-to-r from-yellow-600 to-yellow-400 h-full transition-all duration-500" style="width: 10%"></div>
                     </div>
-                    <div class="mt-4 flex gap-2">
-                        <button onclick="resetGame('warmup-game')" class="bg-red-700 hover:bg-red-600 px-4 py-2 rounded font-bold text-sm transition"><i class="fas fa-redo mr-1"></i> Reset</button>
+                    
+                    <div class="p-6 flex flex-col md:flex-row gap-6">
+                        <!-- Visual Illustration Area -->
+                        <div class="w-full md:w-1/3 flex items-center justify-center bg-black/30 rounded-lg p-4 border border-purple-900">
+                            <div id="arena-visual">
+                                <!-- Default Visual -->
+                                <svg viewBox="0 0 200 200" class="w-full max-w-[180px] drop-shadow-lg">
+                                    <rect x="50" y="100" width="60" height="60" fill="#4c1d95" stroke="#d4af37" stroke-width="2"/>
+                                    <rect x="110" y="100" width="20" height="60" fill="#6b21a8" stroke="#d4af37" stroke-width="2" transform="skewY(-30)"/>
+                                    <rect x="50" y="60" width="60" height="20" fill="#7c3aed" stroke="#d4af37" stroke-width="2" transform="skewY(30)"/>
+                                    
+                                    <rect x="30" y="160" width="120" height="30" fill="#1e3a8a" stroke="#22d3ee" stroke-width="2"/>
+                                    <rect x="150" y="160" width="30" height="30" fill="#2563eb" stroke="#22d3ee" stroke-width="2" transform="skewY(-30)"/>
+                                    <rect x="30" y="120" width="120" height="30" fill="#3b82f6" stroke="#22d3ee" stroke-width="2" transform="skewY(30)" opacity="0.6"/>
+                                    <text x="100" y="180" fill="white" font-size="10" text-anchor="middle" font-family="Roboto">Gabungan</text>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Question & Answer Area -->
+                        <div class="w-full md:w-2/3 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <span id="q-counter" class="text-yellow-500 font-bold text-sm">Soal 1 / 10</span>
+                                    <span id="q-score" class="text-cyan-400 font-bold text-sm">Skor: 0</span>
+                                </div>
+                                <h3 id="q-text" class="text-xl font-bold mb-6 min-h-[60px]">Memuat soal...</h3>
+                                
+                                <div id="q-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <!-- Options generated by JS -->
+                                </div>
+                                <div id="q-feedback" class="mt-4 text-sm font-bold hidden min-h-[40px]"></div>
+                            </div>
+                            
+                            <div class="mt-6 flex justify-end">
+                                <button id="btn-next-q" onclick="nextQuestion()" class="hidden bg-purple-700 hover:bg-purple-600 px-6 py-2 rounded font-bold text-white transition duration-300">
+                                    Serangan Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                                <button id="btn-reset-arena" onclick="resetArena()" class="hidden bg-red-700 hover:bg-red-600 px-6 py-2 rounded font-bold text-white transition duration-300 ml-2">
+                                    <i class="fas fa-redo mr-2"></i> Ulangi Duel
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -278,7 +283,7 @@
             </div>
         </section>
 
-        <!-- SECTION 5: GUIDED PRACTICE (DRAG & DROP) -->
+        <!-- SECTION 5: GUIDED PRACTICE -->
         <section class="holo-card rounded-xl p-6 fade-in">
             <div class="holo-content">
                 <div class="flex justify-between items-center mb-6">
@@ -292,25 +297,25 @@
 
                 <div id="drag-game" class="bg-gray-900 p-4 rounded-lg space-y-6">
                     <div class="flex justify-center gap-4 mb-4 flex-wrap">
-                        <div class="drag-item px-4 py-2 rounded font-bold text-white" draggable="true" id="drag-benar" ondragstart="dragStart(event)">BENAR</div>
-                        <div class="drag-item px-4 py-2 rounded font-bold text-white" draggable="true" id="drag-salah" ondragstart="dragStart(event)">SALAH</div>
+                        <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing" draggable="true" id="drag-benar" ondragstart="dragStart(event)">BENAR</div>
+                        <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing" draggable="true" id="drag-salah" ondragstart="dragStart(event)">SALAH</div>
                     </div>
 
                     <div class="question-box">
                         <p>1. "0.666... sama dengan 6.6%"</p>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-salah">Taruh Jawaban Di Sini</div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-salah">Taruh Jawaban Di Sini</div>
                         <p class="text-sm text-red-400 hidden mt-2 ans-feedback">Salah! Seharusnya 0.666... × 100 = 66.6%</p>
                     </div>
 
                     <div class="question-box">
                         <p>2. "Diskon 50% + 20% = Diskon 70%"</p>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-salah">Taruh Jawaban Di Sini</div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-salah">Taruh Jawaban Di Sini</div>
                         <p class="text-sm text-red-400 hidden mt-2 ans-feedback">Salah! Diskon bertingkat tidak dijumlah, hitung bertahap dari sisa harga.</p>
                     </div>
 
                     <div class="question-box">
                         <p>3. "1/6 = 0.1666..."</p>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-benar">Taruh Jawaban Di Sini</div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-benar">Taruh Jawaban Di Sini</div>
                         <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! 1/6 dibagi menghasilkan desimal 0.1666...</p>
                     </div>
 
@@ -466,34 +471,131 @@
                     {left: "\\[", right: "\\]", display: true}
                 ]
             });
+            initWarmupArena();
             initAssessment();
             document.getElementById('assess-date').valueAsDate = new Date();
         });
 
-        // --- WARMUP GAME ---
-        function checkWarmup(btn, choice) {
-            const qBox = btn.closest('.question');
-            const correct = qBox.dataset.answer;
-            const feedback = qBox.querySelector('.ans-feedback');
+        // --- WARMUP ARENA STATE & LOGIC ---
+        const warmupQuestions = [
+            { q: "Hitung volume kubus jika sisinya 3 cm.", opts: ["9 cm³", "27 cm³", "12 cm³"], ans: 1, visual: "geo" },
+            { q: "Hitung volume balok dengan ukuran 5x3x2 cm.", opts: ["10 cm³", "30 cm³", "15 cm³"], ans: 1, visual: "geo" },
+            { q: "Jika kubus (sisi 3cm) diletakkan di atas balok (5x3x2cm), berapa volume gabungannya?", opts: ["57 cm³", "33 cm³", "90 cm³"], ans: 0, visual: "geo" },
+            { q: "Jika volume sebuah kubus 64 cm³, berapa panjang sisinya?", opts: ["4 cm", "8 cm", "16 cm"], ans: 1, visual: "geo" },
+            { q: "Jika volume kubus 64 cm³, berapa luas salah satu sisinya?", opts: ["16 cm²", "8 cm²", "32 cm²"], ans: 0, visual: "geo" },
+            { q: "Sebutkan angka desimal yang tepat berada di tengah-tengah 0.5 dan 0.6.", opts: ["0.55", "0.56", "0.11"], ans: 0, visual: "dec" },
+            { q: "Angka desimal di tengah-tengah 0.4 dan 0.5 adalah...", opts: ["0.45", "0.09", "0.54"], ans: 0, visual: "dec" },
+            { q: "Ubah 3/4 menjadi bentuk persen.", opts: ["34%", "75%", "0.75%"], ans: 1, visual: "dec" },
+            { q: "Ubah 1/2 menjadi bentuk persen.", opts: ["12%", "50%", "0.5%"], ans: 1, visual: "dec" },
+            { q: "Manakah yang lebih besar: 0.6 atau 0.58?", opts: ["0.6", "0.58", "Sama besar"], ans: 0, visual: "dec" }
+        ];
+
+        let currentQIndex = 0;
+        let scoreArena = 0;
+        let answeredArena = new Array(10).fill(false);
+
+        function initWarmupArena() {
+            currentQIndex = 0;
+            scoreArena = 0;
+            answeredArena = new Array(10).fill(false);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = warmupQuestions[currentQIndex];
+            document.getElementById('q-counter').innerText = `Soal ${currentQIndex + 1} / 10`;
+            document.getElementById('q-score').innerText = `Skor: ${scoreArena}`;
+            document.getElementById('q-text').innerText = q.q;
+            document.getElementById('quiz-progress').style.width = `${((currentQIndex + 1) / 10) * 100}%`;
             
-            // Reset buttons in this question
-            qBox.querySelectorAll('button').forEach(b => {
-                b.classList.remove('bg-green-700', 'bg-red-700', 'ring-2');
-                b.disabled = true;
+            const fbEl = document.getElementById('q-feedback');
+            fbEl.classList.add('hidden');
+            document.getElementById('btn-next-q').classList.add('hidden');
+
+            // Render Options
+            const optContainer = document.getElementById('q-options');
+            optContainer.innerHTML = '';
+            q.opts.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn-arena bg-gray-800 p-3 rounded-lg text-left font-bold hover:bg-gray-700';
+                btn.innerHTML = `<span class="text-yellow-500 mr-2">${String.fromCharCode(65 + i)}.</span> ${opt}`;
+                if(answeredArena[currentQIndex]) {
+                    btn.disabled = true;
+                    if(i === q.ans) btn.classList.add('opt-correct');
+                } else {
+                    btn.onclick = () => checkArenaAnswer(i, q.ans);
+                }
+                optContainer.appendChild(btn);
             });
 
-            if (choice === correct) {
-                btn.classList.add('bg-green-700', 'ring-2', 'ring-green-400');
-                feedback.classList.remove('hidden', 'text-red-400');
-                feedback.classList.add('text-green-400');
-            } else {
-                btn.classList.add('bg-red-700', 'ring-2', 'ring-red-400');
-                feedback.classList.remove('hidden', 'text-green-400');
-                feedback.classList.add('text-red-400');
-                feedback.innerText = "Salah! " + feedback.innerText.split(' ').slice(1).join(' ');
-                // Highlight correct
-                qBox.querySelector(`button[onclick*="'${correct}'"]`).classList.add('bg-green-700', 'ring-2', 'ring-green-400');
+            // Render Visual
+            const visualEl = document.getElementById('arena-visual');
+            if(q.visual === 'geo') {
+                visualEl.innerHTML = `
+                <svg viewBox="0 0 200 200" class="w-full max-w-[200px] drop-shadow-lg">
+                    <!-- Balok (Bagian Bawah) -->
+                    <polygon points="40,160 140,160 140,120 40,120" fill="#2563eb" stroke="#22d3ee" stroke-width="2" stroke-linejoin="round"/>
+                    <polygon points="140,160 140,120 170,105 170,145" fill="#1d4ed8" stroke="#22d3ee" stroke-width="2" stroke-linejoin="round"/>
+                    <polygon points="40,120 140,120 170,105 70,105" fill="#3b82f6" stroke="#22d3ee" stroke-width="2" stroke-linejoin="round"/>
+                    
+                    <!-- Kubus (Bagian Atas) -->
+                    <polygon points="60,120 110,120 110,70 60,70" fill="#7c3aed" stroke="#d4af37" stroke-width="2" stroke-linejoin="round"/>
+                    <polygon points="110,120 110,70 140,55 140,105" fill="#6d28d9" stroke="#d4af37" stroke-width="2" stroke-linejoin="round"/>
+                    <polygon points="60,70 110,70 140,55 90,55" fill="#8b5cf6" stroke="#d4af37" stroke-width="2" stroke-linejoin="round"/>
+                    
+                    <text x="105" y="180" fill="#e2e8f0" font-size="12" text-anchor="middle" font-family="Roboto" font-weight="bold">Gabungan</text>
+                </svg>`;
+            }  else {
+                visualEl.innerHTML = `
+                <svg viewBox="0 0 200 100" class="w-full max-w-[180px] drop-shadow-lg">
+                    <line x1="20" y1="50" x2="180" y2="50" stroke="#a855f7" stroke-width="2"/>
+                    <circle cx="20" cy="50" r="4" fill="#22d3ee"/>
+                    <text x="20" y="70" fill="white" font-size="10" text-anchor="middle">0.4</text>
+                    <circle cx="100" cy="50" r="6" fill="#d4af37"/>
+                    <text x="100" y="70" fill="#d4af37" font-size="12" font-weight="bold" text-anchor="middle">0.45</text>
+                    <circle cx="180" cy="50" r="4" fill="#22d3ee"/>
+                    <text x="180" y="70" fill="white" font-size="10" text-anchor="middle">0.5</text>
+                    <text x="100" y="30" fill="#ef4444" font-size="10" text-anchor="middle">Tengah?</text>
+                </svg>`;
             }
+        }
+
+        function checkArenaAnswer(selected, correct) {
+            answeredArena[currentQIndex] = true;
+            const fbEl = document.getElementById('q-feedback');
+            const btns = document.querySelectorAll('.opt-btn-arena');
+            
+            btns.forEach((btn, i) => {
+                btn.disabled = true;
+                if(i === correct) btn.classList.add('opt-correct');
+                if(i === selected && selected !== correct) btn.classList.add('opt-wrong');
+            });
+
+            if(selected === correct) {
+                scoreArena += 10;
+                fbEl.innerHTML = `<span class="text-green-400"><i class="fas fa-check-circle"></i> Serangan mengenai sasaran! +10 Poin</span>`;
+            } else {
+                fbEl.innerHTML = `<span class="text-red-400"><i class="fas fa-times-circle"></i> Meleset! Jawaban benar adalah ${warmupQuestions[currentQIndex].opts[correct]}</span>`;
+            }
+            fbEl.classList.remove('hidden');
+            document.getElementById('q-score').innerText = `Skor: ${scoreArena}`;
+            
+            if(currentQIndex < 9) {
+                document.getElementById('btn-next-q').classList.remove('hidden');
+            } else {
+                document.getElementById('btn-reset-arena').classList.remove('hidden');
+                fbEl.innerHTML += `<br><span class="text-yellow-500 text-lg font-bold mt-2 block">Duel Selesai! Total Skor: ${scoreArena}</span>`;
+            }
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            renderQuestion();
+        }
+
+        function resetArena() {
+            initWarmupArena();
+            document.getElementById('btn-reset-arena').classList.add('hidden');
         }
 
         // --- DISCOUNT SIMULATOR ---
@@ -509,34 +611,31 @@
             document.getElementById('sim-text').innerHTML = `Harga setelah Diskon ${d1*100}% = Rp ${sisa1.toLocaleString('id-ID')}.<br> Harga akhir setelah Diskon ${d2*100}% lagi = <strong>Rp ${sisa2.toLocaleString('id-ID')}</strong>`;
         }
 
-        // --- DRAG & DROP ---
+        // --- DRAG & DROP LOGIC ---
         function dragStart(e) {
             e.dataTransfer.setData("text/plain", e.target.id);
             setTimeout(() => e.target.classList.add('opacity-50'), 0);
         }
         function dragOver(e) {
             e.preventDefault();
-            e.currentTarget.classList.add('over');
+            e.currentTarget.classList.add('over', 'border-cyan-400');
         }
         function drop(e) {
             e.preventDefault();
-            e.currentTarget.classList.remove('over');
+            e.currentTarget.classList.remove('over', 'border-cyan-400');
             const data = e.dataTransfer.getData("text/plain");
             const draggedEl = document.getElementById(data);
             draggedEl.classList.remove('opacity-50');
             
-            // Move element visually
             if(e.currentTarget.querySelector('.drag-item')) {
-                // swap back if already filled - simplified: just put it back to origin
                 document.querySelector('#drag-game .flex').appendChild(e.currentTarget.querySelector('.drag-item'));
             }
             e.currentTarget.innerHTML = '';
             e.currentTarget.appendChild(draggedEl);
             e.currentTarget.dataset.current = data;
         }
-        // Drag leave remove over class
         document.addEventListener('dragleave', (e) => {
-            if(e.target.classList.contains('drag-zone')) e.target.classList.remove('over');
+            if(e.target.classList.contains('drag-zone')) e.target.classList.remove('over', 'border-cyan-400');
         });
 
         function cekDragDrop() {
@@ -545,8 +644,8 @@
                 const isCorrect = zone.dataset.current === zone.dataset.correct;
                 const feedback = zone.closest('.question-box').querySelector('.ans-feedback');
                 
-                zone.classList.remove('border-red-500', 'border-green-500');
-                zone.classList.add(isCorrect ? 'border-green-500' : 'border-red-500');
+                zone.classList.remove('border-dashed', 'border-green-500', 'border-red-500', 'border-2');
+                zone.classList.add('border-2', isCorrect ? 'border-green-500' : 'border-red-500');
                 feedback.classList.remove('hidden');
                 if(!isCorrect) {
                     feedback.classList.remove('text-green-400');
@@ -585,18 +684,13 @@
         // --- GENERAL RESET ---
         function resetGame(containerId) {
             const c = document.getElementById(containerId);
-            // reset inputs
             c.querySelectorAll('input').forEach(i => { i.value = ''; i.classList.remove('border-red-500', 'border-green-500'); });
-            // reset feedbacks
             c.querySelectorAll('.ans-feedback, .ans-feedback-wrong').forEach(f => f.classList.add('hidden'));
-            // reset buttons if any
-            c.querySelectorAll('button.opt-btn').forEach(b => { b.classList.remove('bg-green-700', 'bg-red-700', 'ring-2'); b.disabled = false; });
-            // reset drag if any
             if(containerId === 'drag-game') {
                 const parent = c.querySelector('.flex');
                 const items = c.querySelectorAll('.drag-item');
                 items.forEach(item => parent.appendChild(item));
-                c.querySelectorAll('.drag-zone').forEach(z => { z.innerHTML = 'Taruh Jawaban Di Sini'; z.dataset.current = ''; z.classList.remove('border-red-500', 'border-green-500'); });
+                c.querySelectorAll('.drag-zone').forEach(z => { z.innerHTML = 'Taruh Jawaban Di Sini'; z.dataset.current = ''; z.classList.remove('border-green-500', 'border-red-500'); z.classList.add('border-dashed', 'border-2'); });
             }
         }
 
@@ -631,7 +725,7 @@
                 { type: 'dropdown', q: 'Ubah 0.444... menjadi pecahan:', opts: ['4/10', '4/9', '4/100', '44/100'], ans: '4/9', sol: 'Desimal 1 digit berulang x = 4/9' },
                 { type: 'text', q: 'Ubah 5/6 menjadi desimal (tuliskan 3 angka di belakang koma):', ans: '0.833', sol: '5/6 = 0.8333...' },
                 { type: 'text', q: 'Ubah 0.8333... menjadi persen (1 desimal, tanpa %):', ans: '83.3', sol: '0.8333... x 100 = 83.33...%' },
-                { type: 'radio', q: 'Hasil dari 1/9 x 3 adalah:', opts: ['1/27', '0.333...', '3/9'], opts: ['1/27', '0.333...', '3/9'], ans: '0.333...', sol: '1/9 = 0.111... x 3 = 0.333...' },
+                { type: 'radio', q: 'Hasil dari 1/9 x 3 adalah:', opts: ['1/27', '0.333...', '3/9'], ans: '0.333...', sol: '1/9 = 0.111... x 3 = 0.333...' },
                 { type: 'checkbox', q: 'Pilih desimal berulang di bawah ini:', opts: ['0.25', '0.666...', '0.142857...', '0.5'], ans: ['0.666...', '0.142857...'], sol: 'Keduanya memiliki pola angka yang berulang.' },
                 { type: 'radio', q: 'Manakah yang lebih besar?', opts: ['0.66', '2/3'], ans: '2/3', sol: '2/3 = 0.666... lebih besar dari 0.660' },
                 { type: 'text', q: '0.555... + 0.444... = ... (dalam desimal)', ans: '1', sol: '5/9 + 4/9 = 9/9 = 1' },
@@ -664,7 +758,6 @@
             ]
         };
 
-        // --- ASSESSMENT RENDERING & LOGIC ---
         function initAssessment() {
             for (let g = 1; g <= 5; g++) {
                 const container = document.getElementById(`qg${g}`);
@@ -678,12 +771,12 @@
                             html += `<label class="block cursor-pointer hover:bg-gray-700 p-1 rounded"><input type="radio" name="q-${g}-${i}" value="${opt}" class="mr-2"> ${opt}</label>`;
                         });
                     } else if(q.type === 'dropdown') {
-                        html += `<select class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white" id="sel-${g}-${i}">`;
+                        html += `<select class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white">`;
                         html += `<option value="">-- Pilih Jawaban --</option>`;
                         q.opts.forEach(opt => html += `<option value="${opt}">${opt}</option>`);
                         html += `</select>`;
                     } else if(q.type === 'text') {
-                        html += `<input type="text" id="txt-${g}-${i}" class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white" placeholder="Ketik jawaban...">`;
+                        html += `<input type="text" class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white" placeholder="Ketik jawaban...">`;
                     } else if(q.type === 'checkbox') {
                         q.opts.forEach((opt, j) => {
                             html += `<label class="block cursor-pointer hover:bg-gray-700 p-1 rounded"><input type="checkbox" name="q-${g}-${i}" value="${opt}" class="mr-2"> ${opt}</label>`;
@@ -719,13 +812,13 @@
                     userAns = sel ? sel.value : "";
                     isCorrect = userAns === q.ans;
                 } else if(q.type === 'dropdown') {
-                    userAns = document.getElementById(`sel-${g}-${i}`).value;
+                    userAns = qEl.querySelector('select').value;
                     isCorrect = userAns === q.ans;
                 } else if(q.type === 'text') {
-                    userAns = document.getElementById(`txt-${g}-${i}`).value.trim().replace(/\s/g, '').replace(/,/g, '.');
+                    userAns = qEl.querySelector('input').value.trim().replace(/\s/g, '').replace(/,/g, '.');
                     isCorrect = userAns === q.ans;
                 } else if(q.type === 'checkbox') {
-                    const checked = document.querySelectorAll(`input[name="q-${g}-${i}"]:checked`);
+                    const checked = qEl.querySelectorAll(`input[name="q-${g}-${i}"]:checked`);
                     userAns = Array.from(checked).map(c => c.value);
                     isCorrect = JSON.stringify(userAns.sort()) === JSON.stringify(q.ans.sort());
                 }
@@ -753,21 +846,22 @@
             let printContent = '';
 
             questions.forEach((q, i) => {
+                const qEl = document.getElementById(`q-${g}-${i}`);
                 let userAns = '';
                 let isCorrect = false;
 
                 if(q.type === 'radio') {
-                    const sel = document.querySelector(`input[name="q-${g}-${i}"]:checked`);
+                    const sel = qEl.querySelector(`input[name="q-${g}-${i}"]:checked`);
                     userAns = sel ? sel.value : "(Kosong)";
                     isCorrect = userAns === q.ans;
                 } else if(q.type === 'dropdown') {
-                    userAns = document.getElementById(`sel-${g}-${i}`).value || "(Kosong)";
+                    userAns = qEl.querySelector('select').value || "(Kosong)";
                     isCorrect = userAns === q.ans;
                 } else if(q.type === 'text') {
-                    userAns = document.getElementById(`txt-${g}-${i}`).value.trim() || "(Kosong)";
+                    userAns = qEl.querySelector('input').value.trim() || "(Kosong)";
                     isCorrect = userAns.replace(/\s/g, '').replace(/,/g, '.') === q.ans;
                 } else if(q.type === 'checkbox') {
-                    const checked = document.querySelectorAll(`input[name="q-${g}-${i}"]:checked`);
+                    const checked = qEl.querySelectorAll(`input[name="q-${g}-${i}"]:checked`);
                     userAns = Array.from(checked).map(c => c.value).join(', ') || "(Kosong)";
                     isCorrect = JSON.stringify(Array.from(checked).map(c=>c.value).sort()) === JSON.stringify(q.ans.sort());
                 }
@@ -788,7 +882,6 @@
             document.getElementById('p-score').innerText = score;
             document.getElementById('p-content').innerHTML = printContent;
 
-            // Show print area, hide others, print, then revert
             document.getElementById('print-area').classList.remove('hidden');
             document.querySelectorAll('main > section:not(#print-area)').forEach(el => el.classList.add('hidden'));
             
