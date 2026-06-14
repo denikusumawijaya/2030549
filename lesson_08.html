@@ -437,7 +437,7 @@
                 </div>
                 <div class="bg-black/40 p-4 rounded-lg border border-purple-800 mb-6">
                     <p class="text-gray-300 mb-3">Sering terjadi kesalahan logika (misconception) dalam persentase. Ingat! Desimal ke persen dikali 100 (koma geser 2 kali ke kanan), dan diskon bertingkat dihitung dari sisa.</p>
-                    <p class="text-gray-300">Tugas: Seret kartu "BENAR" atau "SALAH" ke kolom di setiap soal!</p>
+                    <p class="text-gray-300">Tugas: Seret kartu "BENAR" atau "SALAH" ke kolom di setiap soal sesuai dengan kebenaran pernyataannya!</p>
                 </div>
 
                 <div id="drag-game" class="bg-gray-900 p-4 rounded-lg space-y-6">
@@ -449,8 +449,8 @@
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" ondragstart="dragStart(event)" data-value="benar">BENAR</div>
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" ondragstart="dragStart(event)" data-value="salah">SALAH</div>
                         </div>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="salah">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm mt-2 hidden ans-feedback">Salah! Seharusnya 0.666... × 100 = 66.6%</p>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="salah" data-explanation="Desimal 0.666... jika dikali 100 hasilnya adalah 66.6%, bukan 6.6%.">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback"></p>
                     </div>
 
                     <!-- Soal 2 -->
@@ -460,8 +460,8 @@
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" ondragstart="dragStart(event)" data-value="benar">BENAR</div>
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" ondragstart="dragStart(event)" data-value="salah">SALAH</div>
                         </div>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="salah">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm mt-2 hidden ans-feedback">Salah! Diskon bertingkat tidak dijumlah, hitung bertahap dari sisa harga.</p>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="salah" data-explanation="Diskon kedua dihitung dari sisa harga setelah diskon pertama, sehingga tidak bisa langsung dijumlahkan menjadi 70%.">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback"></p>
                     </div>
 
                     <!-- Soal 3 -->
@@ -471,8 +471,8 @@
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" ondragstart="dragStart(event)" data-value="benar">BENAR</div>
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" ondragstart="dragStart(event)" data-value="salah">SALAH</div>
                         </div>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="benar">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm mt-2 hidden ans-feedback">Benar! 1 dibagi 6 menghasilkan desimal berulang 0.1666...</p>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="benar" data-explanation="Pecahan 1/6 jika dibagi menggunakan porogapit memang menghasilkan desimal berulang 0.1666...">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback"></p>
                     </div>
 
                     <!-- Soal 4 -->
@@ -482,8 +482,8 @@
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" ondragstart="dragStart(event)" data-value="benar">BENAR</div>
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" ondragstart="dragStart(event)" data-value="salah">SALAH</div>
                         </div>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="benar">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm mt-2 hidden ans-feedback">Benar! Konversi desimal ke persen adalah dikali 100, yang berarti geser koma 2 kali ke kanan.</p>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="benar" data-explanation="Mengubah desimal ke persen berarti dikali 100, yang secara visual sama dengan menggeser koma 2 kali ke kanan.">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback"></p>
                     </div>
 
                     <!-- Soal 5 -->
@@ -493,8 +493,8 @@
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" ondragstart="dragStart(event)" data-value="benar">BENAR</div>
                             <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" ondragstart="dragStart(event)" data-value="salah">SALAH</div>
                         </div>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="salah">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm mt-2 hidden ans-feedback">Salah! 100k - 40% = 60k. 60k - 10% = 54k. Diskon efektifnya adalah 46%, bukan 50%.</p>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="salah" data-explanation="Misal harga 100k. Diskon 40% (sisa 60k), lalu diskon 10% dari sisa (potong 6k, sisa 54k). Total diskon efektifnya adalah 46%, bukan 50%.">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback"></p>
                     </div>
 
                     <div class="mt-4 flex gap-2">
@@ -1006,12 +1006,23 @@
             const zones = document.querySelectorAll('#drag-game .drag-zone');
             zones.forEach(zone => {
                 const isCorrect = zone.dataset.current === zone.dataset.correct;
-                const feedback = zone.closest('.question-box').querySelector('.ans-feedback');
+                const feedbackEl = zone.closest('.question-box').querySelector('.ans-feedback');
+                const explanation = zone.dataset.explanation;
                 
                 zone.classList.remove('border-dashed', 'border-green-500', 'border-red-500', 'border-2');
                 zone.classList.add('border-2', isCorrect ? 'border-green-500' : 'border-red-500');
-                feedback.classList.remove('hidden');
-                feedback.className = `text-sm mt-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`;
+                
+                let feedbackHTML = "";
+                if(isCorrect) {
+                    // Jika siswa menjawab tepat
+                    feedbackHTML = `<span class="text-green-400 font-bold"><i class="fas fa-check-circle mr-1"></i>Tepat!</span> Pernyataan ini memang <strong class="underline decoration-yellow-500">${zone.dataset.correct.toUpperCase()}</strong>. ${explanation}`;
+                } else {
+                    // Jika siswa menjawab kurang tepat
+                    feedbackHTML = `<span class="text-red-400 font-bold"><i class="fas fa-times-circle mr-1"></i>Kurang Tepat.</span> Pernyataan ini sebenarnya <strong class="underline decoration-yellow-500">${zone.dataset.correct.toUpperCase()}</strong>. ${explanation}`;
+                }
+
+                feedbackEl.innerHTML = feedbackHTML;
+                feedbackEl.classList.remove('hidden');
             });
         }
 
