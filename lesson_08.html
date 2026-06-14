@@ -93,12 +93,28 @@
         .tab-btn.active { border-color: var(--ygo-cyan); color: var(--ygo-cyan); background: rgba(34, 211, 238, 0.1); }
         
         /* Print Styles */
+        /* Print Styles */
         @media print {
-            body { background: white; color: black; }
-            .no-print { display: none !important; }
-            .holo-card { border: 1px solid black; box-shadow: none; background: white; }
-            .holo-card::before { display: none; }
-            .print-area { display: block !important; }
+            body { background: white !important; color: black !important; }
+            
+            /* Saat class is-printing aktif, sembunyikan header & section utama */
+            body.is-printing header,
+            body.is-printing main > section {
+                display: none !important;
+            }
+            
+            /* Pastikan area print tampil */
+            body.is-printing .print-area {
+                display: block !important;
+                background: white !important;
+                color: black !important;
+                border: none !important;
+                box-shadow: none !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
         }
     </style>
 </head>
@@ -126,6 +142,16 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8 space-y-12">
 
+        <!-- Print Area (Hidden on screen) -->
+        <div id="print-area" class="print-area hidden bg-white text-black p-8">
+            <h1 class="text-2xl font-bold mb-2 text-center">Hasil Assessment Matematika</h1>
+            <p><strong>Nama:</strong> <span id="p-name"></span></p>
+            <p><strong>Tanggal:</strong> <span id="p-date"></span></p>
+            <p><strong>Skor Akhir:</strong> <span id="p-score"></span> / 50</p>
+            <hr class="my-4 border-black">
+            <div id="p-content"></div>
+        </div>
+        
         <!-- SECTION 1: SPIRAL REVIEW WARM-UP (REDESIGNED) -->
         <section class="holo-card rounded-xl p-6 fade-in">
             <div class="holo-content">
@@ -410,32 +436,65 @@
                     <span class="timer-badge px-3 py-1 rounded-full text-sm font-bold text-white">00:30 - 00:45</span>
                 </div>
                 <div class="bg-black/40 p-4 rounded-lg border border-purple-800 mb-6">
-                    <p class="text-gray-300 mb-3">Sering terjadi kesalahan logika (misconception) dalam persentase. Misalnya, mengubah desimal ke persen dengan menggeser koma secara sembarangan. Ingat! Desimal ke persen dikali 100 (koma geser 2 kali ke kanan).</p>
-                    <p class="text-gray-300">Tugas: Seret kartu "BENAR" atau "SALAH" ke kolom yang tersedia!</p>
+                    <p class="text-gray-300 mb-3">Sering terjadi kesalahan logika (misconception) dalam persentase. Ingat! Desimal ke persen dikali 100 (koma geser 2 kali ke kanan), dan diskon bertingkat dihitung dari sisa.</p>
+                    <p class="text-gray-300">Tugas: Seret kartu "BENAR" atau "SALAH" ke kolom di setiap soal!</p>
                 </div>
 
                 <div id="drag-game" class="bg-gray-900 p-4 rounded-lg space-y-6">
-                    <div class="flex justify-center gap-4 mb-4 flex-wrap">
-                        <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing" draggable="true" id="drag-benar" ondragstart="dragStart(event)">BENAR</div>
-                        <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing" draggable="true" id="drag-salah" ondragstart="dragStart(event)">SALAH</div>
+                    
+                    <!-- Soal 1 -->
+                    <div class="question-box bg-black/30 p-4 rounded-lg border border-gray-700">
+                        <p class="font-bold mb-3">1. "0.666... sama dengan 6.6%"</p>
+                        <div class="flex gap-3 mb-2">
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" data-value="benar">BENAR</div>
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" data-value="salah">SALAH</div>
+                        </div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" data-correct="salah">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback">Salah! Seharusnya 0.666... × 100 = 66.6%</p>
                     </div>
 
-                    <div class="question-box">
-                        <p>1. "0.666... sama dengan 6.6%"</p>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-salah">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm text-red-400 hidden mt-2 ans-feedback">Salah! Seharusnya 0.666... × 100 = 66.6%</p>
+                    <!-- Soal 2 -->
+                    <div class="question-box bg-black/30 p-4 rounded-lg border border-gray-700">
+                        <p class="font-bold mb-3">2. "Diskon 50% + 20% = Diskon 70%"</p>
+                        <div class="flex gap-3 mb-2">
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" data-value="benar">BENAR</div>
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" data-value="salah">SALAH</div>
+                        </div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" data-correct="salah">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback">Salah! Diskon bertingkat tidak dijumlah, hitung bertahap dari sisa harga.</p>
                     </div>
 
-                    <div class="question-box">
-                        <p>2. "Diskon 50% + 20% = Diskon 70%"</p>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-salah">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm text-red-400 hidden mt-2 ans-feedback">Salah! Diskon bertingkat tidak dijumlah, hitung bertahap dari sisa harga.</p>
+                    <!-- Soal 3 -->
+                    <div class="question-box bg-black/30 p-4 rounded-lg border border-gray-700">
+                        <p class="font-bold mb-3">3. "1/6 = 0.1666..."</p>
+                        <div class="flex gap-3 mb-2">
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" data-value="benar">BENAR</div>
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" data-value="salah">SALAH</div>
+                        </div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" data-correct="benar">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback">Benar! 1 dibagi 6 menghasilkan desimal berulang 0.1666...</p>
                     </div>
 
-                    <div class="question-box">
-                        <p>3. "1/6 = 0.1666..."</p>
-                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded" ondrop="drop(event)" ondragover="dragOver(event)" data-correct="drag-benar">Taruh Jawaban Di Sini</div>
-                        <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! 1/6 dibagi menghasilkan desimal 0.1666...</p>
+                    <!-- Soal 4 -->
+                    <div class="question-box bg-black/30 p-4 rounded-lg border border-gray-700">
+                        <p class="font-bold mb-3">4. "Untuk mengubah desimal ke persen, koma digeser 2 kali ke kanan"</p>
+                        <div class="flex gap-3 mb-2">
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" data-value="benar">BENAR</div>
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" data-value="salah">SALAH</div>
+                        </div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" data-correct="benar">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback">Benar! Konversi desimal ke persen adalah dikali 100, yang berarti geser koma 2 kali ke kanan.</p>
+                    </div>
+
+                    <!-- Soal 5 -->
+                    <div class="question-box bg-black/30 p-4 rounded-lg border border-gray-700">
+                        <p class="font-bold mb-3">5. "Diskon 40% + 10% sama saja dengan Diskon 50%"</p>
+                        <div class="flex gap-3 mb-2">
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-green-700 border border-green-400" draggable="true" data-value="benar">BENAR</div>
+                            <div class="drag-item px-4 py-2 rounded font-bold text-white cursor-grab active:cursor-grabbing bg-red-700 border border-red-400" draggable="true" data-value="salah">SALAH</div>
+                        </div>
+                        <div class="drag-zone p-2 mt-2 flex items-center justify-center text-gray-500 border-dashed border-2 min-h-[50px] rounded bg-gray-800/50" data-correct="salah">Taruh Jawaban Di Sini</div>
+                        <p class="text-sm mt-2 hidden ans-feedback">Salah! 100k - 40% = 60k. 60k - 10% = 54k. Diskon efektifnya adalah 46%, bukan 50%.</p>
                     </div>
 
                     <div class="mt-4 flex gap-2">
@@ -454,31 +513,12 @@
                     <span class="timer-badge px-3 py-1 rounded-full text-sm font-bold text-white">00:45 - 01:00</span>
                 </div>
                 <div class="bg-gray-900 p-4 rounded-lg">
-                    <div id="indie-game" class="space-y-6">
-                        <div>
-                            <label class="block mb-2">1. Mana yang lebih besar: 2/3 harga atau 65% harga?</label>
-                            <div class="flex gap-2">
-                                <input type="text" id="indie-1" class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white" placeholder="Ketik: 2/3 atau 65%">
-                            </div>
-                            <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! 2/3 = 0.666... (66.6%), lebih besar dari 65%.</p>
-                            <p class="text-sm text-red-400 hidden mt-2 ans-feedback-wrong">Salah. Ubah 2/3 ke desimal = 0.666... (66.6%), lebih besar dari 65%.</p>
-                        </div>
-                        <div>
-                            <label class="block mb-2">2. Harga sepatu Rp 200.000 diskon 30% + 10%. Berapa harga akhir? (Tulis angka tanpa Rp dan titik)</label>
-                            <input type="text" id="indie-2" class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white" placeholder="Contoh: 100000">
-                            <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! 200k - 30% = 140k. 140k - 10% = 126000.</p>
-                            <p class="text-sm text-red-400 hidden mt-2 ans-feedback-wrong">Salah. Hitung: 200.000 - 30% = 140.000. Lalu 140.000 - 10% = 126.000.</p>
-                        </div>
-                        <div>
-                            <label class="block mb-2">3. Ubah 0.8333... menjadi pecahan biasa paling sederhana.</label>
-                            <input type="text" id="indie-3" class="w-full bg-gray-800 border border-gray-600 p-2 rounded text-white" placeholder="Contoh: 1/2">
-                            <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! 0.8333... = 5/6.</p>
-                            <p class="text-sm text-red-400 hidden mt-2 ans-feedback-wrong">Salah. 0.8333... adalah desimal berulang dari 5/6.</p>
-                        </div>
+                    <div id="indie-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Questions will be generated by JS -->
                     </div>
-                    <div class="mt-4 flex gap-2">
+                    <div class="mt-6 flex gap-2">
                         <button onclick="cekIndie()" class="bg-green-700 hover:bg-green-600 px-4 py-2 rounded font-bold text-sm transition"><i class="fas fa-check mr-1"></i> Cek Jawaban</button>
-                        <button onclick="resetGame('indie-game')" class="bg-red-700 hover:bg-red-600 px-4 py-2 rounded font-bold text-sm transition"><i class="fas fa-redo mr-1"></i> Reset</button>
+                        <button onclick="resetGame('indie-grid')" class="bg-red-700 hover:bg-red-600 px-4 py-2 rounded font-bold text-sm transition"><i class="fas fa-redo mr-1"></i> Reset</button>
                     </div>
                 </div>
             </div>
@@ -510,16 +550,6 @@
                 <button class="tab-btn px-4 py-2 font-bold border-b-2 border-transparent text-gray-400 hover:text-white transition whitespace-nowrap" onclick="switchTab('tab3', this)">Grup 3</button>
                 <button class="tab-btn px-4 py-2 font-bold border-b-2 border-transparent text-gray-400 hover:text-white transition whitespace-nowrap" onclick="switchTab('tab4', this)">Grup 4</button>
                 <button class="tab-btn px-4 py-2 font-bold border-b-2 border-transparent text-gray-400 hover:text-white transition whitespace-nowrap" onclick="switchTab('tab5', this)">Grup 5</button>
-            </div>
-
-            <!-- Print Area (Hidden on screen) -->
-            <div id="print-area" class="print-area hidden bg-white text-black p-8">
-                <h1 class="text-2xl font-bold mb-2 text-center">Hasil Assessment Matematika</h1>
-                <p><strong>Nama:</strong> <span id="p-name"></span></p>
-                <p><strong>Tanggal:</strong> <span id="p-date"></span></p>
-                <p><strong>Skor Akhir:</strong> <span id="p-score"></span> / 50</p>
-                <hr class="my-4 border-black">
-                <div id="p-content"></div>
             </div>
 
             <!-- Tab Content -->
@@ -593,6 +623,7 @@
             initWarmupArena();
             initDiscountArena();
             initMagicArena();
+            initIndieGame();
             initAssessment();
             document.getElementById('assess-date').valueAsDate = new Date();
         });
@@ -944,32 +975,31 @@
         }
 
         // ============================================
-        // SECTION 5: DRAG & DROP
+        // SECTION 5: DRAG & DROP (REVISED)
         // ============================================
         function dragStart(e) {
-            e.dataTransfer.setData("text/plain", e.target.id);
+            e.dataTransfer.setData("text/plain", e.target.dataset.value);
             setTimeout(() => e.target.classList.add('opacity-50'), 0);
         }
         function dragOver(e) {
             e.preventDefault();
-            e.currentTarget.classList.add('over', 'border-cyan-400');
+            e.currentTarget.classList.add('border-cyan-400', 'bg-cyan-900/20');
         }
         function drop(e) {
             e.preventDefault();
-            e.currentTarget.classList.remove('over', 'border-cyan-400');
-            const data = e.dataTransfer.getData("text/plain");
-            const draggedEl = document.getElementById(data);
-            draggedEl.classList.remove('opacity-50');
+            e.currentTarget.classList.remove('border-cyan-400', 'bg-cyan-900/20');
+            const value = e.dataTransfer.getData("text/plain");
+            e.currentTarget.dataset.current = value;
+            e.currentTarget.innerHTML = `<span class="font-bold ${value === 'benar' ? 'text-green-400' : 'text-red-400'}">${value.toUpperCase()}</span>`;
             
-            if(e.currentTarget.querySelector('.drag-item')) {
-                document.querySelector('#drag-game .flex').appendChild(e.currentTarget.querySelector('.drag-item'));
-            }
-            e.currentTarget.innerHTML = '';
-            e.currentTarget.appendChild(draggedEl);
-            e.currentTarget.dataset.current = data;
+            // Kembalikan opacity kartu di dalam soal yang sama
+            const box = e.currentTarget.closest('.question-box');
+            box.querySelectorAll('.drag-item').forEach(item => item.classList.remove('opacity-50'));
         }
         document.addEventListener('dragleave', (e) => {
-            if(e.target.classList.contains('drag-zone')) e.target.classList.remove('over', 'border-cyan-400');
+            if(e.target.classList.contains('drag-zone')) {
+                e.target.classList.remove('border-cyan-400', 'bg-cyan-900/20');
+            }
         });
 
         function cekDragDrop() {
@@ -981,54 +1011,80 @@
                 zone.classList.remove('border-dashed', 'border-green-500', 'border-red-500', 'border-2');
                 zone.classList.add('border-2', isCorrect ? 'border-green-500' : 'border-red-500');
                 feedback.classList.remove('hidden');
-                if(!isCorrect) {
-                    feedback.classList.remove('text-green-400');
-                    feedback.classList.add('text-red-400');
+                feedback.className = `text-sm mt-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`;
+            });
+        }
+
+        // ============================================
+        // SECTION 6: INDIE GAME (REVISED)
+        // ============================================
+        const indieQuestions = [
+            { q: "Mana yang lebih besar: 2/3 harga atau 65% harga?", ans: "2/3", sol: "2/3 = 0.666... (66.6%), lebih besar dari 65%." },
+            { q: "Harga sepatu Rp 200.000 diskon 30% + 10%. Berapa harga akhir? (tanpa Rp/titik)", ans: "126000", sol: "200k - 30% = 140k. 140k - 10% = 126000." },
+            { q: "Ubah 0.8333... menjadi pecahan biasa paling sederhana.", ans: "5/6", sol: "0.8333... adalah desimal berulang dari 5/6." },
+            { q: "Hitung harga akhir tas Rp 500.000 diskon 40% + 20%. (tanpa Rp/titik)", ans: "240000", sol: "500k - 40%=300k. 300k - 20%=240k." },
+            { q: "Apakah Diskon 30% + 10% sama dengan Diskon 40%? (Ketik: Benar/Salah)", ans: "salah", sol: "Diskon 30%+10% = 37%, bukan 40%." },
+            { q: "Ubah (1/9 x 3) menjadi pecahan biasa.", ans: "1/3", sol: "1/9 x 3 = 3/9 = 1/3." },
+            { q: "Harga setelah diskon 20% adalah Rp 80.000. Harga asli? (tanpa Rp/titik)", ans: "100000", sol: "80% = 80.000, maka 100% = 80.000 / 0.8 = 100.000." },
+            { q: "Nilai (0.333...) + (1/6) dalam pecahan paling sederhana?", ans: "1/2", sol: "1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2." },
+            { q: "Urutkan termurah ke termahal: A(50%), B(30%+20%), C(40%+10%). (Contoh: A, C, B)", ans: "a,c,b", sol: "A=50k. C=54k. B=56k. Urutan: A, C, B." },
+            { q: "Baju Rp 120.000 didiskon 25%. Harga bayar? (tanpa Rp/titik)", ans: "90000", sol: "120.000 - (25% x 120.000) = 90.000." }
+        ];
+
+        function initIndieGame() {
+            const grid = document.getElementById('indie-grid');
+            grid.innerHTML = '';
+            indieQuestions.forEach((q, i) => {
+                grid.innerHTML += `
+                    <div class="bg-black/40 p-4 rounded-lg border border-purple-800">
+                        <label class="block mb-2 font-bold text-sm">${i+1}. ${q.q}</label>
+                        <input type="text" class="indie-input w-full bg-gray-800 border border-gray-600 p-2 rounded text-white text-sm" data-answer="${q.ans.toLowerCase().replace(/\s/g, '')}" placeholder="Ketik jawaban...">
+                        <p class="text-sm text-green-400 hidden mt-2 ans-feedback">Benar! ${q.sol}</p>
+                        <p class="text-sm text-red-400 hidden mt-2 ans-feedback-wrong">Salah. ${q.sol}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function cekIndie() {
+            const inputs = document.querySelectorAll('.indie-input');
+            inputs.forEach(input => {
+                const userAns = input.value.trim().toLowerCase().replace(/\s/g, '').replace(/,/g, '.');
+                const correctAns = input.dataset.answer;
+                const parent = input.parentElement;
+                const fbTrue = parent.querySelector('.ans-feedback');
+                const fbFalse = parent.querySelector('.ans-feedback-wrong');
+
+                input.classList.remove('border-red-500', 'border-green-500');
+                if(userAns === correctAns) {
+                    input.classList.add('border-green-500');
+                    fbTrue.classList.remove('hidden');
+                    fbFalse.classList.add('hidden');
                 } else {
-                    feedback.classList.remove('text-red-400');
-                    feedback.classList.add('text-green-400');
+                    input.classList.add('border-red-500');
+                    fbTrue.classList.add('hidden');
+                    fbFalse.classList.remove('hidden');
                 }
             });
         }
 
         // ============================================
-        // SECTION 6: INDIE GAME
-        // ============================================
-        function cekIndie() {
-            const a1 = document.getElementById('indie-1').value.trim().replace(/\s/g, '');
-            const a2 = document.getElementById('indie-2').value.trim().replace(/\./g, '');
-            const a3 = document.getElementById('indie-3').value.trim().replace(/\s/g, '');
-
-            checkField(a1 === '2/3', document.getElementById('indie-1'), document.querySelector('#indie-1 + .ans-feedback'), document.querySelector('#indie-1 + .ans-feedback + .ans-feedback-wrong'));
-            checkField(a2 === '126000', document.getElementById('indie-2'), document.querySelector('#indie-2 + .ans-feedback'), document.querySelector('#indie-2 + .ans-feedback + .ans-feedback-wrong'));
-            checkField(a3 === '5/6', document.getElementById('indie-3'), document.querySelector('#indie-3 + .ans-feedback'), document.querySelector('#indie-3 + .ans-feedback + .ans-feedback-wrong'));
-        }
-
-        function checkField(isCorrect, input, fbTrue, fbFalse) {
-            input.classList.remove('border-red-500', 'border-green-500');
-            if(isCorrect) {
-                input.classList.add('border-green-500');
-                fbTrue.classList.remove('hidden');
-                fbFalse.classList.add('hidden');
-            } else {
-                input.classList.add('border-red-500');
-                fbTrue.classList.add('hidden');
-                fbFalse.classList.remove('hidden');
-            }
-        }
-
-        // ============================================
-        // GENERAL RESET
+        // GENERAL RESET (REVISED)
         // ============================================
         function resetGame(containerId) {
             const c = document.getElementById(containerId);
-            c.querySelectorAll('input').forEach(i => { i.value = ''; i.classList.remove('border-red-500', 'border-green-500'); });
-            c.querySelectorAll('.ans-feedback, .ans-feedback-wrong').forEach(f => f.classList.add('hidden'));
             if(containerId === 'drag-game') {
-                const parent = c.querySelector('.flex');
-                const items = c.querySelectorAll('.drag-item');
-                items.forEach(item => parent.appendChild(item));
-                c.querySelectorAll('.drag-zone').forEach(z => { z.innerHTML = 'Taruh Jawaban Di Sini'; z.dataset.current = ''; z.classList.remove('border-green-500', 'border-red-500'); z.classList.add('border-dashed', 'border-2'); });
+                c.querySelectorAll('.drag-zone').forEach(z => { 
+                    z.innerHTML = 'Taruh Jawaban Di Sini'; 
+                    z.dataset.current = ''; 
+                    z.classList.remove('border-green-500', 'border-red-500'); 
+                    z.classList.add('border-dashed', 'border-2'); 
+                });
+                c.querySelectorAll('.drag-item').forEach(item => item.classList.remove('opacity-50'));
+                c.querySelectorAll('.ans-feedback').forEach(f => f.classList.add('hidden'));
+            } else if(containerId === 'indie-grid') {
+                c.querySelectorAll('.indie-input').forEach(i => { i.value = ''; i.classList.remove('border-red-500', 'border-green-500'); });
+                c.querySelectorAll('.ans-feedback, .ans-feedback-wrong').forEach(f => f.classList.add('hidden'));
             }
         }
 
@@ -1217,20 +1273,24 @@
                 `;
             });
 
+            // Masukkan data ke area print
             document.getElementById('p-name').innerText = name;
             document.getElementById('p-date').innerText = date;
             document.getElementById('p-score').innerText = score;
             document.getElementById('p-content').innerHTML = printContent;
 
+            // Aktifkan mode print pada body
+            document.body.classList.add('is-printing');
             document.getElementById('print-area').classList.remove('hidden');
-            document.querySelectorAll('main > section:not(#print-area)').forEach(el => el.classList.add('hidden'));
             
+            // Cetak
             window.print();
 
+            // Setelah dialog print ditutup, kembalikan semuanya seperti semula
             setTimeout(() => {
+                document.body.classList.remove('is-printing');
                 document.getElementById('print-area').classList.add('hidden');
-                document.querySelectorAll('main > section').forEach(el => el.classList.remove('hidden'));
-            }, 500);
+            }, 1000);
         }
     </script>
 </body>
