@@ -199,16 +199,45 @@
                     <span class="timer-badge px-3 py-1 rounded-full text-sm font-bold text-white">00:10 - 00:15</span>
                 </div>
                 <div class="bg-black/40 p-4 rounded-lg border border-purple-800 mb-6">
-                    <p class="text-gray-300 mb-3">Pernahkah kamu melihat tulisan 'Diskon 50% + 20%' di mall? Apakah itu artinya diskon total 70%? <strong class="text-red-400">Hati-hati, ini jebakan!</strong></p>
-                    <p class="text-gray-300">Diskon bertingkat tidak dijumlahkan langsung. Diskon kedua dihitung dari sisa harga setelah diskon pertama. Hari ini kita menjadi <em class="text-cyan-400">Detektif Belanja</em> untuk membongkar rahasia angka-angka ini!</p>
+                    <p class="text-gray-300 mb-3">Pernahkah kamu melihat tulisan 'Diskon 50% + 20%' di mall? Apakah itu artinya diskon total 70%? <strong class="text-red-400">Hati-hati, ini bisa jadi Trap Card!</strong></p>
+                    <p class="text-gray-300 mb-4">Diskon bertingkat tidak dijumlahkan langsung. Diskon kedua dihitung dari sisa harga setelah diskon pertama. Coba pilih: Mana toko yang lebih murah?</p>
                 </div>
-                <div class="flex justify-center">
-                    <div class="bg-gradient-to-t from-gray-900 to-purple-900 p-6 rounded-xl border-4 border-red-600 shadow-lg shadow-red-600/30 text-center w-64 transform hover:scale-105 transition duration-300">
-                        <div class="bg-red-600 text-white font-bold py-1 px-4 rounded-full inline-block mb-3 text-sm">SALE</div>
-                        <h3 class="font-cinzel text-2xl font-black text-white">50% + 20%</h3>
-                        <p class="text-yellow-400 mt-2">= 70%?</p>
-                        <p class="text-red-400 font-bold text-3xl mt-2">SALAH!</p>
+                
+                <h3 class="text-center text-cyan-400 font-bold mb-4 font-cinzel text-lg tracking-widest"><i class="fas fa-crosshairs mr-2"></i>MISI DETEKTIF: PILIH TOKO TERMURAH!</h3>
+                <p class="text-center text-gray-400 text-sm mb-6">(Klik salah satu toko untuk membongkar jebakannya)</p>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <!-- Kartu Toko A -->
+                    <div id="toko-a" onclick="revealTrap('A')" class="cursor-pointer bg-gradient-to-t from-gray-900 to-blue-900 p-6 rounded-xl border-4 border-cyan-600 shadow-lg shadow-cyan-600/20 text-center transition-all duration-300 hover:scale-105 hover:border-yellow-400 relative overflow-hidden group">
+                        <div class="bg-cyan-600 text-white font-bold py-1 px-4 rounded-full inline-block mb-3 text-sm tracking-wider">TOKO A</div>
+                        <h3 class="font-cinzel text-2xl font-black text-white mb-4">Diskon 70%</h3>
+                        <p class="text-gray-300 text-sm mb-2">Tas Seharga</p>
+                        <p class="text-2xl font-bold text-white">Rp 100.000</p>
+                        <!-- Hasil Reveal -->
+                        <div id="reveal-a" class="hidden mt-4 bg-green-500/20 p-3 rounded-lg border border-green-400">
+                            <p class="text-green-400 text-sm font-bold">Harga Bayar:</p>
+                            <p class="text-green-300 text-2xl font-black font-cinzel">Rp 30.000</p>
+                        </div>
                     </div>
+
+                    <!-- Kartu Toko B (Trap) -->
+                    <div id="toko-b" onclick="revealTrap('B')" class="cursor-pointer bg-gradient-to-t from-gray-900 to-red-900 p-6 rounded-xl border-4 border-red-600 shadow-lg shadow-red-600/30 text-center transition-all duration-300 hover:scale-105 hover:border-yellow-400 relative overflow-hidden group">
+                        <div class="bg-red-600 text-white font-bold py-1 px-4 rounded-full inline-block mb-3 text-sm tracking-wider animate-pulse">TRAP CARD?</div>
+                        <h3 class="font-cinzel text-2xl font-black text-white mb-4">Diskon 50% + 20%</h3>
+                        <p class="text-gray-300 text-sm mb-2">Tas Seharga</p>
+                        <p class="text-2xl font-bold text-white">Rp 100.000</p>
+                        <!-- Hasil Reveal -->
+                        <div id="reveal-b" class="hidden mt-4 bg-yellow-500/20 p-3 rounded-lg border border-yellow-400">
+                            <p class="text-yellow-400 text-sm font-bold">Harga Bayar:</p>
+                            <p class="text-yellow-300 text-2xl font-black font-cinzel">Rp 40.000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Jebakan -->
+                <div id="trap-feedback" class="hidden bg-black/40 p-4 rounded-lg border-2 border-yellow-500 fade-in">
+                    <h4 class="text-yellow-500 font-bold text-xl font-cinzel mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>TRAP TERBONGKAR!</h4>
+                    <p class="text-gray-300">Banyak yang mengira "Diskon 50% + 20%" totalnya 70%. <strong class="text-red-400">Ini salah!</strong> Diskon kedua (20%) dihitung dari <em>sisa harga</em> setelah diskon pertama (50%), bukan dari harga awal. Jadi tokonya menarik dengan angka, tapi sebenarnya Toko A lebih murah!</p>
                 </div>
             </div>
         </section>
@@ -598,6 +627,40 @@
             document.getElementById('btn-reset-arena').classList.add('hidden');
         }
 
+        // --- TRAP CARD REVEAL LOGIC ---
+        let trapRevealed = false;
+        function revealTrap(toko) {
+            if(trapRevealed) return; // Mencegah klik berulang
+            trapRevealed = true;
+            
+            // Tampilkan hasil di kedua kartu
+            document.getElementById('reveal-a').classList.remove('hidden');
+            document.getElementById('reveal-b').classList.remove('hidden');
+            
+            // Tampilkan teks penjelasan jebakan
+            document.getElementById('trap-feedback').classList.remove('hidden');
+            
+            const tokoA = document.getElementById('toko-a');
+            const tokoB = document.getElementById('toko-b');
+            
+            // Hilangkan efek hover karena sudah diklik
+            tokoA.classList.remove('hover:scale-105', 'hover:border-yellow-400');
+            tokoB.classList.remove('hover:scale-105', 'hover:border-yellow-400');
+            tokoA.style.cursor = 'default';
+            tokoB.style.cursor = 'default';
+            
+            // Efek visual pilihan
+            if(toko === 'A') {
+                // Kalau milih A (Benar)
+                tokoA.classList.add('ring-4', 'ring-green-400', 'scale-105', 'border-green-400');
+                tokoB.classList.add('opacity-60', 'grayscale');
+            } else {
+                // Kalau milih B (Kena Trap)
+                tokoB.classList.add('ring-4', 'ring-red-400', 'scale-105', 'border-red-400', 'animate-pulse');
+                tokoA.classList.add('opacity-60', 'grayscale');
+            }
+        }
+        
         // --- DISCOUNT SIMULATOR ---
         function hitungSimulator() {
             const h = parseFloat(document.getElementById('sim-harga').value);
