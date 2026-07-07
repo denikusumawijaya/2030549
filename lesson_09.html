@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Tutoring — by Deni</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root {
+  --bg: #0b1121; --bg2: #111827; --card: rgba(17,24,39,0.85);
+  --fg: #e2e8f0; --muted: #64748b; --accent: #10b981;
+  --accent2: #f59e0b; --danger: #ef4444; --border: rgba(100,116,139,0.2);
+  --glass: rgba(16,185,129,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; overflow-x: hidden; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Latar belakang animasi */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(16,185,129,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(245,158,11,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(16,185,129,0.03) 0%, transparent 50%);
+}
+.bg-grid::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(16,185,129,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,185,129,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Transisi halaman */
+.view { display: none; position: relative; z-index: 1; }
+.view.active { display: block; animation: fadeSlideIn 0.4s ease; }
+@keyframes fadeSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Peta node */
+.map-node {
+  width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease;
+  position: relative; border: 3px solid var(--border);
+  background: var(--bg2);
+}
+.map-node.unlocked { border-color: var(--accent); box-shadow: 0 0 20px rgba(16,185,129,0.2); }
+.map-node.unlocked:hover { transform: scale(1.12); box-shadow: 0 0 30px rgba(16,185,129,0.4); }
+.map-node.completed { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.map-node.completed:hover { transform: scale(1.08); }
+.map-node.locked { opacity: 0.35; cursor: not-allowed; }
+.map-node.current { animation: pulseGlow 2s ease-in-out infinite; }
+@keyframes pulseGlow {
+  0%,100% { box-shadow: 0 0 15px rgba(16,185,129,0.3); }
+  50% { box-shadow: 0 0 35px rgba(16,185,129,0.6); }
+}
+
+/* Koneksi garis peta */
+.map-line { width: 3px; height: 40px; margin: 0 auto; background: var(--border); transition: background 0.5s; }
+.map-line.done { background: var(--accent); }
+.map-branch-line { height: 3px; width: 60px; background: var(--border); transition: background 0.5s; }
+.map-branch-line.done { background: var(--accent); }
+
+/* Lesson node di peta detail */
+.lesson-node {
+  width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; cursor: pointer; transition: all 0.3s; border: 2px solid var(--border); background: var(--bg2);
+}
+.lesson-node.theory { border-radius: 50%; }
+.lesson-node.exercise { border-radius: 16px; }
+.lesson-node.unlocked { border-color: var(--accent); }
+.lesson-node.unlocked:hover { transform: scale(1.15); box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+.lesson-node.completed { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.lesson-node.locked { opacity: 0.3; cursor: not-allowed; }
+.lesson-connector { width: 2px; height: 24px; margin: 0 auto; background: var(--border); }
+.lesson-connector.done { background: var(--accent); }
+
+/* Tombol */
+.btn-primary {
+  background: var(--accent); color: var(--bg); font-weight: 600; padding: 14px 32px; border-radius: 14px;
+  border: none; cursor: pointer; font-size: 1rem; font-family: inherit; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.3); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; filter: none; }
+.btn-secondary {
+  background: transparent; color: var(--accent); font-weight: 600; padding: 12px 24px; border-radius: 14px;
+  border: 2px solid var(--accent); cursor: pointer; font-size: 0.9rem; font-family: inherit; transition: all 0.2s;
+}
+.btn-secondary:hover { background: rgba(16,185,129,0.1); }
+
+/* Opsi exercise */
+.opt-card {
+  padding: 16px 20px; border: 2px solid var(--border); border-radius: 14px; cursor: pointer;
+  transition: all 0.2s; background: var(--card); min-height: 52px; display: flex; align-items: center; gap: 12px;
+}
+.opt-card:hover { border-color: rgba(16,185,129,0.4); background: var(--glass); }
+.opt-card.selected { border-color: var(--accent); background: rgba(16,185,129,0.12); }
+.opt-card.correct { border-color: #10b981; background: rgba(16,185,129,0.15); }
+.opt-card.wrong { border-color: #ef4444; background: rgba(239,68,68,0.1); }
+.opt-card.disabled { pointer-events: none; opacity: 0.7; }
+
+/* Input exercise */
+.ex-input {
+  background: var(--bg2); border: 2px solid var(--border); border-radius: 12px; padding: 14px 18px;
+  color: var(--fg); font-size: 1rem; font-family: inherit; width: 100%; outline: none; transition: border-color 0.2s;
+}
+.ex-input:focus { border-color: var(--accent); }
+.ex-input.correct { border-color: #10b981; }
+.ex-input.wrong { border-color: #ef4444; }
+
+/* Code block */
+.code-block {
+  background: #0d1117; border: 1px solid rgba(100,116,139,0.2); border-radius: 12px;
+  padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+  line-height: 1.7; overflow-x: auto; white-space: pre;
+}
+
+/* Progress bar */
+.prog-bar { height: 6px; border-radius: 3px; background: rgba(100,116,139,0.2); overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width 0.5s ease; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+  padding: 14px 28px; border-radius: 14px; font-weight: 600; z-index: 999;
+  transition: transform 0.4s ease; pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { background: #10b981; color: #0b1121; }
+.toast.error { background: #ef4444; color: white; }
+.toast.info { background: #f59e0b; color: #0b1121; }
+
+/* XP popup */
+.xp-popup {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0);
+  background: var(--bg2); border: 2px solid var(--accent2); border-radius: 24px;
+  padding: 40px 60px; z-index: 100; text-align: center;
+  transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.xp-popup.show { transform: translate(-50%,-50%) scale(1); }
+
+/* Celebration particles */
+.confetti { position: fixed; top: -10px; z-index: 99; pointer-events: none; animation: confettiFall 2s ease-out forwards; }
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Match exercise */
+.match-item {
+  padding: 12px 18px; border: 2px solid var(--border); border-radius: 12px; cursor: pointer;
+  transition: all 0.2s; background: var(--card); text-align: center; user-select: none;
+}
+.match-item:hover { border-color: rgba(16,185,129,0.4); }
+.match-item.active { border-color: var(--accent); background: rgba(16,185,129,0.12); box-shadow: 0 0 15px rgba(16,185,129,0.2); }
+.match-item.matched { border-color: #10b981; background: rgba(16,185,129,0.15); opacity: 0.6; pointer-events: none; }
+.match-item.wrong-match { border-color: #ef4444; background: rgba(239,68,68,0.1); }
+
+/* Order exercise */
+.order-item {
+  padding: 14px 20px; border: 2px solid var(--border); border-radius: 12px; cursor: pointer;
+  transition: all 0.2s; background: var(--card); user-select: none;
+}
+.order-item:hover { border-color: rgba(16,185,129,0.4); }
+.order-item.ordered { border-color: var(--accent2); background: rgba(245,158,11,0.1); opacity: 0.5; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.3); border-radius: 3px; }
+
+/* Responsif */
+@media (max-width: 640px) {
+  .map-node { width: 56px; height: 56px; font-size: 1rem; }
+  .lesson-node { width: 48px; height: 48px; font-size: 0.75rem; }
+}
+
+/* Animasi masuk */
+.stagger-in > * { opacity: 0; transform: translateY(15px); animation: staggerFade 0.4s ease forwards; }
+.stagger-in > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-in > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-in > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-in > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-in > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger-in > *:nth-child(9) { animation-delay: 0.45s; }
+.stagger-in > *:nth-child(10) { animation-delay: 0.5s; }
+@keyframes staggerFade { to { opacity: 1; transform: translateY(0); } }
+
+/* Feedback benar/salah */
+.feedback-bar {
+  padding: 18px 24px; border-radius: 14px; font-weight: 600; display: flex; align-items: center; gap: 12px;
+  animation: fadeSlideIn 0.3s ease;
+}
+.feedback-bar.correct-fb { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #10b981; }
+.feedback-bar.wrong-fb { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; }
+
+/* Terjemahan bahasa Indonesia di bawah teks utama */
+.id-lang { display: block; font-size: 0.75rem; color: #94a3b8; margin-top: 2px; line-height: 1.4; }
+
+/* Khusus label di node peta/lesson: tidak wrap, indo di bawah inggris */
+.node-title { text-align: center; white-space: nowrap; }
+.node-title .id-lang { display: block; white-space: nowrap; margin-top: 2px; }
+
+/* Modal Rules */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
+  display: none; align-items: center; justify-content: center;
+}
+.modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+.modal-box {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
+  padding: 30px; max-width: 450px; width: 90%; position: relative;
+  animation: scaleIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<!-- Rules Modal -->
+<div id="rulesModal" class="modal-overlay">
+  <div class="modal-box">
+    <button onclick="closeRules()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-300 transition">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+    <h3 class="text-xl font-bold mb-5 text-amber-400">
+      <i class="fa-solid fa-gavel mr-2"></i>Class Rules <span class="id-lang" style="display:inline; color:#f59e0b;">Aturan Kelas</span>
+    </h3>
+    <ul class="space-y-4 text-slate-300">
+      <li class="flex items-start gap-3">
+        <span class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fa-solid fa-comments text-emerald-400"></i></span>
+        <div>
+          <strong>Take turns speaking</strong>
+          <span class="id-lang">Berbicara secara bergantian</span>
+        </div>
+      </li>
+      <li class="flex items-start gap-3">
+        <span class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fa-solid fa-video text-amber-400"></i></span>
+        <div>
+          <strong>Turn on camera & microphone when required</strong>
+          <span class="id-lang">Menyalakan kamera & microphone jika diperlukan</span>
+        </div>
+      </li>
+      <li class="flex items-start gap-3">
+        <span class="w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center flex-shrink-0 mt-0.5"><i class="fa-solid fa-hand text-violet-400"></i></span>
+        <div>
+          <strong>Ask for permission to leave the class</strong>
+          <span class="id-lang">Meminta izin jika ingin meninggalkan kelas</span>
+        </div>
+      </li>
+    </ul>
+    <div class="mt-6 text-right">
+      <button onclick="closeRules()" class="btn-primary">Got it! <span class="id-lang" style="color:rgba(11,17,33,0.7); display:inline;">Mengerti!</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- XP Popup -->
+<div id="xpPopup" class="xp-popup">
+  <div class="text-5xl font-bold text-amber-400 mb-2">+<span id="xpAmount">10</span> XP</div>
+  <div class="text-lg text-slate-400">Correct answer! <span class="id-lang">Jawaban benar!</span></div>
+</div>
+
+<!-- ========== MAP VIEW ========== -->
+<div id="mapView" class="view active">
+  <header class="sticky top-0 z-10 backdrop-blur-xl bg-[#0b1121]/80 border-b border-white/5">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+          <i class="fa-solid fa-square-root-variable text-emerald-400"></i>
+        </div>
+        <div>
+          <div class="font-bold text-lg leading-tight">Math Tutoring</div>
+          <div class="text-xs text-slate-500">by Deni</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-5">
+        <button onclick="openRules()" class="text-xs text-slate-500 hover:text-amber-400 transition flex items-center gap-1 border border-transparent hover:border-amber-400/30 rounded-lg px-2 py-1" title="Class Rules">
+          <i class="fa-solid fa-gavel"></i> Rules
+        </button>
+        <button onclick="resetProgress()" class="text-xs text-slate-500 hover:text-red-400 transition flex items-center gap-1 border border-transparent hover:border-red-400/30 rounded-lg px-2 py-1" title="Reset Semua Progress">
+          <i class="fa-solid fa-rotate-left"></i> Reset
+        </button>
+        <div class="flex items-center gap-2 text-amber-400 font-semibold">
+          <i class="fa-solid fa-bolt"></i><span id="headerXP">0</span> XP
+        </div>
+        <div class="flex items-center gap-2 text-orange-400 font-semibold">
+          <i class="fa-solid fa-fire"></i><span id="headerStreak">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 pt-8 pb-20">
+    <div class="text-center mb-10">
+		<h1 class="text-2xl md:text-3xl font-extrabold mb-3 bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent leading-tight">
+		  Luas, Array, & Perkalian Aljabar Dasar
+		  <span class="id-lang" style="display:block; color:#94a3b8; margin-top: 4px; font-size: 1.25rem;">Area, Arrays, and Basic Algebraic Multiplication</span>
+		</h1>
+            <div class="text-slate-400 mx-auto text-center" style="max-width: 90%;">
+        <div style="white-space: nowrap;">Selesaikan setiap peta untuk membuka peta berikutnya. Kumpulkan XP dan bangun streak belajarmu!</div>
+        <div class="id-lang" style="white-space: nowrap;">Complete each map to unlock the next. Collect XP and build your learning streak!</div>
+      </div>
+    </div>
+
+    <!-- Progress keseluruhan -->
+    <div class="max-w-md mx-auto mb-10">
+      <div class="flex justify-between text-sm mb-2">
+        <span class="text-slate-400">Overall Progress <span class="id-lang" style="display:inline; color:#64748b;">Progress Keseluruhan</span></span>
+        <span class="text-emerald-400 font-semibold" id="totalProgress">0%</span>
+      </div>
+      <div class="prog-bar">
+        <div class="prog-fill" id="totalProgFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Peta nodes akan dirender oleh JS -->
+    <div id="mapContainer" class="flex flex-col items-center gap-0"></div>
+  </main>
+</div>
+
+<!-- ========== PETA VIEW (detail lesson) ========== -->
+<div id="petaView" class="view">
+  <header class="sticky top-0 z-10 backdrop-blur-xl bg-[#0b1121]/80 border-b border-white/5">
+    <div class="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
+      <button onclick="showMap()" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition">
+        <i class="fa-solid fa-arrow-left text-slate-400"></i>
+      </button>
+      <div>
+        <div class="font-bold text-lg" id="petaTitle"></div>
+        <div class="text-xs text-slate-500" id="petaSubtitle"></div>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-2xl mx-auto px-4 pt-8 pb-20">
+    <div id="lessonContainer" class="flex flex-col items-center"></div>
+  </main>
+</div>
+
+<!-- ========== LESSON VIEW ========== -->
+<div id="lessonView" class="view">
+  <header class="sticky top-0 z-10 backdrop-blur-xl bg-[#0b1121]/80 border-b border-white/5">
+    <div class="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
+      <button onclick="closeLesson()" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition">
+        <i class="fa-solid fa-xmark text-slate-400"></i>
+      </button>
+      <div class="flex-1">
+        <div class="prog-bar">
+          <div class="prog-fill" id="lessonProgFill" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="text-sm text-slate-400 font-mono" id="lessonCounter">1/10</div>
+    </div>
+  </header>
+  <main class="max-w-2xl mx-auto px-4 pt-6 pb-20" id="lessonContent"></main>
+</div>
+
+<script>
+// ============================================================
+// DATA KURSUS — Seluruh konten pembelajaran
+// ============================================================
+const COURSE = {
+  title: "Luas, Array, & Perkalian Aljabar Dasar <span class='id-lang'>Area, Arrays, & Basic Algebraic Multiplication</span>",
+  maps: [
+    // ==================== SECTION 1 ====================
+    {
+      id:1, title:"Spiral Review <span class='id-lang'>Review Spiral</span>", icon:"fa-rotate", color:"#10b981", branch:false,
+      lessons:[
+        {type:"T",title:"Volume Bangun Ruang Gabungan <span class='id-lang'>Volume of Composite 3D Shapes</span>",
+         body:`<p>Sebelum menjelajahi model luas, mari pemanasan dengan volume! Ketika bangun ruang digabungkan, kita jumlahkan volumenya. <span class='id-lang'>Before exploring area models, let's warm up with volume! When shapes combine, we add volumes.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+           <div class="text-emerald-400 font-semibold mb-2"><i class="fa-solid fa-cube mr-2"></i>Rumus Kunci <span class='id-lang'>Key Formulas</span></div>
+           <p class="text-sm text-slate-300">\\( V_{\\text{kubus}} = s^3 \\) &nbsp;|&nbsp; \\( V_{\\text{balok}} = p \\times l \\times t \\). Untuk bangun gabungan: \\( V_{\\text{total}} = V_1 + V_2 \\). <span class='id-lang'>For composite shapes: add the volumes.</span></p>
+         </div>
+         <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+           <div class="text-amber-400 font-semibold mb-2">Contoh <span class='id-lang'>Example</span></div>
+           <p class="text-sm text-slate-300">Kubus \\( s = 4 \\): \\( V = 64 \\). Balok \\( 2 \\times 3 \\times 4 \\): \\( V = 24 \\). Total = \\( 64 + 24 = 88 \\). <span class='id-lang'>Cube s=4: 64. Cuboid 2×3×4: 24. Total: 88.</span></p>
+         </div>`},
+        {type:"E",etype:"mc",
+         q:"Sebuah kubus memiliki rusuk 5 cm. Berapa volumenya? <span class='id-lang'>A cube has side length 5 cm. What is its volume?</span>",
+         o:["125 cm³ <span class='id-lang'></span>","25 cm³ <span class='id-lang'></span>","15 cm³ <span class='id-lang'></span>","50 cm³ <span class='id-lang'></span>"],
+         a:0, h:"\\( V = 5^3 = 125 \\) cm³. <span class='id-lang'>V = 5³ = 125 cm³.</span>"},
+        {type:"E",etype:"fb",
+         q:"Sebuah balok \\( 2 \\times 3 \\times 4 \\) cm diletakkan di atas kubus bersisi 4 cm. Berapa volume totalnya? <span class='id-lang'>A cuboid 2×3×4 cm on a cube side 4 cm. Total volume?</span>",
+         a:"88", h:"\\( 4^3 + 2 \\times 3 \\times 4 = 64 + 24 = 88 \\). <span class='id-lang'>64 + 24 = 88.</span>"},
+        {type:"E",etype:"tf",
+         q:"Jika semua rusuk kubus digandakan, volumenya juga menjadi dua kali lipat. <span class='id-lang'>If you double all sides of a cube, the volume also doubles.</span>",
+         a:false, h:"Menggandakan rusuk melipatgandakan volume sebesar \\( 2^3 = 8 \\), bukan 2. <span class='id-lang'>Doubling sides multiplies volume by 8, not 2.</span>"},
+        {type:"T",title:"Menyelesaikan Persamaan Sederhana <span class='id-lang'>Solving Simple Equations</span>",
+         body:`<p>Di aljabar, kita menggunakan operasi kebalikan untuk menemukan nilai yang belum diketahui. Penjumlahan dibatalkan oleh pengurangan, dan perkalian dibatalkan oleh pembagian. <span class='id-lang'>In algebra, we use inverse operations. Addition is undone by subtraction, multiplication by division.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+           <div class="text-cyan-400 font-semibold mb-2">Operasi Kebalikan <span class='id-lang'>Inverse Operations</span></div>
+           <p class="text-sm text-slate-300">Jika \\( x + 7 = 15 \\), kurangi 7: \\( x = 8 \\). Jika \\( 2y = 20 \\), bagi 2: \\( y = 10 \\). <span class='id-lang'>If x+7=15 → subtract 7. If 2y=20 → divide by 2.</span></p>
+         </div>`},
+        {type:"E",etype:"fb",
+         q:"Jika \\( x + 7 = 15 \\), berapakah \\( x \\)? <span class='id-lang'>If x + 7 = 15, what is x?</span>",
+         a:"8", h:"Kurangi 7 dari kedua sisi. <span class='id-lang'>Subtract 7 from both sides.</span>"},
+        {type:"E",etype:"mc",
+         q:"Jika \\( 2y = 20 \\), berapakah \\( y \\)? <span class='id-lang'>If 2y = 20, what is y?</span>",
+         o:["10 <span class='id-lang'></span>","20 <span class='id-lang'></span>","5 <span class='id-lang'></span>","40 <span class='id-lang'></span>"],
+         a:0, h:"Bagi kedua sisi dengan 2. <span class='id-lang'>Divide both sides by 2.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah menyelesaikan \\( 3a + 2 = 14 \\). <span class='id-lang'>Order steps to solve 3a + 2 = 14.</span>",
+         o:["Kurangi 2: \\( 3a = 12 \\)","Bagi 3: \\( a = 4 \\)"],
+         a:[0,1], h:"Pertama batalkan penjumlahan, lalu perkalian. <span class='id-lang'>First undo addition, then multiplication.</span>"},
+        {type:"T",title:"Rumus Luas Persegi Panjang <span class='id-lang'>Rectangle Area Formula</span>",
+         body:`<p>Luas persegi panjang ditemukan dengan mengalikan panjang dan lebarnya: \\( L = p \\times l \\). Luas selalu diukur dalam satuan persegi. <span class='id-lang'>Area = length × width. Area is always in square units.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+           <div class="text-amber-400 font-semibold mb-2">Ingat <span class='id-lang'>Remember</span></div>
+           <p class="text-sm text-slate-300">\\( L = p \\times l \\). Contoh: panjang 8, lebar 5 → \\( L = 8 \\times 5 = 40 \\) cm². <span class='id-lang'>Example: length 8, width 5 → A = 40 cm².</span></p>
+         </div>`},
+        {type:"E",etype:"sa",
+         q:"Manakah rumus luas persegi panjang yang benar? <span class='id-lang'>Which are correct formulas for rectangle area?</span>",
+         o:["\\( L = p \\times l \\)","\\( L = s^2 \\) (untuk persegi) <span class='id-lang'>for a square</span>","\\( L = 2(p + l) \\)","\\( L = p + l \\)"],
+         a:[0,1], h:"\\( L = p \\times l \\) untuk persegi panjang; \\( s^2 \\) untuk persegi. \\( 2(p+l) \\) adalah keliling. <span class='id-lang'>2(p+l) is perimeter.</span>"},
+        {type:"E",etype:"fb",
+         q:"Hitunglah luas persegi panjang dengan panjang 12 dan lebar 5. <span class='id-lang'>Find the area of a rectangle length 12, width 5.</span>",
+         a:"60", h:"\\( 12 \\times 5 = 60 \\). <span class='id-lang'>12 × 5 = 60.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas selalu diukur dalam satuan persegi (misalnya cm², m²). <span class='id-lang'>Area is always measured in square units.</span>",
+         a:true, h:"Ya! Satuan persegi menunjukkan dua dimensi yang dikalikan. <span class='id-lang'>Yes! Square units indicate two dimensions multiplied.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sebuah persegi panjang memiliki panjang 8 dan lebar 6. Berapa luasnya? <span class='id-lang'>A rectangle has length 8 and width 6. Area?</span>",
+         o:["48 <span class='id-lang'></span>","14 <span class='id-lang'></span>","28 <span class='id-lang'></span>","36 <span class='id-lang'></span>"],
+         a:0, h:"\\( 8 \\times 6 = 48 \\). <span class='id-lang'>8 × 6 = 48.</span>"}
+      ]
+    },
+    // ==================== SECTION 2 ====================
+    {
+      id:2, title:"Koneksi Dunia Nyata <span class='id-lang'>Real-World Connection</span>", icon:"fa-lightbulb", color:"#06b6d4", branch:false,
+      lessons:[
+        {type:"T",title:"Variabel dalam Desain <span class='id-lang'>Variables in Design</span>",
+         body:`<p>Bayangkan merancang ruangan di Minecraft atau Roblox di mana panjangnya belum pasti — itu variabel! Desainer menggunakan variabel saat dimensi belum diketahui atau fleksibel. <span class='id-lang'>Imagine designing a room where length isn't fixed — it's a variable! Designers use variables for unknown dimensions.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+           <div class="text-cyan-400 font-semibold mb-2">Kekuatan Variabel <span class='id-lang'>The Power of Variables</span></div>
+           <p class="text-sm text-slate-300">Jika ruangan memiliki lebar 4 dan panjang \\( x \\), kita bisa menulis luasnya sebagai \\( 4x \\) — meskipun tidak tahu nilai \\( x \\)! <span class='id-lang'>If width is 4 and length is x, area is 4x — without knowing x!</span></p>
+         </div>`},
+        {type:"E",etype:"mc",
+         q:"Dalam desain game, apa yang diwakili variabel seperti \\( x \\) pada dimensi ruangan? <span class='id-lang'>In game design, what does a variable like x represent?</span>",
+         o:["Panjang yang belum diketahui atau fleksibel <span class='id-lang'>An unknown or flexible length</span>","Angka tetap <span class='id-lang'>A fixed number</span>","Luasnya sendiri <span class='id-lang'>The area itself</span>","Jenis balok <span class='id-lang'>A type of block</span>"],
+         a:0, h:"Variabel mewakili nilai yang bisa berubah atau belum diketahui. <span class='id-lang'>A variable stands for a value that can change or is unknown.</span>"},
+        {type:"E",etype:"tf",
+         q:"Semua dimensi bangunan harus berupa angka pasti sebelum kita bisa menghitung luasnya. <span class='id-lang'>All dimensions must be exact numbers before calculating area.</span>",
+         a:false, h:"Kita bisa menggunakan variabel untuk dimensi yang belum diketahui dan tetap menulis ekspresi luasnya! <span class='id-lang'>We can use variables for unknown dimensions and still write area expressions!</span>"},
+        {type:"E",etype:"fb",
+         q:"Sebuah ruangan memiliki lebar 4 dan panjang \\( x \\). Tulis luasnya sebagai ekspresi aljabar. <span class='id-lang'>A room has width 4 and length x. Write the area expression.</span>",
+         a:"4x", h:"\\( L = 4 \\times x = 4x \\). <span class='id-lang'>A = 4 × x = 4x.</span>"},
+        {type:"T",title:"Apa Itu Ekspresi Aljabar? <span class='id-lang'>What are Algebraic Expressions?</span>",
+         body:`<p>Ekspresi aljabar menggabungkan angka, variabel, dan operasi. Contoh: \\( 3x \\), \\( x + 5 \\), \\( 2x + 3 \\). Ini memungkinkan kita menulis rumus yang berlaku untuk SEMUA nilai \\( x \\). <span class='id-lang'>Algebraic expressions combine numbers, variables, and operations. They let us write formulas for ANY value of x.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+           <div class="text-emerald-400 font-semibold mb-2">Istilah Kunci <span class='id-lang'>Key Terms</span></div>
+           <p class="text-sm text-slate-300">\\( 3x \\): koefisien 3, variabel \\( x \\). &nbsp; \\( x + 5 \\): \\( x \\) adalah suku variabel, 5 adalah konstanta. <span class='id-lang'>3x: coefficient 3, variable x. x+5: variable term, constant.</span></p>
+         </div>`},
+        {type:"E",etype:"mc",
+         q:"Manakah yang merupakan ekspresi aljabar? <span class='id-lang'>Which is an algebraic expression?</span>",
+         o:["\\( 5x + 3 \\) <span class='id-lang'></span>","\\( 5 + 3 \\) <span class='id-lang'></span>","\\( 5 = 3 + 2 \\) <span class='id-lang'></span>","\\( 53 \\) <span class='id-lang'></span>"],
+         a:0, h:"Ekspresi aljabar harus mengandung minimal satu variabel. <span class='id-lang'>Must contain at least one variable.</span>"},
+        {type:"E",etype:"fb",
+         q:"Tulis '3 dikali \\( x \\)' sebagai ekspresi aljabar. <span class='id-lang'>Write '3 times x' as an algebraic expression.</span>",
+         a:"3x", h:"3 dikali \\( x \\) ditulis sebagai \\( 3x \\). <span class='id-lang'>3 times x is written 3x.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah dari soal cerita ke ekspresi aljabar: 'Sebuah persegi panjang memiliki panjang 7 lebih dari \\( x \\) dan lebar 3.' <span class='id-lang'>Order: 'A rectangle has length 7 more than x and width 3.'</span>",
+         o:["Identifikasi panjang: \\( x + 7 \\)","Identifikasi lebar: 3","Tulis luas: \\( 3(x + 7) \\)"],
+         a:[0,1,2], h:"Pertama identifikasi dimensi, lalu kalikan. <span class='id-lang'>First identify dimensions, then multiply.</span>"},
+        {type:"T",title:"Menghubungkan Luas dengan Aljabar <span class='id-lang'>Connecting Area to Algebra</span>",
+         body:`<p>Ketika dimensi mengandung variabel, luas menjadi ekspresi aljabar. Ini sangat berguna — satu rumus berlaku untuk semua nilai variabel! <span class='id-lang'>When dimensions contain variables, area becomes an algebraic expression. One formula works for any value!</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+           <div class="text-amber-400 font-semibold mb-2">Contoh <span class='id-lang'>Example</span></div>
+           <p class="text-sm text-slate-300">Panjang = \\( 3x \\), Lebar = 2 → \\( L = 3x \\times 2 = 6x \\). Jika \\( x = 4 \\), maka \\( L = 24 \\). <span class='id-lang'>Length=3x, Width=2 → A=6x. If x=4, then A=24.</span></p>
+         </div>`},
+        {type:"E",etype:"tf",
+         q:"Luas persegi panjang bisa mengandung variabel. <span class='id-lang'>Rectangle area can contain a variable.</span>",
+         a:true, h:"Ya! Ketika dimensi ada variabelnya, luas juga akan mengandung variabel. <span class='id-lang'>Yes! When dimensions have variables, area will too.</span>"},
+        {type:"E",etype:"sa",
+         q:"Manakah yang bisa mewakili luas persegi panjang? <span class='id-lang'>Which could represent rectangle area?</span>",
+         o:["\\( L = p \\times l \\)","\\( L = 5x \\)","\\( L = x^2 + 3x \\)","\\( L = 2(p + l) \\)"],
+         a:[0,1,2], h:"\\( 2(p+l) \\) adalah keliling, bukan luas. Selebihnya bisa jadi ekspresi luas. <span class='id-lang'>2(p+l) is perimeter, not area.</span>"},
+        {type:"E",etype:"fb",
+         q:"Jika panjang = \\( 4x \\) dan lebar = 3, berapakah luasnya? <span class='id-lang'>If length = 4x and width = 3, what is the area?</span>",
+         a:"12x", h:"\\( 4x \\times 3 = 12x \\). Kalikan koefisien dengan angka. <span class='id-lang'>4x × 3 = 12x. Multiply coefficient by number.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sebuah taman memiliki panjang \\( (x+2) \\) dan lebar 3. Manakah yang mewakili luasnya? <span class='id-lang'>A garden length (x+2) width 3. Which represents area?</span>",
+         o:["\\( 3(x+2) = 3x + 6 \\) <span class='id-lang'></span>","\\( 3x + 2 \\) <span class='id-lang'></span>","\\( x + 6 \\) <span class='id-lang'></span>","\\( 6x \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( L = 3 \\times (x+2) = 3x + 6 \\). <span class='id-lang'>A = 3 × (x+2) = 3x+6.</span>"}
+      ]
+    },
+    // ==================== SECTION 3 ====================
+    {
+      id:3, title:"Review Pengetahuan <span class='id-lang'>Review of Prior Knowledge</span>", icon:"fa-brain", color:"#8b5cf6", branch:false,
+      lessons:[
+        {type:"T",title:"Luas Persegi Panjang dengan Angka <span class='id-lang'>Rectangle Area with Numbers</span>",
+         body:`<p>Mari kita latih rumus dasar sebelum memasukkan variabel. Luas persegi panjang sama dengan panjang dikali lebar. <span class='id-lang'>Let's practice the basic formula before introducing variables. Area = length × width.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-violet-500/10 border border-violet-500/20">
+           <div class="text-violet-400 font-semibold mb-2">Latihan Cepat <span class='id-lang'>Quick Practice</span></div>
+           <p class="text-sm text-slate-300">\\( L = p \\times l \\). Jika \\( p = 7 \\) dan \\( l = 4 \\), maka \\( L = 28 \\). <span class='id-lang'>If p = 7 and l = 4, then A = 28.</span></p>
+         </div>`},
+        {type:"E",etype:"fb",
+         q:"Hitunglah luas persegi panjang dengan panjang 7 dan lebar \\( 4x \\). <span class='id-lang'>Find the area of a rectangle with length 7 and width 4x.</span>",
+         a:"28x", h:"\\( 7 \\times 4x = 28x \\). Kalikan angka dengan koefisien. <span class='id-lang'>7 × 4x = 28x. Multiply the number by the coefficient.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sebuah ruangan memiliki panjang \\( 5x \\) dan lebar 3. Berapa luasnya? <span class='id-lang'>A room has length 5x and width 3. Area?</span>",
+         o:["\\( 15x \\) <span class='id-lang'></span>","\\( 8x \\) <span class='id-lang'></span>","\\( 5x + 3 \\) <span class='id-lang'></span>","\\( 53x \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( 5x \\times 3 = 15x \\). <span class='id-lang'>5x × 3 = 15x.</span>"},
+        {type:"E",etype:"tf",
+         q:"Jika sebuah persegi panjang memiliki luas \\( 12x \\) dan lebar 4, maka panjangnya adalah \\( 3x \\). <span class='id-lang'>If area is 12x and width is 4, length is 3x.</span>",
+         a:true, h:"\\( 12x \\div 4 = 3x \\). Luas dibagi lebar sama dengan panjang. <span class='id-lang'>12x ÷ 4 = 3x. Area divided by width gives length.</span>"},
+        {type:"T",title:"Mengalikan Angka dengan Variabel <span class='id-lang'>Multiplying Numbers with Variables</span>",
+         body:`<p>Saat mengalikan angka dengan suku yang memiliki variabel, kalikan koefisiennya dan pertahankan variabelnya. <span class='id-lang'>When multiplying a number by a term with a variable, multiply the coefficients and keep the variable.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+           <div class="text-emerald-400 font-semibold mb-2">Aturannya <span class='id-lang'>The Rule</span></div>
+           <p class="text-sm text-slate-300">\\( 3 \\times x = 3x \\). &nbsp; \\( 5 \\times 2x = 10x \\). &nbsp; Kalikan angkanya, tempel variabelnya! <span class='id-lang'>Multiply the numbers, attach the variable!</span></p>
+         </div>`},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan: \\( 3 \\times x = \\) ? <span class='id-lang'>Simplify: 3 × x = ?</span>",
+         a:"3x", h:"3 dikali \\( x \\) ditulis sebagai \\( 3x \\). <span class='id-lang'>3 times x is written 3x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Berapa hasil dari \\( 5 \\times 2x \\)? <span class='id-lang'>What is 5 × 2x?</span>",
+         o:["\\( 10x \\) <span class='id-lang'></span>","\\( 7x \\) <span class='id-lang'></span>","\\( 52x \\) <span class='id-lang'></span>","\\( 10x^2 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( 5 \\times 2 = 10 \\), jadi \\( 5 \\times 2x = 10x \\). <span class='id-lang'>5 × 2 = 10, so 5 × 2x = 10x.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah untuk mengalikan \\( 4 \\times 3x \\). <span class='id-lang'>Order steps to multiply 4 × 3x.</span>",
+         o:["Kalikan angkanya: \\( 4 \\times 3 = 12 \\)","Tempelkan variabelnya: \\( 12x \\)"],
+         a:[0,1], h:"Pertama kalikan koefisiennya, lalu tempel variabelnya. <span class='id-lang'>First multiply coefficients, then attach variable.</span>"},
+        {type:"T",title:"Pengenalan Sifat Distributif <span class='id-lang'>Introduction to Distributive Property</span>",
+         body:`<p>Sifat distributif memungkinkan kita mengalikan angka dengan penjumlahan: \\( a(b + c) = ab + ac \\). Ini adalah kunci untuk menyederhanakan ekspresi seperti \\( 2(x + 3) \\). <span class='id-lang'>The distributive property lets us multiply a number by a sum. This is key to expanding expressions.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+           <div class="text-amber-400 font-semibold mb-2">Ide Visual <span class='id-lang'>Visual Idea</span></div>
+           <p class="text-sm text-slate-300">Bayangkan persegi panjang dengan lebar \\( a \\) dan panjang \\( b + c \\). Luasnya = \\( a \\times b + a \\times c \\). <span class='id-lang'>Think of a rectangle width a, length b+c. Area = a×b + a×c.</span></p>
+         </div>`},
+        {type:"E",etype:"sa",
+         q:"Manakah yang menunjukkan sifat distributif? <span class='id-lang'>Which demonstrate the distributive property?</span>",
+         o:["\\( 2(x+3) = 2x + 6 \\)","\\( 5(2+x) = 10 + 5x \\)","\\( 3(x) = 3x \\)","\\( 4(2x) = 8x \\)"],
+         a:[0,1], h:"Sifat distributif melibatkan perkalian ke dalam PENJUMLAHAN di dalam kurung. <span class='id-lang'>Involves multiplying into a SUM inside parentheses.</span>"},
+        {type:"E",etype:"tf",
+         q:"\\( 2(x + 3) = 2x + 3 \\). <span class='id-lang'>Is 2(x+3) = 2x+3?</span>",
+         a:false, h:"Angka 2 harus dikalikan ke KEDUA suku: \\( 2(x+3) = 2x + 6 \\). <span class='id-lang'>2 must multiply BOTH terms: 2x+6.</span>"},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan: \\( 5(x + 2) = \\) ? <span class='id-lang'>Expand: 5(x+2) = ?</span>",
+         a:"5x+10", h:"\\( 5 \\times x + 5 \\times 2 = 5x + 10 \\). <span class='id-lang'>5×x + 5×2 = 5x+10.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sederhanakan \\( 3(x + 4) \\). <span class='id-lang'>Expand 3(x+4).</span>",
+         o:["\\( 3x + 12 \\) <span class='id-lang'></span>","\\( 3x + 4 \\) <span class='id-lang'></span>","\\( x + 12 \\) <span class='id-lang'></span>","\\( 12x \\) <span class='id-lang'></span>"],
+         a:0, h:"Distribusikan 3 ke kedua suku: \\( 3x + 12 \\). <span class='id-lang'>Distribute 3 to both terms: 3x+12.</span>"}
+      ]
+    },
+    // ==================== SECTION 4 ====================
+    {
+      id:4, title:"Pengenalan Masalah: Model Luas <span class='id-lang'>Problem Introduction: Model Area</span>", icon:"fa-circle-question", color:"#f59e0b", branch:false,
+      lessons:[
+        {type:"T",title:"Konsep Model Luas <span class='id-lang'>The Area Model Concept</span>",
+         body:`<p>Bayangkan persegi panjang dengan panjang \\( (x + 4) \\) dan lebar \\( x \\). Kita bisa membaginya menjadi DUA persegi panjang kecil! Ini disebut Model Luas (atau Model Array). <span class='id-lang'>Imagine a rectangle length (x+4) width x. We can split it into TWO smaller rectangles! This is the Area Model.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+           <div class="text-amber-400 font-semibold mb-2">Membagi Persegi Panjang <span class='id-lang'>Splitting the Rectangle</span></div>
+           <p class="text-sm text-slate-300">Bagian 1: \\( x \\times x = x^2 \\). Bagian 2: \\( x \\times 4 = 4x \\). Total luas = \\( x^2 + 4x \\). <span class='id-lang'>Part 1: x×x=x². Part 2: x×4=4x. Total = x²+4x.</span></p>
+         </div>`},
+        {type:"E",etype:"mc",
+         q:"Sebuah persegi panjang dengan panjang \\( (x + 4) \\) dan lebar \\( x \\) dalam model luas dibagi menjadi berapa bagian kecil? <span class='id-lang'>Rectangle length (x+4) width x splits into how many parts?</span>",
+         o:["2 <span class='id-lang'></span>","1 <span class='id-lang'></span>","3 <span class='id-lang'></span>","4 <span class='id-lang'></span>"],
+         a:0, h:"\\( (x + 4) \\) memiliki 2 suku, jadi persegi panjang dibagi menjadi 2 bagian. <span class='id-lang'>(x+4) has 2 terms, so 2 parts.</span>"},
+        {type:"E",etype:"fb",
+         q:"Dalam model luas untuk \\( (x+4) \\times x \\), berapa luas bagian \\( x \\times x \\)? <span class='id-lang'>In area model (x+4)×x, area of x×x part?</span>",
+         a:"x^2||x²", h:"\\( x \\times x = x^2 \\). <span class='id-lang'>x × x = x².</span>"},
+        {type:"E",etype:"fb",
+         q:"Dalam model luas untuk \\( (x+4) \\times x \\), berapa luas bagian \\( x \\times 4 \\)? <span class='id-lang'>In area model (x+4)×x, area of x×4 part?</span>",
+         a:"4x", h:"\\( x \\times 4 = 4x \\). <span class='id-lang'>x × 4 = 4x.</span>"},
+        {type:"T",title:"Membagi Persegi Panjang untuk Model Luas <span class='id-lang'>Splitting Rectangles for Area Model</span>",
+         body:`<p>Model luas bekerja karena sifat distributif. Ketika panjang memiliki dua suku, kita bagi persegi panjang dan menghitung setiap bagian secara terpisah, lalu menjumlahkannya. <span class='id-lang'>Area model works because of the distributive property. Split, calculate each part, then add.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+           <div class="text-emerald-400 font-semibold mb-2">Pola <span class='id-lang'>The Pattern</span></div>
+           <p class="text-sm text-slate-300">\\( (x + a) \\times b = x \\times b + a \\times b = bx + ab \\). Setiap suku pada panjang dikalikan dengan lebar. <span class='id-lang'>Each term in the length gets multiplied by the width.</span></p>
+         </div>`},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah mencari luas \\( (x+3) \\times 5 \\) menggunakan model luas. <span class='id-lang'>Order steps for area of (x+3)×5 using area model.</span>",
+         o:["Bagi: \\( x \\times 5 \\) dan \\( 3 \\times 5 \\)","Hitung: \\( 5x \\) dan \\( 15 \\)","Gabungkan: \\( 5x + 15 \\)"],
+         a:[0,1,2], h:"Bagi → Hitung tiap bagian → Jumlahkan. <span class='id-lang'>Split → Calculate → Combine.</span>"},
+        {type:"E",etype:"mc",
+         q:"Persegi panjang \\( (x+2) \\times 4 \\) terbagi menjadi dua luas. Apa saja itu? <span class='id-lang'>Rectangle (x+2)×4 splits into two areas. What are they?</span>",
+         o:["\\( 4x \\) dan \\( 8 \\) <span class='id-lang'></span>","\\( 4x \\) dan \\( 2 \\) <span class='id-lang'></span>","\\( x \\) dan \\( 8 \\) <span class='id-lang'></span>","\\( 4x \\) dan \\( 4x \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( x \\times 4 = 4x \\) dan \\( 2 \\times 4 = 8 \\). <span class='id-lang'>x×4 = 4x and 2×4 = 8.</span>"},
+        {type:"E",etype:"tf",
+         q:"Menggunakan model luas, \\( (x+5) \\times x = x^2 + 5x \\). <span class='id-lang'>Using area model, (x+5)×x = x²+5x.</span>",
+         a:true, h:"\\( x \\times x = x^2 \\) dan \\( 5 \\times x = 5x \\). Total = \\( x^2 + 5x \\). <span class='id-lang'>x×x=x² and 5×x=5x. Total=x²+5x.</span>"},
+        {type:"T",title:"Dari Model Luas ke Ekspresi Aljabar <span class='id-lang'>From Area Model to Algebraic Expression</span>",
+         body:`<p>Model luas memberi kita cara visual untuk menyederhanakan ekspresi. Luas total adalah jumlah dari semua persegi panjang kecil. <span class='id-lang'>The area model gives a visual way to expand. Total area = sum of all smaller rectangles.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-violet-500/10 border border-violet-500/20">
+           <div class="text-violet-400 font-semibold mb-2">Wawasan Kunci <span class='id-lang'>Key Insight</span></div>
+           <p class="text-sm text-slate-300">\\( x(x + a) = x^2 + ax \\). Model luas membuktikannya secara visual! <span class='id-lang'>x(x+a) = x²+ax. The area model proves this visually!</span></p>
+         </div>`},
+        {type:"E",etype:"sa",
+         q:"Manakah yang benar mewakili luas dari \\( (x+6) \\times x \\)? <span class='id-lang'>Which correctly represent the area of (x+6)×x?</span>",
+         o:["\\( x^2 + 6x \\)","\\( x(x + 6) \\)","\\( 6x^2 \\)","\\( x^2 + 6 \\)"],
+         a:[0,1], h:"\\( x \\times x + x \\times 6 = x^2 + 6x \\). Bentuk faktornya \\( x(x+6) \\). <span class='id-lang'>x×x + x×6 = x²+6x. Factored form: x(x+6).</span>"},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( x(x + 3) \\). <span class='id-lang'>Expand x(x+3).</span>",
+         a:"x^2+3x||x²+3x", h:"\\( x \\times x + x \\times 3 = x^2 + 3x \\). <span class='id-lang'>x×x + x×3 = x²+3x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Model luas untuk \\( (x+1) \\times x \\) menghasilkan ekspresi? <span class='id-lang'>Area model for (x+1)×x gives?</span>",
+         o:["\\( x^2 + x \\) <span class='id-lang'></span>","\\( x^2 + 1 \\) <span class='id-lang'></span>","\\( 2x \\) <span class='id-lang'></span>","\\( x + 1 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( x \\times x + 1 \\times x = x^2 + x \\). <span class='id-lang'>x×x + 1×x = x²+x.</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan dimensi ke ekspresi luasnya. <span class='id-lang'>Match dimensions to area expression.</span>",
+         left:["\\( (x+4) \\times x \\)","\\( (x+3) \\times 5 \\)","\\( (x+2) \\times 3 \\)"],
+         right:["\\( x^2 + 4x \\)","\\( 5x + 15 \\)","\\( 3x + 6 \\)"],
+         a:[0,1,2],
+         h:"Bagilah, kalikan tiap bagian, lalu gabungkan. <span class='id-lang'>Split, multiply each part, then combine.</span>"}
+      ]
+    },
+    // ==================== SECTION 5 ====================
+    {
+      id:5, title:"Latihan Terbimbing <span class='id-lang'>Guided Practice</span>", icon:"fa-chalkboard-user", color:"#ec4899", branch:false,
+      lessons:[
+        {type:"T",title:"Langkah demi Langkah: \\( (x+3) \\times 5 \\) <span class='id-lang'>Step-by-Step: (x+3) × 5</span>",
+         body:`<p>Mari kita kerjakan bersama! Kita akan menggunakan model luas untuk menyederhanakan \\( (x+3) \\times 5 \\). <span class='id-lang'>Let's walk through this together! We'll use the area model to expand (x+3) × 5.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-pink-500/10 border border-pink-500/20">
+           <div class="text-pink-400 font-semibold mb-2">3 Langkah <span class='id-lang'>3 Steps</span></div>
+           <p class="text-sm text-slate-300">1. Bagi panjangnya: \\( (x+3) \\) menjadi \\( x \\) dan \\( 3 \\).<br>2. Kalikan masing-masing dengan lebar 5: \\( 5 \\times x = 5x \\), \\( 5 \\times 3 = 15 \\).<br>3. Gabungkan: \\( 5x + 15 \\). <span class='id-lang'>1. Split length. 2. Multiply each by width. 3. Combine.</span></p>
+         </div>`},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah menyederhanakan \\( (x+3) \\times 5 \\). <span class='id-lang'>Order steps to expand (x+3) × 5.</span>",
+         o:["Bagi persegi panjang: \\( x \\times 5 \\) dan \\( 3 \\times 5 \\)","Hitung tiap bagian: \\( 5x \\) dan \\( 15 \\)","Gabungkan: \\( 5x + 15 \\)"],
+         a:[0,1,2], h:"Bagi → Hitung → Gabungkan. <span class='id-lang'>Split → Calculate → Combine.</span>"},
+        {type:"E",etype:"fb",
+         q:"Pada \\( (x+3) \\times 5 \\), berapa luas bagian pertama (\\( 5 \\times x \\))? <span class='id-lang'>In (x+3)×5, area of first part (5×x)?</span>",
+         a:"5x", h:"\\( 5 \\times x = 5x \\). <span class='id-lang'>5 × x = 5x.</span>"},
+        {type:"E",etype:"fb",
+         q:"Pada \\( (x+3) \\times 5 \\), berapa luas bagian kedua (\\( 5 \\times 3 \\))? <span class='id-lang'>In (x+3)×5, area of second part (5×3)?</span>",
+         a:"15", h:"\\( 5 \\times 3 = 15 \\). <span class='id-lang'>5 × 3 = 15.</span>"},
+        {type:"T",title:"Konsep Luas Arsiran <span class='id-lang'>Shaded Area Concept</span>",
+         body:`<p>Terkadang kita perlu mencari luas sebagian dari sebuah bangun. Jika sebuah persegi panjang memiliki lubang, maka luas arsiran = luas total − luas kosong. <span class='id-lang'>Sometimes we need the area of part of a shape. If there's a hole: shaded area = total area − empty area.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+           <div class="text-emerald-400 font-semibold mb-2">Rumus <span class='id-lang'>The Formula</span></div>
+           <p class="text-sm text-slate-300">\\( L_{\\text{arsiran}} = L_{\\text{total}} - L_{\\text{kosong}} \\). Selalu kurangi bagian dalam dari bagian luar! <span class='id-lang'>Always subtract the inside from the outside!</span></p>
+         </div>`},
+        {type:"E",etype:"mc",
+         q:"Untuk mencari luas arsiran pada bangun dengan lubang, kamu harus: <span class='id-lang'>To find shaded area with a hole, you should:</span>",
+         o:["Mengurangi luas lubang dari luas total <span class='id-lang'>Subtract hole from total</span>","Menambahkan luas lubang ke total <span class='id-lang'>Add hole to total</span>","Mengalikan luasnya <span class='id-lang'>Multiply areas</span>","Membagi total dengan lubang <span class='id-lang'>Divide total by hole</span>"],
+         a:0, h:"Arsiran = Total − Kosong. <span class='id-lang'>Shaded = Total − Empty.</span>"},
+        {type:"E",etype:"fb",
+         q:"Luas total adalah 50 dan luas kosong adalah 10. Berapa luas arsiran? <span class='id-lang'>Total area 50, empty area 10. Shaded area?</span>",
+         a:"40", h:"\\( 50 - 10 = 40 \\). <span class='id-lang'>50 − 10 = 40.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas arsiran dari sebuah bangun selalu merupakan bagian yang lebih kecil. <span class='id-lang'>The shaded area is always the smaller part.</span>",
+         a:false, h:"Tidak selalu! Luas arsiran bisa jadi bagian yang lebih besar. <span class='id-lang'>Not always! Shaded could be the larger part.</span>"},
+        {type:"T",title:"Model Luas yang Lebih Kompleks <span class='id-lang'>More Complex Area Models</span>",
+         body:`<p>Sekarang mari kita gabungkan model luas dengan konsep luas arsiran! Kita akan mencari luas arsiran dari bangun dengan dimensi aljabar. <span class='id-lang'>Now combine area model with shaded area! We'll find shaded area of shapes with algebraic dimensions.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-pink-500/10 border border-pink-500/20">
+           <div class="text-pink-400 font-semibold mb-2">Contoh <span class='id-lang'>Example</span></div>
+           <p class="text-sm text-slate-300">\\( 3(x+2) \\): bagi menjadi \\( 3x \\) dan \\( 6 \\). Total = \\( 3x + 6 \\). Jika persegi panjang \\( 2 \\times 3 \\) dihilangkan: arsiran = \\( 3x + 6 - 6 = 3x \\). <span class='id-lang'>3(x+2) = 3x+6. If 2×3 removed: shaded = 3x+6−6 = 3x.</span></p>
+         </div>`},
+        {type:"E",etype:"sa",
+         q:"Manakah yang benar? <span class='id-lang'>Which are correct?</span>",
+         o:["\\( 3(x+2) = 3x + 6 \\)","\\( 2(x+5) = 2x + 10 \\)","\\( 4(x+1) = 4x + 1 \\)","\\( x(x+3) = x^2 + 3x \\)"],
+         a:[0,1,3], h:"\\( 4(x+1) = 4x + 4 \\), bukan \\( 4x + 1 \\). <span class='id-lang'>4(x+1) = 4x+4, not 4x+1.</span>"},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( 3(x + 2) \\). <span class='id-lang'>Expand 3(x+2).</span>",
+         a:"3x+6", h:"\\( 3 \\times x + 3 \\times 2 = 3x + 6 \\). <span class='id-lang'>3×x + 3×2 = 3x+6.</span>"},
+        {type:"E",etype:"mc",
+         q:"\\( (x+5) \\times 3 \\) menghasilkan ekspresi? <span class='id-lang'>(x+5) × 3 gives?</span>",
+         o:["\\( 3x + 15 \\) <span class='id-lang'></span>","\\( 3x + 5 \\) <span class='id-lang'></span>","\\( x + 15 \\) <span class='id-lang'></span>","\\( 15x \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( 3x + 15 \\). <span class='id-lang'>3x+15.</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan ekspresi ke bentuk sederhananya. <span class='id-lang'>Match expression to expanded form.</span>",
+         left:["\\( 2(x+3) \\)","\\( x(x+5) \\)","\\( 4(x+1) \\)"],
+         right:["\\( 2x + 6 \\)","\\( x^2 + 5x \\)","\\( 4x + 4 \\)"],
+         a:[0,1,2],
+         h:"Gunakan sifat distributif atau model luas. <span class='id-lang'>Use distributive property or area model.</span>"}
+      ]
+    },
+    // ==================== SECTION 6 ====================
+    {
+      id:6, title:"Latihan Mandiri <span class='id-lang'>Independent Practice</span>", icon:"fa-user-graduate", color:"#14b8a6", branch:false,
+      lessons:[
+        {type:"T",title:"Tantangan Mandiri: Bentuk \\( x(x+a) \\) <span class='id-lang'>Independent Challenge: x(x+a) Form</span>",
+         body:`<p>Sekarang giliranmu menyelesaikan secara mandiri! Polanya adalah: \\( x(x + a) = x^2 + ax \\). Gunakan model luas sebagai panduanmu. <span class='id-lang'>Your turn to solve independently! Pattern: x(x+a) = x²+ax. Use the area model as your guide.</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-teal-500/10 border border-teal-500/20">
+           <div class="text-teal-400 font-semibold mb-2">Perlengkapanmu <span class='id-lang'>Your Toolkit</span></div>
+           <p class="text-sm text-slate-300">1. Bagi persegi panjang. 2. Kalikan tiap bagian. 3. Gabungkan. Untuk luas arsiran: kurangi! <span class='id-lang'>1. Split. 2. Multiply each part. 3. Combine. For shaded areas: subtract!</span></p>
+         </div>`},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( x(x + 6) \\). <span class='id-lang'>Expand x(x+6).</span>",
+         a:"x^2+6x||x²+6x", h:"\\( x \\times x + x \\times 6 = x^2 + 6x \\). <span class='id-lang'>x×x + x×6 = x²+6x.</span>"},
+        {type:"E",etype:"mc",
+         q:"\\( x(x + 5) \\) sama dengan: <span class='id-lang'>x(x+5) equals:</span>",
+         o:["\\( x^2 + 5x \\) <span class='id-lang'></span>","\\( 5x^2 \\) <span class='id-lang'></span>","\\( x + 5x \\) <span class='id-lang'></span>","\\( 6x \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( x^2 + 5x \\). <span class='id-lang'>x²+5x.</span>"},
+        {type:"E",etype:"tf",
+         q:"\\( x(x + 4) = x^2 + 4 \\). <span class='id-lang'>Is x(x+4) = x²+4?</span>",
+         a:false, h:"Penyederhanaan yang benar adalah \\( x^2 + 4x \\). Jangan lupa variabel \\( x \\) pada suku kedua! <span class='id-lang'>Correct is x²+4x. Don't forget x in second term!</span>"},
+        {type:"T",title:"Luas Arsiran pada Bangun Gabungan <span class='id-lang'>Shaded Area in Composite Shapes</span>",
+         body:`<p>Ketika sebuah bangun memiliki bagian yang dipotong, kita gunakan: Luas Arsiran = Luas Total − Luas Kosong. Ini juga berlaku untuk variabel! <span class='id-lang'>When a shape has a cut-out: Shaded Area = Total Area − Empty Area. Works with variables too!</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+           <div class="text-amber-400 font-semibold mb-2">Contoh <span class='id-lang'>Example</span></div>
+           <p class="text-sm text-slate-300">Luar: \\( 10 \\times 5 = 50 \\). Persegi dalam: \\( x \\times x = x^2 \\). Arsiran = \\( 50 - x^2 \\). <span class='id-lang'>Outer: 10×5=50. Inner square: x×x=x². Shaded = 50−x².</span></p>
+         </div>`},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah mencari luas arsiran saat persegi \\( x \\times x \\) dipotong dari persegi panjang \\( 10 \\times 5 \\). <span class='id-lang'>Order steps to find shaded area when x×x square is cut from 10×5 rectangle.</span>",
+         o:["Hitung luas total: \\( 10 \\times 5 = 50 \\)","Hitung luas kosong: \\( x \\times x = x^2 \\)","Kurangi: \\( 50 - x^2 \\)"],
+         a:[0,1,2], h:"Total dulu, lalu kosong, lalu kurangi. <span class='id-lang'>Total first, then empty, then subtract.</span>"},
+        {type:"E",etype:"fb",
+         q:"Sebuah persegi panjang \\( 10 \\times 5 \\) memiliki lubang persegi \\( x \\times x \\). Tulis ekspresi luas arsirannya. <span class='id-lang'>Rectangle 10×5 has square hole x×x. Write shaded area expression.</span>",
+         a:"50-x^2||50-x²", h:"\\( 50 - x^2 \\). <span class='id-lang'>50 − x².</span>"},
+        {type:"E",etype:"mc",
+         q:"Persegi panjang besar \\( (x+2) \\times 6 \\) memiliki potongan kecil \\( 2 \\times 3 \\). Berapa luas arsirannya? <span class='id-lang'>Large rectangle (x+2)×6 has small cut 2×3. Shaded area?</span>",
+         o:["\\( 6x + 6 \\) <span class='id-lang'></span>","\\( 6x + 12 \\) <span class='id-lang'></span>","\\( 6x \\) <span class='id-lang'></span>","\\( 6x - 6 \\) <span class='id-lang'></span>"],
+         a:0, h:"Total: \\( 6(x+2) = 6x + 12 \\). Potongan: \\( 2 \\times 3 = 6 \\). Arsiran: \\( 6x + 12 - 6 = 6x + 6 \\). <span class='id-lang'>Total: 6x+12. Cut: 6. Shaded: 6x+6.</span>"},
+        {type:"T",title:"Menggabungkan Semuanya <span class='id-lang'>Putting It All Together</span>",
+         body:`<p>Sekarang kita gabungkan model luas, sifat distributif, dan luas arsiran ke dalam soal multi-langkah! <span class='id-lang'>Now we combine area models, distributive property, and shaded areas into multi-step problems!</span></p>
+         <div class="mt-4 p-4 rounded-xl bg-teal-500/10 border border-teal-500/20">
+           <div class="text-teal-400 font-semibold mb-2">Contoh Lanjutan <span class='id-lang'>Advanced Example</span></div>
+           <p class="text-sm text-slate-300">\\( 2x(x+5) \\): bagi menjadi \\( 2x \\times x = 2x^2 \\) dan \\( 2x \\times 5 = 10x \\). Total = \\( 2x^2 + 10x \\). <span class='id-lang'>2x(x+5): split into 2x×x=2x² and 2x×5=10x. Total = 2x²+10x.</span></p>
+         </div>`},
+        {type:"E",etype:"sa",
+         q:"Manakah yang mewakili luas arsiran \\( (x+2) \\times 6 \\) dikurangi \\( 2 \\times 3 \\)? <span class='id-lang'>Which represent shaded area (x+2)×6 minus 2×3?</span>",
+         o:["\\( 6(x+2) - 6 \\)","\\( 6x + 12 - 6 \\)","\\( 6x + 6 \\)","\\( 6x \\)"],
+         a:[0,1,2], h:"Ketiganya ekuivalen! \\( 6(x+2)-6 = 6x+12-6 = 6x+6 \\). <span class='id-lang'>All three are equivalent!</span>"},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( 2x(x + 5) \\). <span class='id-lang'>Expand 2x(x+5).</span>",
+         a:"2x^2+10x||2x²+10x", h:"\\( 2x \\times x + 2x \\times 5 = 2x^2 + 10x \\). <span class='id-lang'>2x×x + 2x×5 = 2x²+10x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sebuah taman \\( (x+3) \\times x \\) memiliki luas \\( x^2 + 3x \\). Jika \\( x = 5 \\), berapa luasnya? <span class='id-lang'>Garden (x+3)×x has area x²+3x. If x=5, area?</span>",
+         o:["40 <span class='id-lang'></span>","15 <span class='id-lang'></span>","25 <span class='id-lang'></span>","30 <span class='id-lang'></span>"],
+         a:0, h:"\\( 5^2 + 3(5) = 25 + 15 = 40 \\). <span class='id-lang'>5² + 3(5) = 25+15 = 40.</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan ekspresi ke bentuk sederhananya. <span class='id-lang'>Match expression to expanded form.</span>",
+         left:["\\( x(x+6) \\)","\\( 2x(x+5) \\)","\\( 3(x+2) \\)","\\( (x+1)(x+4) \\)"],
+         right:["\\( x^2 + 6x \\)","\\( 2x^2 + 10x \\)","\\( 3x + 6 \\)","\\( x^2 + 5x + 4 \\)"],
+         a:[0,1,2,3],
+         h:"Gunakan model luas untuk masing-masing. <span class='id-lang'>Use the area model for each.</span>"}
+      ]
+    },
+    // ==================== SECTION 7A ====================
+    {
+      id:"7A", title:"Asesmen A <span class='id-lang'>Assessment A</span>", icon:"fa-clipboard-check", color:"#3b82f6", branch:true,
+      lessons:[
+        {type:"E",etype:"mc",
+         q:"Berapa luas persegi panjang dengan panjang 8 dan lebar 5? <span class='id-lang'>Area of rectangle length 8 width 5?</span>",
+         o:["40 <span class='id-lang'></span>","13 <span class='id-lang'></span>","35 <span class='id-lang'></span>","45 <span class='id-lang'></span>"],
+         a:0, h:"\\( 8 \\times 5 = 40 \\). <span class='id-lang'>8 × 5 = 40.</span>"},
+        {type:"E",etype:"fb",
+         q:"Hitunglah luas persegi panjang dengan panjang 7 dan lebar \\( 4x \\). <span class='id-lang'>Area of rectangle length 7 width 4x.</span>",
+         a:"28x", h:"\\( 7 \\times 4x = 28x \\). <span class='id-lang'>7 × 4x = 28x.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas selalu diukur dalam satuan persegi. <span class='id-lang'>Area is always measured in square units.</span>",
+         a:true, h:"Satuan persegi berasal dari mengalikan dua panjang. <span class='id-lang'>Square units come from multiplying two lengths.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah mencari luas persegi panjang dengan panjang \\( (x+3) \\) dan lebar 5. <span class='id-lang'>Order steps for area length (x+3) width 5.</span>",
+         o:["Bagi: \\( x \\times 5 \\) dan \\( 3 \\times 5 \\)","Hitung: \\( 5x \\) dan \\( 15 \\)","Gabungkan: \\( 5x + 15 \\)"],
+         a:[0,1,2], h:"Bagi, hitung, gabungkan. <span class='id-lang'>Split, calculate, combine.</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan dimensi ke ekspresi luasnya. <span class='id-lang'>Match dimensions to area expression.</span>",
+         left:["\\( 5x \\times 3 \\)","\\( x \\times (x+8) \\)","\\( 4 \\times (x+2) \\)"],
+         right:["\\( 15x \\)","\\( x^2 + 8x \\)","\\( 4x + 8 \\)"],
+         a:[0,1,2], h:"Gunakan sifat distributif atau model luas. <span class='id-lang'>Use distributive property or area model.</span>"},
+        {type:"E",etype:"sa",
+         q:"Manakah yang benar mewakili luas dari \\( (x+6) \\times x \\)? <span class='id-lang'>Which correctly represent area of (x+6)×x?</span>",
+         o:["\\( x^2 + 6x \\)","\\( x(x + 6) \\)","\\( 6x^2 \\)","\\( x^2 + 6 \\)"],
+         a:[0,1], h:"\\( x \\times x + x \\times 6 = x^2 + 6x \\). <span class='id-lang'>x×x + x×6 = x²+6x.</span>"},
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( x(x + 3) \\). <span class='id-lang'>Expand x(x+3).</span>",
+         a:"x^2+3x||x²+3x", h:"\\( x \\times x + x \\times 3 = x^2 + 3x \\). <span class='id-lang'>x×x + x×3 = x²+3x.</span>"},
+        {type:"E",etype:"tf",
+         q:"\\( x(x + 4) = x^2 + 4 \\). <span class='id-lang'>Is x(x+4) = x²+4?</span>",
+         a:false, h:"Angka 4 juga harus dikalikan dengan \\( x \\), jadi \\( x^2 + 4x \\). <span class='id-lang'>4 must also multiply by x, so x²+4x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Model luas untuk \\( (x+1) \\times x \\) menghasilkan ekspresi? <span class='id-lang'>Area model for (x+1)×x gives?</span>",
+         o:["\\( x^2 + x \\) <span class='id-lang'></span>","\\( x^2 + 1 \\) <span class='id-lang'></span>","\\( 2x \\) <span class='id-lang'></span>","\\( x + 1 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( x \\times x + 1 \\times x = x^2 + x \\). <span class='id-lang'>x×x + 1×x = x²+x.</span>"},
+        {type:"E",etype:"code",
+         q:"Tulis ekspresi aljabar untuk luas persegi panjang dengan panjang \\( (x+5) \\) dan lebar \\( x \\). <span class='id-lang'>Write algebraic expression for area length (x+5) width x.</span>",
+         a:"x^2+5x||x²+5x", h:"\\( x^2 + 5x \\). <span class='id-lang'>x²+5x.</span>"}
+      ]
+    },
+    // ==================== SECTION 7B ====================
+    {
+      id:"7B", title:"Asesmen B <span class='id-lang'>Assessment B</span>", icon:"fa-clipboard-check", color:"#ef4444", branch:true,
+      lessons:[
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( 5(x + 2) \\). <span class='id-lang'>Expand 5(x+2).</span>",
+         a:"5x+10", h:"\\( 5 \\times x + 5 \\times 2 = 5x + 10 \\). <span class='id-lang'>5×x + 5×2 = 5x+10.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sederhanakan \\( 3(x + 4) \\). <span class='id-lang'>Expand 3(x+4).</span>",
+         o:["\\( 3x + 12 \\) <span class='id-lang'></span>","\\( 3x + 4 \\) <span class='id-lang'></span>","\\( x + 12 \\) <span class='id-lang'></span>","\\( 12x \\) <span class='id-lang'></span>"],
+         a:0, h:"Distribusikan 3 ke kedua suku: \\( 3x + 12 \\). <span class='id-lang'>Distribute 3 to both terms.</span>"},
+        {type:"E",etype:"tf",
+         q:"\\( 2(x + 3) = 2x + 3 \\). <span class='id-lang'>Is 2(x+3) = 2x+3?</span>",
+         a:false, h:"Angka 2 harus dikalikan ke KEDUA suku: \\( 2x + 6 \\). <span class='id-lang'>2 must multiply BOTH terms: 2x+6.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah menyederhanakan \\( (x+2) \\times x \\). <span class='id-lang'>Order steps to expand (x+2)×x.</span>",
+         o:["Bagi: \\( x \\times x \\) dan \\( 2 \\times x \\)","Hitung: \\( x^2 \\) dan \\( 2x \\)","Gabungkan: \\( x^2 + 2x \\)"],
+         a:[0,1,2], h:"Bagilah persegi panjang menggunakan model luas. <span class='id-lang'>Split rectangle using area model.</span>"},
+        {type:"E",etype:"sa",
+         q:"Manakah yang merupakan penyederhanaan yang benar? <span class='id-lang'>Which are correct expansions?</span>",
+         o:["\\( 3(x+2) = 3x + 6 \\)","\\( 2(x+5) = 2x + 10 \\)","\\( 4(x+1) = 4x + 1 \\)","\\( x(x+3) = x^2 + 3x \\)"],
+         a:[0,1,3], h:"\\( 4(x+1) = 4x + 4 \\), bukan \\( 4x + 1 \\). <span class='id-lang'>4(x+1) = 4x+4, not 4x+1.</span>"},
+        {type:"E",etype:"fb",
+         q:"Hitunglah luas persegi panjang dengan panjang \\( 5x \\) dan lebar 3. <span class='id-lang'>Area of rectangle length 5x width 3.</span>",
+         a:"15x", h:"\\( 5x \\times 3 = 15x \\). <span class='id-lang'>5x × 3 = 15x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Untuk mencari luas arsiran pada bangun dengan lubang, kamu harus: <span class='id-lang'>To find shaded area with a hole, you should:</span>",
+         o:["Mengurangi luas lubang dari luas total <span class='id-lang'>Subtract hole from total</span>","Menambahkan luas lubang ke total <span class='id-lang'>Add hole to total</span>","Mengalikan luasnya <span class='id-lang'>Multiply areas</span>","Membagi total dengan lubang <span class='id-lang'>Divide total by hole</span>"],
+         a:0, h:"Arsiran = Total − Kosong. <span class='id-lang'>Shaded = Total − Empty.</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan ekspresi ke bentuk sederhananya. <span class='id-lang'>Match expression to expanded form.</span>",
+         left:["\\( 2(x+3) \\)","\\( x(x+5) \\)","\\( 4(x+1) \\)"],
+         right:["\\( 2x + 6 \\)","\\( x^2 + 5x \\)","\\( 4x + 4 \\)"],
+         a:[0,1,2], h:"Gunakan sifat distributif. <span class='id-lang'>Use distributive property.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas persegi panjang yang sisinya \\( x \\) dan \\( x \\) adalah \\( x^2 \\). <span class='id-lang'>Area of rectangle sides x and x is x².</span>",
+         a:true, h:"\\( x \\times x = x^2 \\). <span class='id-lang'>x × x = x².</span>"},
+        {type:"E",etype:"code",
+         q:"Tulis ekspresi luas untuk persegi panjang dengan lebar 4 dan panjang \\( (x+7) \\). <span class='id-lang'>Write area expression for width 4 length (x+7).</span>",
+         a:"4x+28", h:"\\( 4(x+7) = 4x + 28 \\). <span class='id-lang'>4(x+7) = 4x+28.</span>"}
+      ]
+    },
+    // ==================== SECTION 7C ====================
+    {
+      id:"7C", title:"Asesmen C <span class='id-lang'>Assessment C</span>", icon:"fa-clipboard-check", color:"#a855f7", branch:true,
+      lessons:[
+        {type:"E",etype:"fb",
+         q:"Sebuah persegi panjang \\( 10 \\times 5 \\) memiliki lubang persegi \\( x \\times x \\). Tulis ekspresi luas arsirannya. <span class='id-lang'>Rectangle 10×5 has square hole x×x. Write shaded area.</span>",
+         a:"50-x^2||50-x²", h:"\\( 50 - x^2 \\). <span class='id-lang'>50 − x².</span>"},
+        {type:"E",etype:"mc",
+         q:"Persegi panjang besar \\( (x+2) \\times 6 \\) memiliki potongan kecil \\( 2 \\times 3 \\). Berapa luas arsirannya? <span class='id-lang'>Large rectangle (x+2)×6 has cut 2×3. Shaded area?</span>",
+         o:["\\( 6x + 6 \\) <span class='id-lang'></span>","\\( 6x + 12 \\) <span class='id-lang'></span>","\\( 6x \\) <span class='id-lang'></span>","\\( 6x - 6 \\) <span class='id-lang'></span>"],
+         a:0, h:"Total: \\( 6x + 12 \\). Potongan: 6. Arsiran: \\( 6x + 6 \\). <span class='id-lang'>Total: 6x+12. Cut: 6. Shaded: 6x+6.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas arsiran = Luas total + Luas kosong. <span class='id-lang'>Shaded area = Total area + Empty area.</span>",
+         a:false, h:"Seharusnya pengurangan: Luas arsiran = Luas total − Luas kosong. <span class='id-lang'>Should be subtraction: Total − Empty.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah mencari luas arsiran saat persegi \\( x \\times x \\) dipotong dari persegi panjang \\( 10 \\times 5 \\). <span class='id-lang'>Order steps to find shaded area.</span>",
+         o:["Hitung luas total: \\( 10 \\times 5 = 50 \\)","Hitung luas kosong: \\( x \\times x = x^2 \\)","Kurangi: \\( 50 - x^2 \\)"],
+         a:[0,1,2], h:"Total dulu, lalu kosong, lalu kurangi. <span class='id-lang'>Total first, empty, then subtract.</span>"},
+        {type:"E",etype:"sa",
+         q:"Manakah yang benar mewakili luas arsiran \\( (x+2) \\times 6 \\) dikurangi \\( 2 \\times 3 \\)? <span class='id-lang'>Which represent shaded area (x+2)×6 minus 2×3?</span>",
+         o:["\\( 6(x+2) - 6 \\)","\\( 6x + 12 - 6 \\)","\\( 6x + 6 \\)","\\( 6x \\)"],
+         a:[0,1,2], h:"Ketiganya ekuivalen! \\( 6(x+2)-6 = 6x+6 \\). <span class='id-lang'>All three are equivalent!</span>"},
+        {type:"E",etype:"fb",
+         q:"Hitunglah luas persegi panjang dengan panjang 10 dan lebar 5. <span class='id-lang'>Area of rectangle length 10 width 5.</span>",
+         a:"50", h:"\\( 10 \\times 5 = 50 \\). <span class='id-lang'>10 × 5 = 50.</span>"},
+        {type:"E",etype:"mc",
+         q:"Berapa hasil dari \\( x \\times x \\)? <span class='id-lang'>What is x × x?</span>",
+         o:["\\( x^2 \\) <span class='id-lang'></span>","\\( 2x \\) <span class='id-lang'></span>","\\( x \\) <span class='id-lang'></span>","\\( x^3 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( x \\times x = x^2 \\). <span class='id-lang'>x × x = x².</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan bangun ke rumus luasnya. <span class='id-lang'>Match shape to area formula.</span>",
+         left:["Persegi panjang <span class='id-lang'>Rectangle</span>","Persegi <span class='id-lang'>Square</span>","Arsiran <span class='id-lang'>Shaded</span>"],
+         right:["\\( p \\times l \\)","\\( s^2 \\)","\\( Total - Kosong \\)"],
+         a:[0,1,2], h:"Gunakan rumus yang tepat untuk setiap bangun. <span class='id-lang'>Use correct formula for each shape.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas persegi dengan sisi \\( s \\) adalah \\( s^3 \\). <span class='id-lang'>Area of square side s is \\( s^3 \\).</span>",
+         a:false, h:"Luas persegi adalah \\( s^2 \\). \\( s^3 \\) adalah volume kubus. <span class='id-lang'>Area is s². s³ is cube volume.</span>"},
+        {type:"E",etype:"code",
+         q:"Tulis ekspresi luas arsiran untuk persegi panjang luar \\( 8 \\times 4 \\) dikurangi persegi kecil dalam \\( 2 \\times 2 \\). <span class='id-lang'>Write shaded area expression outer 8×4 minus inner 2×2.</span>",
+         a:"28", h:"\\( 32 - 4 = 28 \\). <span class='id-lang'>32 − 4 = 28.</span>"}
+      ]
+    },
+    // ==================== SECTION 7D ====================
+    {
+      id:"7D", title:"Asesmen D <span class='id-lang'>Assessment D</span>", icon:"fa-clipboard-check", color:"#06b6d4", branch:true,
+      lessons:[
+        {type:"E",etype:"fb",
+         q:"Sederhanakan \\( 2x(x + 5) \\). <span class='id-lang'>Expand 2x(x+5).</span>",
+         a:"2x^2+10x||2x²+10x", h:"\\( 2x \\times x + 2x \\times 5 = 2x^2 + 10x \\). <span class='id-lang'>2x×x + 2x×5 = 2x²+10x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Berapa hasil dari \\( 3x(x + 2) \\)? <span class='id-lang'>What is 3x(x+2)?</span>",
+         o:["\\( 3x^2 + 6x \\) <span class='id-lang'></span>","\\( 3x + 6 \\) <span class='id-lang'></span>","\\( 5x \\) <span class='id-lang'></span>","\\( 3x^2 + 2 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( 3x \\times x + 3x \\times 2 = 3x^2 + 6x \\). <span class='id-lang'>3x×x + 3x×2 = 3x²+6x.</span>"},
+        {type:"E",etype:"tf",
+         q:"\\( 2x(x + 4) = 2x^2 + 4 \\). <span class='id-lang'>Is 2x(x+4) = 2x²+4?</span>",
+         a:false, h:"Suku kedua harus \\( 2x \\times 4 = 8x \\), jadi \\( 2x^2 + 8x \\). <span class='id-lang'>Second term is 8x, so 2x²+8x.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah menyederhanakan \\( 2x(x + 5) \\). <span class='id-lang'>Order steps to expand 2x(x+5).</span>",
+         o:["Bagi: \\( 2x \\times x \\) dan \\( 2x \\times 5 \\)","Hitung: \\( 2x^2 \\) dan \\( 10x \\)","Gabungkan: \\( 2x^2 + 10x \\)"],
+         a:[0,1,2], h:"Bagilah persegi panjang menggunakan model luas. <span class='id-lang'>Split rectangle using area model.</span>"},
+        {type:"E",etype:"sa",
+         q:"Manakah penyederhanaan yang benar? <span class='id-lang'>Which expansions are correct?</span>",
+         o:["\\( 2x(x+5) = 2x^2 + 10x \\)","\\( 3x(x+2) = 3x^2 + 6x \\)","\\( x(x+4) = x^2 + 4 \\)","\\( 4x(x+1) = 4x^2 + 4x \\)"],
+         a:[0,1,3], h:"\\( x(x+4) = x^2 + 4x \\), bukan \\( x^2 + 4 \\). <span class='id-lang'>x(x+4) = x²+4x, not x²+4.</span>"},
+        {type:"E",etype:"fb",
+         q:"Sebuah taman berbentuk persegi panjang berukuran \\( (x+3) \\) dan lebar \\( x \\). Jika \\( x = 5 \\), berapakah luasnya? <span class='id-lang'>Garden (x+3) by x. If x=5, area?</span>",
+         a:"40", h:"\\( 5^2 + 3(5) = 25 + 15 = 40 \\). <span class='id-lang'>5² + 3(5) = 40.</span>"},
+        {type:"E",etype:"mc",
+         q:"Berapa hasil dari \\( 4x(x + 1) \\)? <span class='id-lang'>What is 4x(x+1)?</span>",
+         o:["\\( 4x^2 + 4x \\) <span class='id-lang'></span>","\\( 4x + 4 \\) <span class='id-lang'></span>","\\( 5x \\) <span class='id-lang'></span>","\\( 4x^2 + 1 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( 4x \\times x + 4x \\times 1 = 4x^2 + 4x \\). <span class='id-lang'>4x×x + 4x×1 = 4x²+4x.</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan ekspresi ke bentuk sederhananya. <span class='id-lang'>Match expression to expanded form.</span>",
+         left:["\\( x(x+6) \\)","\\( 2x(x+5) \\)","\\( 3(x+2) \\)"],
+         right:["\\( x^2 + 6x \\)","\\( 2x^2 + 10x \\)","\\( 3x + 6 \\)"],
+         a:[0,1,2], h:"Gunakan model luas. <span class='id-lang'>Use area model.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas dari \\( x \\times x \\) adalah \\( 2x \\). <span class='id-lang'>Area of x × x is 2x.</span>",
+         a:false, h:"\\( x \\times x = x^2 \\), bukan \\( 2x \\). <span class='id-lang'>x × x = x², not 2x.</span>"},
+        {type:"E",etype:"code",
+         q:"Tulis ekspresi luas untuk persegi panjang dengan lebar \\( 2x \\) dan panjang \\( (x+4) \\). <span class='id-lang'>Write area for width 2x length (x+4).</span>",
+         a:"2x^2+8x||2x²+8x", h:"\\( 2x(x+4) = 2x^2 + 8x \\). <span class='id-lang'>2x²+8x.</span>"}
+      ]
+    },
+    // ==================== SECTION 7E ====================
+    {
+      id:"7E", title:"Asesmen E <span class='id-lang'>Assessment E</span>", icon:"fa-clipboard-check", color:"#f97316", branch:true,
+      lessons:[
+        {type:"E",etype:"fb",
+         q:"Diberikan persegi panjang dengan luas \\( 12x \\). Jika lebarnya adalah 4, berapakah panjangnya dalam bentuk variabel? <span class='id-lang'>Rectangle area 12x. Width 4. Length in variable form?</span>",
+         a:"3x", h:"\\( 12x \\div 4 = 3x \\). <span class='id-lang'>12x ÷ 4 = 3x.</span>"},
+        {type:"E",etype:"mc",
+         q:"Jika luas persegi panjang adalah \\( 15x \\) dan lebarnya 3, berapa panjangnya? <span class='id-lang'>Area 15x, width 3. Length?</span>",
+         o:["\\( 5x \\) <span class='id-lang'></span>","\\( 12x \\) <span class='id-lang'></span>","\\( 45x \\) <span class='id-lang'></span>","\\( 5 \\) <span class='id-lang'></span>"],
+         a:0, h:"\\( 15x \\div 3 = 5x \\). <span class='id-lang'>15x ÷ 3 = 5x.</span>"},
+        {type:"E",etype:"tf",
+         q:"Jika luas persegi panjang adalah \\( 20x \\) dan lebarnya \\( 5x \\), maka panjangnya adalah 4. <span class='id-lang'>Area 20x, width 5x, length is 4.</span>",
+         a:true, h:"\\( 20x \\div 5x = 4 \\). <span class='id-lang'>20x ÷ 5x = 4.</span>"},
+        {type:"E",etype:"ord",
+         q:"Urutkan langkah mencari panjang jika diketahui luas \\( 10x \\) dan lebar 2. <span class='id-lang'>Order steps to find length given area 10x width 2.</span>",
+         o:["Tulis rumus: \\( L = p \\times l \\)","Substitusi: \\( 10x = p \\times 2 \\)","Selesaikan: \\( p = 5x \\)"],
+         a:[0,1,2], h:"Gunakan rumus luas dan isolasi panjang. <span class='id-lang'>Use area formula and isolate length.</span>"},
+        {type:"E",etype:"sa",
+         q:"Manakah dimensi yang valid untuk persegi panjang dengan luas \\( 10x \\)? <span class='id-lang'>Which are valid dimensions for area 10x?</span>",
+         o:["Panjang \\( 5x \\), lebar 2","Panjang 10, lebar \\( x \\)","Panjang \\( 10x \\), lebar 0","Panjang \\( 2x \\), lebar 5"],
+         a:[0,1,3], h:"Lebar tidak boleh 0. Selebihnya hasil kalinya \\( 10x \\). <span class='id-lang'>Width cannot be 0. The rest multiply to 10x.</span>"},
+        {type:"E",etype:"fb",
+         q:"Modelkan dan tuliskan ekspresi untuk \\( (x+1)(x+4) \\) menggunakan pembagian 4 kotak area. <span class='id-lang'>Model and write expression for (x+1)(x+4) using 4-block area.</span>",
+         a:"x^2+5x+4||x²+5x+4", h:"\\( x^2 + 4x + x + 4 = x^2 + 5x + 4 \\). <span class='id-lang'>x²+4x+x+4 = x²+5x+4.</span>"},
+        {type:"E",etype:"mc",
+         q:"Sebuah persegi panjang luar berukuran \\( 10 \\times 5 \\) dan persegi di dalamnya berukuran \\( x \\times x \\). Berapa ekspresi luas daerah yang diarsir? <span class='id-lang'>Outer 10×5, inner x×x. Shaded area expression?</span>",
+         o:["\\( 50 - x^2 \\) <span class='id-lang'></span>","\\( 50 + x^2 \\) <span class='id-lang'></span>","\\( 15x \\) <span class='id-lang'></span>","\\( 50x^2 \\) <span class='id-lang'></span>"],
+         a:0, h:"Total \\( 50 \\) dikurangi persegi \\( x^2 \\). <span class='id-lang'>Total 50 minus square x².</span>"},
+        {type:"E",etype:"match",
+         q:"Cocokkan luas ke dimensi panjangnya. <span class='id-lang'>Match area to length dimension.</span>",
+         left:["Luas \\( 12x \\), lebar 4","Luas \\( 15x \\), lebar 3","Luas \\( 20x \\), lebar \\( 5x \\)"],
+         right:["Panjang \\( 3x \\)","Panjang \\( 5x \\)","Panjang 4"],
+         a:[0,1,2], h:"Bagilah luas dengan lebarnya. <span class='id-lang'>Divide area by width.</span>"},
+        {type:"E",etype:"tf",
+         q:"Luas persegi dengan sisi \\( (x+2) \\) adalah \\( x^2 + 4 \\). <span class='id-lang'>Area of square side (x+2) is \\( x^2 + 4 \\).</span>",
+         a:false, h:"Seharusnya \\( (x+2)^2 = x^2 + 4x + 4 \\). <span class='id-lang'>Should be (x+2)² = x²+4x+4.</span>"},
+        {type:"E",etype:"code",
+         q:"Tulis ekspresi panjang jika luas \\( 15x \\) dan lebar 3. <span class='id-lang'>Write length expression if area 15x width 3.</span>",
+         a:"5x", h:"\\( 15x \\div 3 = 5x \\). <span class='id-lang'>15x ÷ 3 = 5x.</span>"}
+      ]
+    },
+    // ==================== SECTION 8 ====================
+    {
+      id:8, title:"Konsolidasi & Refleksi <span class='id-lang'>Consolidation & Reflection</span>", icon:"fa-star", color:"#fbbf24", branch:false,
+      lessons:[
+        {type:"T",title:"Ringkasan & Langkah Berikutnya <span class='id-lang'>Summary & Next Steps</span>",
+         body:`<p>Kerja luar biasa hari ini! Kamu telah belajar bahwa aljabar itu seperti potongan puzzle. Luas total adalah jumlah dari semua potongan kecilnya. <span class='id-lang'>Brilliant work! You learned algebra is like puzzle pieces. Total area is the sum of all small pieces.</span></p>
+         <div class="mt-4 p-5 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20">
+           <div class="text-emerald-400 font-bold mb-3 text-lg"><i class="fa-solid fa-medal mr-2"></i>Daftar Periksa 3 Langkah <span class='id-lang'>3-Step Checklist</span></div>
+           <ul class="space-y-2 text-sm text-slate-300 list-decimal list-inside">
+             <li><strong>Bagilah:</strong> Pisahkan persegi panjang berdasarkan suku panjangnya. <span class='id-lang'>Split rectangle based on length terms.</span></li>
+             <li><strong>Kalikan:</strong> Kalikan setiap bagian (lebar × bagian panjang). <span class='id-lang'>Multiply each part (width × length part).</span></li>
+             <li><strong>Gabungkan:</strong> Jumlahkan semua luas bagian kecil. Untuk arsiran, kurangi! <span class='id-lang'>Add all small areas. For shaded, subtract!</span></li>
+           </ul>
+         </div>
+         <p class="mt-4">Sebelum kita akhiri, jangan lupa untuk bergabung dengan platform Algonova untuk mengakses catatan terbimbing dan melanjutkan perjalanan belajarmu! <span class='id-lang'>Remember to join the Algonova platform to access guided notes and continue learning!</span></p>
+         <div class="mt-6 p-5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+           <div class="text-amber-400 font-bold text-xl mb-2">Misi Berikutnya <span class='id-lang'>Your Next Mission</span></div>
+           <p class="text-sm text-slate-300 mb-4">Siap untuk tantangan lainnya? Login ke Algonova sekarang! <span class='id-lang'>Ready for more challenges? Login to Algonova now!</span></p>
+           <a href="https://learn.algonova.id/login" target="_blank" class="btn-primary inline-flex">
+             <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Algonova <span class="id-lang" style="color:rgba(11,17,33,0.7); display:inline;">Open Algonova</span>
+           </a>
+         </div>`}
+      ]
+    }
+  ]
+};
+
+// ============================================================
+// STATE APLIKASI
+// ============================================================
+let state = {
+  xp: 0,
+  streak: 0,
+  completed: {},   // { "1-0": true, "1-1": true, ... }  mapIndex-lessonIndex
+  currentView: 'map',
+  currentMap: null,  // index di COURSE.maps
+  currentLesson: null, // index lesson dalam map
+  exerciseState: {},  // state untuk exercise interaktif
+};
+
+// Load dari localStorage
+function loadState() {
+  try {
+    const saved = localStorage.getItem('logicode_state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state.xp = parsed.xp || 0;
+      state.streak = parsed.streak || 0;
+      state.completed = parsed.completed || {};
+	  state.mapAnswers = parsed.mapAnswers || {};
+    }
+  } catch(e) {}
+}
+function saveState() {
+  try {
+    localStorage.setItem('logicode_state', JSON.stringify({
+      xp: state.xp, streak: state.streak, completed: state.completed, mapAnswers: state.mapAnswers
+    }));
+  } catch(e) {}
+}
+
+function resetProgress() {
+  if (confirm('Apakah kamu yakin ingin menghapus semua progress? Tindakan ini tidak bisa dibatalkan.')) {
+    // Hapus data dari localStorage
+    localStorage.removeItem('logicode_state');
+    
+    // Reset state di memori
+    state.xp = 0;
+    state.streak = 0;
+    state.completed = {};
+    
+    // Render ulang tampilan peta
+    renderMap();
+    
+    // Tampilkan notifikasi
+    showToast('Progress berhasil direset!', 'info');
+  }
+}
+
+// ============================================================
+// HELPER: Cek apakah peta terbuka
+// ============================================================
+function isMapUnlocked(mapIdx) {
+  return true; // Semua peta selalu terbuka
+}
+
+function isMapCompleted(mapIdx) {
+  const map = COURSE.maps[mapIdx];
+  if (!map) return false;
+  return map.lessons.every((_, li) => state.completed[`${mapIdx}-${li}`]);
+}
+
+function isLessonUnlocked(mapIdx, lessonIdx) {
+  return true; // Semua lesson selalu terbuka
+}
+
+function getMapProgress(mapIdx) {
+  const map = COURSE.maps[mapIdx];
+  if (!map) return 0;
+  const done = map.lessons.filter((_, li) => state.completed[`${mapIdx}-${li}`]).length;
+  return Math.round((done / map.lessons.length) * 100);
+}
+
+function getTotalProgress() {
+  let total = 0, done = 0;
+  COURSE.maps.forEach((m, mi) => {
+    m.lessons.forEach((_, li) => {
+      total++;
+      if (state.completed[`${mi}-${li}`]) done++;
+    });
+  });
+  return total > 0 ? Math.round((done / total) * 100) : 0;
+}
+
+// ============================================================
+// RENDER: PETA MAP (halaman utama)
+// ============================================================
+function renderMap() {
+  const container = document.getElementById('mapContainer');
+  let html = '';
+
+	COURSE.maps.forEach((map, mi) => {
+	const unlocked = isMapUnlocked(mi);
+	const completed = isMapCompleted(mi);
+	const progress = getMapProgress(mi);
+	const isBranch = map.branch;
+	const isLastBranch = isBranch && !COURSE.maps[mi+1]?.branch;
+	const isFirstBranch = isBranch && !COURSE.maps[mi-1]?.branch;
+
+	// Node kelas
+	const nodeClass = completed ? 'completed' : unlocked ? 'unlocked' + (progress === 0 ? ' current' : '') : 'locked';
+
+	// --- BRANCH START: Visual dari Peta 6 ke Peta 7A-7E ---
+	if (isFirstBranch) {
+      const peta6Completed = isMapCompleted(mi - 1);
+      // Garis vertikal turun dari Peta 6
+      html += `<div class="map-line ${peta6Completed ? 'done' : ''}"></div>`;
+      // Garis horizontal branch (diperlebar)
+      html += `<div style="height: 3px; width: 95%; max-width: 850px; margin: 0 auto; background: var(--border);"></div>`;
+      // Buka container flex untuk 7A-7E (ditambah flex-wrap agar rapi di HP)
+      html += `<div class="flex flex-wrap justify-center" style="gap: 20px; max-width: 850px; margin: 0 auto;">`;
+    }
+
+	// --- RENDER NODE ---
+	html += `
+	  <div class="flex flex-col items-center" style="${isBranch ? 'min-width: 150px;' : ''}" onclick="${unlocked ? `openPeta(${mi})` : ''}">
+		${isBranch ? `<div style="width: 3px; height: 25px; background: var(--border);"></div>` : ''}
+		<div class="map-node ${nodeClass}" style="${unlocked ? `border-color:${map.color};${completed ? `background:${map.color}` : ''}` : ''}">
+		  ${completed ? '<i class="fa-solid fa-check"></i>' : unlocked ? `<i class="fa-solid ${map.icon}"></i>` : '<i class="fa-solid fa-lock text-sm"></i>'}
+		</div>
+		<div class="mt-2 text-center">
+		  <div class="text-sm font-semibold node-title ${unlocked ? 'text-slate-200' : 'text-slate-600'}">Peta ${map.id}</div>
+		  <div class="text-xs node-title ${unlocked ? 'text-slate-400' : 'text-slate-600'}">${map.title}</div>
+		  ${unlocked && !completed ? `<div class="mt-1 w-16 mx-auto"><div class="prog-bar"><div class="prog-fill" style="width:${progress}%;background:${map.color}"></div></div></div>` : ''}
+		</div>
+		${isBranch ? `<div style="width: 3px; height: 25px; background: var(--border);"></div>` : ''}
+	  </div>
+	`;
+
+	// --- BRANCH END: Visual dari Peta 7A-7E ke Peta 8 ---
+	if (isLastBranch) {
+      // Tutup container flex 7A-7E
+      html += `</div>`;
+      // Garis horizontal merge (diperlebar)
+      html += `<div style="height: 3px; width: 95%; max-width: 850px; margin: 0 auto; background: var(--border);"></div>`;
+      // Garis vertikal turun ke Peta 8
+      html += `<div class="map-line"></div>`;
+    }
+
+	// --- GARIS VERTIKAL NORMAL (Peta 1-5) ---
+	if (!isBranch && mi < COURSE.maps.length - 1 && !COURSE.maps[mi+1]?.branch) {
+	  html += `<div class="map-line ${completed ? 'done' : ''}"></div>`;
+	}
+	});
+
+  container.innerHTML = html;
+
+  // Update header stats
+  document.getElementById('headerXP').textContent = state.xp;
+  document.getElementById('headerStreak').textContent = state.streak;
+  document.getElementById('totalProgress').textContent = getTotalProgress() + '%';
+  document.getElementById('totalProgFill').style.width = getTotalProgress() + '%';
+}
+
+// ============================================================
+// RENDER: PETA DETAIL (daftar lesson)
+// ============================================================
+function openPeta(mapIdx) {
+  state.currentMap = mapIdx;
+  showView('peta');
+  const map = COURSE.maps[mapIdx];
+  document.getElementById('petaTitle').innerHTML = `Peta ${map.id}: ${map.title}`;
+  const totalLessons = map.lessons.length;
+  const doneLessons = map.lessons.filter((_, li) => state.completed[`${mapIdx}-${li}`]).length;
+  document.getElementById('petaSubtitle').textContent = `${doneLessons}/${totalLessons} selesai`;
+
+  const container = document.getElementById('lessonContainer');
+  let html = '<div class="stagger-in flex flex-col items-center">';
+
+  map.lessons.forEach((lesson, li) => {
+    const unlocked = isLessonUnlocked(mapIdx, li);
+    const completed = state.completed[`${mapIdx}-${li}`] === true;
+    const isTheory = lesson.type === 'T';
+    const isCurrent = unlocked && !completed;
+
+    const nodeClass = completed ? 'completed' : unlocked ? 'unlocked' : 'locked';
+    const shapeClass = isTheory ? 'theory' : 'exercise';
+
+    html += `
+      <div class="flex flex-col items-center">
+        <div class="lesson-node ${shapeClass} ${nodeClass} ${isCurrent ? 'current' : ''}"
+             style="${unlocked ? `border-color:${map.color};${completed ? `background:${map.color}` : ''}` : ''}"
+             onclick="${unlocked ? `openLesson(${mapIdx},${li})` : ''}">
+          ${completed ? '<i class="fa-solid fa-check text-sm"></i>' : isTheory ? '<i class="fa-solid fa-book text-sm"></i>' : '<i class="fa-solid fa-dumbbell text-sm"></i>'}
+        </div>
+        <div class="mt-1 text-center">
+          <div class="text-xs node-title ${unlocked ? 'text-slate-300' : 'text-slate-600'}">${isTheory ? lesson.title : `Exercise ${li+1}`}</div>
+        </div>
+      </div>
+    `;
+
+    // Koneksi ke lesson berikutnya
+    if (li < map.lessons.length - 1) {
+      const connDone = completed;
+      html += `<div class="lesson-connector ${connDone ? 'done' : ''}"></div>`;
+    }
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ============================================================
+// RENDER: LESSON (teori atau exercise)
+// ============================================================
+function openLesson(mapIdx, lessonIdx) {
+  state.currentMap = mapIdx;
+  state.currentLesson = lessonIdx;
+  state.exerciseState = {};
+  showView('lesson');
+
+  const map = COURSE.maps[mapIdx];
+  const lesson = map.lessons[lessonIdx];
+  const total = map.lessons.length;
+
+  document.getElementById('lessonCounter').textContent = `${lessonIdx+1}/${total}`;
+  const done = map.lessons.filter((_, li) => state.completed[`${mapIdx}-${li}`] || li < lessonIdx).length;
+  document.getElementById('lessonProgFill').style.width = `${(done/total)*100}%`;
+
+  if (lesson.type === 'T') {
+    renderTheory(lesson);
+  } else {
+    renderExercise(lesson, mapIdx, lessonIdx);
+  }
+}
+
+function renderTheory(lesson) {
+  const content = document.getElementById('lessonContent');
+  content.innerHTML = `
+    <div class="stagger-in">
+      <div class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">
+        <i class="fa-solid fa-book-open mr-1"></i> Theory <span class="id-lang" style="display:inline; color:#64748b;">Teori</span>
+      </div>
+      <h2 class="text-2xl font-bold mb-6">${lesson.title}</h2>
+      <div class="text-slate-300 leading-relaxed space-y-3">
+        ${lesson.body}
+      </div>
+      <div class="mt-8 flex justify-end">
+        <button id="nextBtn" class="btn-primary" onclick="completeAndNext()">
+          Next <span class="id-lang" style="color:rgba(11,17,33,0.7); display:inline;">Lanjut</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderExercise(lesson, mapIdx, lessonIdx) {
+  const content = document.getElementById('lessonContent');
+  const etype = lesson.etype;
+  let exerciseHTML = '';
+
+  switch(etype) {
+    case 'mc': exerciseHTML = renderMC(lesson); break;
+    case 'tf': exerciseHTML = renderTF(lesson); break;
+    case 'fb': exerciseHTML = renderFB(lesson); break;
+    case 'ord': exerciseHTML = renderOrd(lesson); break;
+    case 'match': exerciseHTML = renderMatch(lesson); break;
+    case 'sa': exerciseHTML = renderSA(lesson); break;
+    case 'code': exerciseHTML = renderCode(lesson); break;
+    default: exerciseHTML = '<p>Tipe exercise tidak dikenal</p>';
+  }
+
+  content.innerHTML = `
+    <div class="stagger-in">
+      <div class="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">
+        <i class="fa-solid fa-dumbbell mr-1"></i> Exercise <span class="id-lang" style="display:inline; color:#64748b;">Latihan</span>
+      </div>
+      <h2 class="text-xl font-bold mb-6">${lesson.q}</h2>
+      ${lesson.code ? `<div class="code-block mb-6">${escapeHTML(lesson.code)}</div>` : ''}
+      <div id="exerciseArea">${exerciseHTML}</div>
+      <div id="feedbackArea" class="mt-4"></div>
+      <div class="mt-6 flex items-center justify-between flex-wrap gap-3">
+        <div class="flex gap-2">
+          <button class="btn-secondary text-sm" onclick="showHint()" id="hintBtn">
+            <i class="fa-solid fa-lightbulb mr-1"></i> Hint <span class="id-lang" style="display:inline;">Petunjuk</span>
+          </button>
+          <button class="btn-secondary text-sm" onclick="resetExercise()" id="resetBtn">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Reset <span class="id-lang" style="display:inline;">Atur Ulang</span>
+          </button>
+        </div>
+        <button class="btn-primary" id="checkBtn" onclick="checkAnswer()" disabled>
+          Check <span class="id-lang" style="display:inline;">Periksa</span> <i class="fa-solid fa-check"></i>
+        </button>
+      </div>
+      <div id="hintArea" class="mt-4 hidden">
+        <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-sm text-amber-200">
+          <i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i>${lesson.h || 'Tidak ada petunjuk'}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Fungsi baru untuk mereset exercise
+function resetExercise() {
+  if (state.exerciseState.answered) return; // Tidak bisa reset jika sudah di-check
+  const lesson = COURSE.maps[state.currentMap].lessons[state.currentLesson];
+  renderExercise(lesson, state.currentMap, state.currentLesson);
+  // Panggil KaTeX setelah HTML dirender ulang
+  setTimeout(() => renderKatexInElement(document.getElementById('lessonContent')), 50);
+}
+
+// ============================================================
+// EXERCISE RENDERERS
+// ============================================================
+
+// Multiple Choice
+function renderMC(lesson) {
+  const labels = ['A','B','C','D','E','F'];
+  return `<div class="space-y-3" id="mcOptions">
+    ${lesson.o.map((opt, i) => `
+      <div class="opt-card" data-idx="${i}" onclick="selectMC(${i})">
+        <span class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm font-bold flex-shrink-0">${labels[i]}</span>
+        <span>${opt}</span>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function selectMC(idx) {
+  if (state.exerciseState.answered) return;
+  state.exerciseState.selected = idx;
+  document.querySelectorAll('#mcOptions .opt-card').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('checkBtn').disabled = false;
+}
+
+// True/False
+function renderTF(lesson) {
+  return `<div class="flex gap-4" id="tfOptions">
+    <div class="opt-card flex-1 justify-center text-center text-lg" onclick="selectTF(true)" data-val="true">
+      <i class="fa-solid fa-check text-emerald-400 mr-2"></i> True <span class="id-lang">Benar</span>
+    </div>
+    <div class="opt-card flex-1 justify-center text-center text-lg" onclick="selectTF(false)" data-val="false">
+      <i class="fa-solid fa-xmark text-red-400 mr-2"></i> False <span class="id-lang">Salah</span>
+    </div>
+  </div>`;
+}
+
+function selectTF(val) {
+  if (state.exerciseState.answered) return;
+  state.exerciseState.selected = val;
+  document.querySelectorAll('#tfOptions .opt-card').forEach(el => {
+    el.classList.toggle('selected', el.dataset.val === String(val));
+  });
+  document.getElementById('checkBtn').disabled = false;
+}
+
+// Fill Blank
+function renderFB(lesson) {
+  return `<div>
+    <input type="text" class="ex-input" id="fbInput" placeholder="Ketik jawaban..." autocomplete="off" oninput="onFBInput()">
+  </div>`;
+}
+
+function onFBInput() {
+  const val = document.getElementById('fbInput').value.trim();
+  document.getElementById('checkBtn').disabled = val.length === 0;
+}
+
+// Order
+function renderOrd(lesson) {
+  // Tampilkan item dalam urutan acak
+  const shuffled = lesson.o.map((item, i) => ({text: item, origIdx: i}));
+  // Shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  state.exerciseState.ordOrder = [];
+  state.exerciseState.ordItems = shuffled;
+
+  return `<div>
+	<div class="text-sm text-slate-400 mb-3">Click items in the correct order: <span class="id-lang">Klik item dalam urutan yang benar:</span></div>
+    <div class="space-y-2" id="ordList">
+      ${shuffled.map((item, i) => `
+        <div class="order-item flex items-center gap-3" data-orig="${item.origIdx}" onclick="selectOrd(this,${item.origIdx})">
+          <span class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-xs font-bold ord-num"></span>
+          <span>${item.text}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="mt-3 text-xs text-slate-500" id="ordStatus">Urutan terpilih: (belum ada)</div>
+  </div>`;
+}
+
+function selectOrd(el, origIdx) {
+  if (state.exerciseState.answered) return;
+  if (el.classList.contains('ordered')) return;
+
+  const order = state.exerciseState.ordOrder;
+  order.push(origIdx);
+  el.classList.add('ordered');
+  const numEl = el.querySelector('.ord-num');
+  numEl.textContent = order.length;
+
+  document.getElementById('ordStatus').textContent = `Urutan terpilih: ${order.length}/${state.exerciseState.ordItems.length}`;
+  document.getElementById('checkBtn').disabled = order.length < state.exerciseState.ordItems.length;
+}
+
+// Match
+function renderMatch(lesson) {
+  state.exerciseState.matchLeft = null;
+  state.exerciseState.matchPairs = [];
+  state.exerciseState.matchedLeft = new Set();
+  state.exerciseState.matchedRight = new Set();
+
+  // Shuffle right column
+  const rightShuffled = [...lesson.right];
+  for (let i = rightShuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rightShuffled[i], rightShuffled[j]] = [rightShuffled[j], rightShuffled[i]];
+  }
+  state.exerciseState.rightShuffled = rightShuffled;
+
+  return `<div>
+    <div class="text-sm text-slate-400 mb-3">Klik item kiri, lalu item kanan untuk mencocokkan:</div>
+    <div class="grid grid-cols-2 gap-3" id="matchGrid">
+      <div class="space-y-2" id="matchLeft">
+        ${lesson.left.map((item, i) => `
+          <div class="match-item" data-side="left" data-idx="${i}" onclick="selectMatch('left',${i})">${item}</div>
+        `).join('')}
+      </div>
+      <div class="space-y-2" id="matchRight">
+        ${rightShuffled.map((item, i) => `
+          <div class="match-item" data-side="right" data-idx="${i}" data-val="${item}" onclick="selectMatch('right',${i})">${item}</div>
+        `).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function selectMatch(side, idx) {
+  if (state.exerciseState.answered) return;
+  const es = state.exerciseState;
+
+  if (side === 'left') {
+    if (es.matchedLeft.has(idx)) return;
+    // Highlight
+    document.querySelectorAll('#matchLeft .match-item').forEach(el => el.classList.remove('active'));
+    const el = document.querySelector(`#matchLeft .match-item[data-idx="${idx}"]`);
+    el.classList.add('active');
+    es.matchLeft = idx;
+  } else {
+    if (es.matchedRight.has(idx)) return;
+    if (es.matchLeft === null) {
+      showToast('Pilih item kiri terlebih dahulu', 'info');
+      return;
+    }
+    // Create pair
+    const lesson = COURSE.maps[state.currentMap].lessons[state.currentLesson];
+    const leftIdx = es.matchLeft;
+    const rightVal = es.rightShuffled[idx];
+    es.matchPairs.push({leftIdx, rightVal, rightShuffledIdx: idx});
+    es.matchedLeft.add(leftIdx);
+    es.matchedRight.add(idx);
+
+    // Visual
+    const leftEl = document.querySelector(`#matchLeft .match-item[data-idx="${leftIdx}"]`);
+    const rightEl = document.querySelector(`#matchRight .match-item[data-idx="${idx}"]`);
+    leftEl.classList.remove('active');
+    leftEl.classList.add('matched');
+    rightEl.classList.add('matched');
+
+    es.matchLeft = null;
+
+    document.getElementById('checkBtn').disabled = es.matchPairs.length < lesson.left.length;
+  }
+}
+
+// Select All
+function renderSA(lesson) {
+  state.exerciseState.selectedSet = new Set();
+  return `<div>
+    <div class="text-sm text-slate-400 mb-3">Pilih semua jawaban yang benar:</div>
+    <div class="space-y-2" id="saOptions">
+      ${lesson.o.map((opt, i) => `
+        <div class="opt-card" data-idx="${i}" onclick="toggleSA(${i})">
+          <span class="w-6 h-6 rounded border-2 border-slate-600 flex items-center justify-center flex-shrink-0 sa-check"></span>
+          <span>${opt}</span>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+function toggleSA(idx) {
+  if (state.exerciseState.answered) return;
+  const set = state.exerciseState.selectedSet;
+  if (set.has(idx)) set.delete(idx); else set.add(idx);
+  document.querySelectorAll('#saOptions .opt-card').forEach((el, i) => {
+    const check = el.querySelector('.sa-check');
+    if (set.has(i)) {
+      el.classList.add('selected');
+      check.innerHTML = '<i class="fa-solid fa-check text-emerald-400 text-xs"></i>';
+      check.style.borderColor = '#10b981';
+    } else {
+      el.classList.remove('selected');
+      check.innerHTML = '';
+      check.style.borderColor = '';
+    }
+  });
+  document.getElementById('checkBtn').disabled = set.size === 0;
+}
+
+// Code Output
+function renderCode(lesson) {
+  return `<div>
+    <div class="text-sm text-slate-400 mb-3">Tulis output yang akan ditampilkan:</div>
+    <input type="text" class="ex-input font-mono" id="codeInput" placeholder="Ketik output..." autocomplete="off" oninput="onCodeInput()">
+  </div>`;
+}
+
+function onCodeInput() {
+  const val = document.getElementById('codeInput').value.trim();
+  document.getElementById('checkBtn').disabled = val.length === 0;
+}
+
+// ============================================================
+// CHECK ANSWER
+// ============================================================
+function checkAnswer() {
+  if (state.exerciseState.answered) return;
+  state.exerciseState.answered = true;
+
+  // Sembunyikan tombol Hint dan Reset
+  const resetBtn = document.getElementById('resetBtn');
+  if (resetBtn) resetBtn.style.display = 'none';
+
+  const lesson = COURSE.maps[state.currentMap].lessons[state.currentLesson];
+  const etype = lesson.etype;
+  let correct = false;
+  let correctAnswer = '';
+
+  switch(etype) {
+    case 'mc': {
+      const sel = state.exerciseState.selected;
+      correct = sel === lesson.a;
+      document.querySelectorAll('#mcOptions .opt-card').forEach((el, i) => {
+        el.classList.add('disabled');
+        if (i === lesson.a) el.classList.add('correct');
+        if (i === sel && !correct) el.classList.add('wrong');
+      });
+      correctAnswer = lesson.o[lesson.a];
+      break;
+    }
+    case 'tf': {
+      const sel = state.exerciseState.selected;
+      correct = sel === lesson.a;
+      document.querySelectorAll('#tfOptions .opt-card').forEach(el => {
+        el.classList.add('disabled');
+        if (String(lesson.a) === el.dataset.val) el.classList.add('correct');
+        if (String(sel) === el.dataset.val && !correct) el.classList.add('wrong');
+      });
+            correctAnswer = lesson.a ? 'True <span class="id-lang">Benar</span>' : 'False <span class="id-lang">Salah</span>';
+      break;
+    }
+    case 'fb': {
+      const input = document.getElementById('fbInput').value.trim();
+      // Normalisasi: hapus semua spasi dan ubah jadi huruf kecil
+      const normalize = str => str
+        .replace(/[\u200B-\u200D\u2060-\u206F\uFEFF]/g, '') // Hapus karakter tak terlihat (Zero-width, function apply, BOM)
+        .replace(/[（﹝]/g, '(') // Ubah kurung buka full-width ke setengah
+        .replace(/[）﹞]/g, ')') // Ubah kurung tutup full-width ke setengah
+        .replace(/\s+/g, '')    // Hapus semua spasi
+        .toLowerCase();         // Jadiin huruf kecil
+      // Terima beberapa jawaban yang benar (dipisah /)
+      const answers = lesson.a.split('||');
+      correct = answers.some(a => normalize(input) === normalize(a));
+      document.getElementById('fbInput').classList.add(correct ? 'correct' : 'wrong');
+      document.getElementById('fbInput').disabled = true;
+      correctAnswerText = lesson.a.split('||')[0];
+      break;
+    }
+    case 'ord': {
+      const order = state.exerciseState.ordOrder;
+      correct = order.length === lesson.a.length && order.every((v, i) => v === lesson.a[i]);
+      correctAnswer = lesson.a.map(i => lesson.o[i]).join(' → ');
+      break;
+    }
+    case 'match': {
+      const pairs = state.exerciseState.matchPairs;
+      const lesson_data = lesson;
+      correct = pairs.length === lesson_data.a.length && pairs.every((p, i) => {
+        // Cek apakah leftIdx-i cocok dengan right yang benar
+        const expectedRightVal = lesson_data.right[lesson_data.a[p.leftIdx]];
+        return p.rightVal === expectedRightVal;
+      });
+      correctAnswer = lesson_data.left.map((l, i) => `${l} ↔ ${lesson_data.right[lesson_data.a[i]]}`).join(', ');
+      break;
+    }
+    case 'sa': {
+      const selected = [...state.exerciseState.selectedSet].sort();
+      const expected = [...lesson.a].sort();
+      correct = selected.length === expected.length && selected.every((v, i) => v === expected[i]);
+      document.querySelectorAll('#saOptions .opt-card').forEach((el, i) => {
+        el.classList.add('disabled');
+        if (lesson.a.includes(i)) el.classList.add('correct');
+        if (selected.includes(i) && !lesson.a.includes(i)) el.classList.add('wrong');
+      });
+      correctAnswer = lesson.a.map(i => lesson.o[i]).join(', ');
+      break;
+    }
+    case 'code': {
+      const input = document.getElementById('codeInput').value.trim();
+      // Normalisasi: hapus semua spasi dan ubah jadi huruf kecil
+      const normalize = str => str
+        .replace(/[\u200B-\u200D\u2060-\u206F\uFEFF]/g, '') // Hapus karakter tak terlihat
+        .replace(/[（﹝]/g, '(') // Standar kurung buka
+        .replace(/[）﹞]/g, ')') // Standar kurung tutup
+        .replace(/\s+/g, '')    // Hapus spasi
+        .toLowerCase();         // Huruf kecil
+      const answers = lesson.a.split('||');
+      correct = answers.some(a => normalize(input) === normalize(a));
+      document.getElementById('codeInput').classList.add(correct ? 'correct' : 'wrong');
+      document.getElementById('codeInput').disabled = true;
+      correctAnswerText = lesson.a.split('||')[0];
+      break;
+    }
+  }
+
+  // Simpan jawaban untuk Print Result
+  const mi = state.currentMap;
+  const li = state.currentLesson;
+  let studentAnswerText = "";
+  let correctAnswerText = "";
+
+  switch(etype) {
+    case 'mc':
+      studentAnswerText = state.exerciseState.selected !== undefined ? lesson.o[state.exerciseState.selected] : "-";
+      correctAnswerText = lesson.o[lesson.a];
+      break;
+    case 'tf':
+      studentAnswerText = state.exerciseState.selected !== null ? (state.exerciseState.selected ? "True" : "False") : "-";
+      correctAnswerText = lesson.a ? "True" : "False";
+      break;
+    case 'fb':
+      studentAnswerText = document.getElementById('fbInput').value.trim() || "-";
+      correctAnswerText = lesson.a;
+      break;
+    case 'code':
+      studentAnswerText = document.getElementById('codeInput').value.trim() || "-";
+      correctAnswerText = lesson.a;
+      break;
+    case 'ord':
+      studentAnswerText = state.exerciseState.ordOrder.map(i => lesson.o[i]).join(' → ') || "-";
+      correctAnswerText = lesson.a.map(i => lesson.o[i]).join(' → ');
+      break;
+    case 'match':
+      studentAnswerText = "Matched pairs";
+      correctAnswerText = lesson.left.map((l, i) => `${l} ↔ ${lesson.right[lesson.a[i]]}`).join('; ');
+      break;
+    case 'sa':
+      studentAnswerText = [...state.exerciseState.selectedSet].sort().map(i => lesson.o[i]).join(', ') || "-";
+      correctAnswerText = lesson.a.map(i => lesson.o[i]).join(', ');
+      break;
+  }
+
+  if (!state.mapAnswers) state.mapAnswers = {};
+  if (!state.mapAnswers[mi]) state.mapAnswers[mi] = {};
+  state.mapAnswers[mi][li] = {
+    q: lesson.q,
+    studentAnswer: studentAnswerText,
+    correctAnswer: correctAnswerText,
+    isCorrect: correct
+  };
+  saveState();
+
+  // Tampilkan feedback
+  const feedback = document.getElementById('feedbackArea');
+  if (correct) {
+    feedback.innerHTML = `
+      <div class="feedback-bar correct-fb">
+        <i class="fa-solid fa-check-circle text-2xl"></i>
+        <div>
+          <div class="text-lg">Correct! Excellent! <span class="id-lang">Benar! Hebat!</span></div>
+          ${correctAnswer ? `<div class="text-sm opacity-80 mt-1">Answer: ${correctAnswer}</div>` : ''}
+        </div>
+      </div>
+    `;
+    // Tambah XP
+    state.xp += 10;
+    state.streak += 1;
+    showXPPopup(10);
+    spawnConfetti();
+  } else {
+    feedback.innerHTML = `
+      <div class="feedback-bar wrong-fb">
+        <i class="fa-solid fa-times-circle text-2xl"></i>
+        <div>
+            <div class="text-lg">Incorrect <span class="id-lang">Belum tepat</span></div>
+            <div class="text-sm opacity-80 mt-1">Answer: ${correctAnswer}</div>
+        </div>
+      </div>
+    `;
+    state.streak = 0;
+  }
+  
+  renderKatexInElement(feedback);
+  
+  // Update header
+  document.getElementById('headerXP').textContent = state.xp;
+  document.getElementById('headerStreak').textContent = state.streak;
+
+  // Ganti tombol check menjadi lanjut
+  const checkBtn = document.getElementById('checkBtn');
+  checkBtn.textContent = 'Lanjut ';
+  checkBtn.innerHTML = 'Next <span class="id-lang" style="color:rgba(11,17,33,0.7); display:inline;">Lanjut</span> <i class="fa-solid fa-arrow-right"></i>';
+  checkBtn.disabled = false;
+  checkBtn.onclick = () => completeAndNext();
+
+  saveState();
+}
+
+// ============================================================
+// PRINT RESULT UNTUK ASSESSMENT
+// ============================================================
+function showPrintResultForm(mapIdx) {
+  const map = COURSE.maps[mapIdx];
+  const totalLessons = map.lessons.length;
+  let correctCount = 0;
+  
+  if (state.mapAnswers && state.mapAnswers[mapIdx]) {
+    for (let i = 0; i < totalLessons; i++) {
+      if (state.mapAnswers[mapIdx][i] && state.mapAnswers[mapIdx][i].isCorrect) {
+        correctCount++;
+      }
+    }
+  }
+  
+  const score = Math.round((correctCount / totalLessons) * 100);
+
+  const content = document.getElementById('lessonContent');
+  content.innerHTML = `
+    <div class="stagger-in text-center">
+      <div class="text-5xl mb-4">🎉</div>
+      <h2 class="text-2xl font-bold mb-2">Assessment Completed! <span class="id-lang">Asesmen Selesai!</span></h2>
+      <p class="text-slate-400 mb-6">You scored <span class="text-emerald-400 font-bold text-xl">${score}%</span> (${correctCount}/${totalLessons})</p>
+      
+      <div class="max-w-md mx-auto text-left space-y-4 mb-8">
+        <div>
+          <label class="text-sm text-slate-400 block mb-1">Name / <span class="id-lang">Nama</span></label>
+          <input type="text" id="printName" class="ex-input" placeholder="Enter your name / Masukkan nama">
+        </div>
+        <div>
+          <label class="text-sm text-slate-400 block mb-1">Date / <span class="id-lang">Tanggal</span></label>
+          <input type="date" id="printDate" class="ex-input" value="${new Date().toISOString().split('T')[0]}">
+        </div>
+        <div>
+          <label class="text-sm text-slate-400 block mb-1">Assessment / <span class="id-lang">Asesmen</span></label>
+          <input type="text" class="ex-input" value="Assessment ${map.id}" disabled style="opacity:0.6">
+        </div>
+        <div>
+          <label class="text-sm text-slate-400 block mb-1">Score / <span class="id-lang">Skor</span></label>
+          <input type="text" class="ex-input" value="${score}%" disabled style="opacity:0.6">
+        </div>
+      </div>
+
+      <button class="btn-primary text-lg" onclick="generatePrintout(${mapIdx})">
+        <i class="fa-solid fa-print mr-2"></i> Print Result <span class="id-lang" style="color:rgba(11,17,33,0.7); display:inline;">Cetak Hasil</span>
+      </button>
+      
+      <div class="mt-4">
+        <button class="btn-secondary" onclick="openPeta(${mapIdx})">
+          Back to Map <span class="id-lang">Kembali ke Peta</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function generatePrintout(mapIdx) {
+  const map = COURSE.maps[mapIdx];
+  const studentName = document.getElementById('printName').value || '-';
+  const printDate = document.getElementById('printDate').value || '-';
+  
+  let correctCount = 0;
+  let tableRows = '';
+  
+  for (let i = 0; i < map.lessons.length; i++) {
+    const ansData = (state.mapAnswers && state.mapAnswers[mapIdx] && state.mapAnswers[mapIdx][i]) ? state.mapAnswers[mapIdx][i] : null;
+    // Hapus tag id-lang dari pertanyaan agar printout lebih bersih (hanya bahasa Inggris)
+    const qText = map.lessons[i].q.replace(/<span class='id-lang'>.*?<\/span>/g, '');
+    const studentAns = ansData ? ansData.studentAnswer : '-';
+    const correctAns = ansData ? ansData.correctAnswer : '-';
+    const isCorrect = ansData ? ansData.isCorrect : false;
+    
+    if (isCorrect) correctCount++;
+    
+    const noteSymbol = isCorrect ? '✓' : '✗';
+    const noteColor = isCorrect ? 'green' : 'red';
+    
+    tableRows += `
+      <tr>
+        <td style="text-align:center; width: 40px;">${i + 1}</td>
+        <td>${qText}</td>
+        <td>${studentAns}</td>
+        <td>${correctAns}</td>
+        <td style="text-align:center; color: ${noteColor}; font-weight:bold; font-size:1.2rem;">${noteSymbol}</td>
+      </tr>
+    `;
+  }
+  
+  const score = Math.round((correctCount / map.lessons.length) * 100);
+
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+      <meta charset="UTF-8">
+      <title>Assessment Result - ${map.id}</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"><\/script>
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '\\\\(', right: '\\\\)', display: false},{left: '\\\\[', right: '\\\\]', display: true}], throwOnError: false}); setTimeout(function(){window.print();}, 1000);"><\/script>
+      <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; color: #333; line-height: 1.5; }
+        h1 { text-align: center; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+        .header-info { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .header-info p { margin: 5px 0; font-size: 14px; }
+        .header-info strong { margin-right: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+        th, td { border: 1px solid #333; padding: 10px; text-align: left; vertical-align: top; }
+        th { background: #f0f0f0; font-weight: bold; text-align: center; }
+        @media print {
+          body { padding: 0; }
+          .header-info { border: none; padding: 0; }
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Assessment Result</h1>
+      <div class="subtitle">Luas, Array, & Perkalian Aljabar Dasar</div>
+      
+      <div class="header-info">
+        <div style="flex:1; min-width: 200px;">
+          <p><strong>Name:</strong> ${studentName}</p>
+          <p><strong>Date:</strong> ${printDate}</p>
+        </div>
+        <div style="flex:1; min-width: 200px;">
+          <p><strong>Assessment:</strong> ${map.id}</p>
+          <p><strong>Score:</strong> ${score}% (${correctCount}/${map.lessons.length})</p>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Question</th>
+            <th>Student Answer</th>
+            <th>Correct Answer</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+}
+
+// ============================================================
+// COMPLETE & NEXT
+// ============================================================
+function completeAndNext() {
+  const mi = state.currentMap;
+  const li = state.currentLesson;
+  state.completed[`${mi}-${li}`] = true;
+  saveState();
+
+  const map = COURSE.maps[mi];
+  const isLastLesson = li + 1 >= map.lessons.length;
+  const isAssessment = map.branch; // Peta 7A-7E adalah branch: true
+
+  // Jika ini exercise terakhir di Assessment, tampilkan form Print
+  if (isAssessment && isLastLesson) {
+    showPrintResultForm(mi);
+  } else if (li + 1 < map.lessons.length && isLessonUnlocked(mi, li + 1)) {
+    openLesson(mi, li + 1);
+  } else {
+    openPeta(mi);
+  }
+}
+
+// ============================================================
+// NAVIGASI
+// ============================================================
+function showView(viewName) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewName + 'View').classList.add('active');
+  state.currentView = viewName;
+  window.scrollTo(0, 0);
+}
+
+function showMap() {
+  showView('map');
+  renderMap();
+}
+
+function closeLesson() {
+  openPeta(state.currentMap);
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function showToast(msg, type='info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function showXPPopup(amount) {
+  document.getElementById('xpAmount').textContent = amount;
+  const popup = document.getElementById('xpPopup');
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 1500);
+}
+
+function spawnConfetti() {
+  const colors = ['#10b981','#f59e0b','#ec4899','#8b5cf6','#06b6d4','#ef4444'];
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (Math.random() * 8 + 4) + 'px';
+    c.style.height = (Math.random() * 8 + 4) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+    c.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
+function showHint() {
+  document.getElementById('hintArea').classList.remove('hidden');
+  document.getElementById('hintBtn').disabled = true;
+}
+
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// --- FUNGSI UNTUK MODAL RULES ---
+function openRules() {
+  document.getElementById('rulesModal').classList.add('active');
+}
+
+function closeRules() {
+  document.getElementById('rulesModal').classList.remove('active');
+}
+
+// ============================================================
+// KATEX RENDERING
+// ============================================================
+function renderKatexInElement(el) {
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(el, {
+      delimiters: [
+        {left: '\\(', right: '\\)', display: false},  //
+        {left: '\\[', right: '\\]', display: true}    //
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+// Override showView untuk render KaTeX setiap pindah halaman
+const originalShowView = showView;
+showView = function(viewName) {
+  originalShowView(viewName);
+  setTimeout(() => renderKatexInElement(document.body), 100);
+};
+
+// Override openLesson untuk render KaTeX di konten lesson
+const originalOpenLesson = openLesson;
+openLesson = function(mapIdx, lessonIdx) {
+  originalOpenLesson(mapIdx, lessonIdx);
+  setTimeout(() => renderKatexInElement(document.body), 100);
+};
+
+// ============================================================
+// INISIALISASI APLIKASI
+// ============================================================
+loadState();
+renderMap();
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  // Tekan Escape untuk menutup lesson
+  if (e.key === 'Escape' && state.currentView === 'lesson') {
+    closeLesson();
+  }
+  
+  // Tekan Enter untuk memeriksa jawaban / lanjut ke soal berikutnya
+  if (e.key === 'Enter' && state.currentView === 'lesson') {
+    const checkBtn = document.getElementById('checkBtn');
+    // Pastikan tombol ada dan tidak dalam keadaan disabled
+    if (checkBtn && !checkBtn.disabled) {
+      e.preventDefault(); 
+      checkBtn.click();   // Untuk halaman Exercise
+    } else if (nextBtn) {
+      e.preventDefault();
+      nextBtn.click();    // Untuk halaman Teori
+    }
+  }
+});
+</script>
+</body>
+</html>
