@@ -1,0 +1,1168 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 3757
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 20 Tf
+23. TL
+0 g
+56.6929133858267775 785.1970866141732586 Td
+(Luas, Array, & Perkalian Aljabar Dasar - Jean) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 742.6774015748030706 Td
+(Created: 07/07/2026) Tj
+ET
+56.6929133858267775 714.3309448818897636 m
+538.5826771653544256 714.3309448818897636 l
+S
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 685.9844881889763428 Td
+(Student) Tj
+ET
+BT
+/F1 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 657.6380314960629221 Td
+(Student: Jean) Tj
+ET
+BT
+/F1 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 634.9608661417322537 Td
+(Topic: Luas, Array, & Perkalian Aljabar Dasar) Tj
+ET
+BT
+/F1 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 612.2837007874015853 Td
+(Status: completed) Tj
+ET
+BT
+/F2 16 Tf
+18.3999999999999986 TL
+0 g
+56.6929133858267775 569.7640157480313974 Td
+(Lesson Plan) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 527.2443307086614368 Td
+(Learning Objectives) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 504.5671653543306547 Td
+(• Menghitung luas persegi panjang dengan dimensi variabel \(suku tunggal aljabar\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 481.8899999999999295 Td
+(• Memodelkan perkalian suku aljabar menggunakan model visual area \(array\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 459.2128346456692611 Td
+(• Menyusun ekspresi aljabar untuk menghitung luas area yang diarsir pada bangun datar) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 442.2049606299212314 Td
+(gabungan.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 419.5277952755905062 Td
+(• Menyelesaikan ekspresi perkalian distributif sederhana seperti x\(x+a\) menggunakan representasi) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 402.5199212598424765 Td
+(grafis.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 357.1655905511810261 Td
+(Lesson Information) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 311.8112598425195756 Td
+(Lesson Sections) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 283.4648031496062686 Td
+(1. Spiral Review Warm-up \(10 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 260.7876377952754865 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 243.7797637795274568 Td
+(Halo Jean! Senang sekali bertemu lagi. Sebelum kita masuk ke tantangan baru, mari kita panaskan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 229.6065354330708033 Td
+(otak dengan 'Misi Mengingat'. Kita punya 4 tantangan cepat di layar. Siap? \(1\) Sebuah kubus punya) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 215.4333070866141497 Td
+(rusuk 5 cm, berapa volumenya? \(2\) Jika ada balok 10x2x5 cm diletakkan di atas kubus tadi, berapa) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 201.2600787401573825 Td
+(total volume bangun gabungannya? \(3\) Di game angka kita, jika x + 7 = 15, berapakah x? \(4\) Jika 2y =) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 187.086850393700729 Td
+(20, berapakah y? Tulis jawabanmu di chatbox ya!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 161.5750393700786844 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 144.5671653543306547 Td
+(• Menjawab 2 soal volume bangun ruang gabungan.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 127.559291338582625 Td
+(• Menjawab 2 soal teka-teki angka \(aljabar dasar\).) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 07/07/2026, 09:50:31) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(1 / 4) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 4403
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 785.1970866141732586 Td
+(2. Introduction & Real-World Connection \(5 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 762.5199212598424765 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 745.5120472440944468 Td
+(Jean, pernahkah kamu membayangkan bagaimana desainer game seperti di Minecraft atau Roblox) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 731.3388188976377933 Td
+(menghitung luas lahan jika ukurannya belum pasti? Mereka menggunakan 'Variabel'. Hari ini, kita akan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 717.1655905511811397 Td
+(menjadi arsitek digital. Kita akan belajar menghitung luas ruangan meskipun ukurannya masih berupa) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 702.9923622047243725 Td
+(kode rahasia atau aljabar!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 677.480551181102328 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 660.4726771653542983 Td
+(• Diskusi singkat tentang penggunaan variabel dalam desain bangunan.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 615.1183464566928478 Td
+(3. Review of Prior Knowledge \(5 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 592.4411811023621794 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 575.4333070866141497 Td
+(Ingat rumus Luas Persegi Panjang? Ya, Panjang dikali Lebar. Kalau panjangnya 5 dan lebarnya 4,) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 561.2600787401574962 Td
+(luasnya 20. Nah, bagaimana kalau panjangnya adalah '3x' dan lebarnya adalah '2'? Kita tinggal kalikan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 547.086850393700729 Td
+(angkanya: 3 dikali 2, lalu tempelkan x-nya. Jadi 6x! Mudah, kan?) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 521.5750393700786844 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 504.5671653543306547 Td
+(• Latihan perkalian angka dengan variabel tunggal \(bilangan bulat x variabel\).) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 459.2128346456692611 Td
+(4. Problem Introduction: Model Area \(10 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 436.5356692913385359 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 419.5277952755905062 Td
+(Sekarang, perhatikan kotak besar ini. Panjangnya \(x + 4\) dan lebarnya adalah x. Untuk menghitung) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 405.3545669291337958 Td
+(luasnya, kita bagi kotak ini menjadi dua bagian. Bagian pertama adalah x dikali x, yang jadi x-kuadrat) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 391.1813385826770855 Td
+(\(x²\). Bagian kedua adalah x dikali 4, jadi 4x. Jadi total luasnya adalah x² + 4x. Ini disebut Model Area!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 365.6695275590550409 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 348.6616535433070112 Td
+(• Visualisasi persegi panjang yang dibagi menjadi dua bagian \(x dan konstanta\).) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 303.3073228346455608 Td
+(5. Guided Practice \(15 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 280.6301574803148924 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 263.6222834645668627 Td
+(Ayo kita coba bersama. Lihat gambar di layar. Ada persegi panjang besar dengan panjang \(x + 3\) dan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 249.4490551181102092 Td
+(lebar 5. Mari kita buat kotak-kotaknya. Berapa luas kotak pertama \(5 dikali x\)? Dan berapa luas kotak) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 235.2758267716534419 Td
+(kedua \(5 dikali 3\)? Sekarang, gabungkan keduanya!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 209.7640157480313974 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 192.7561417322833677 Td
+(• Menggambar model array untuk perkalian 3\(x + 2\).) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 175.748267716535338 Td
+(• Menghitung luas area arsiran: Luas Total dikurangi Luas Kosong.) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 07/07/2026, 09:50:31) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(2 / 4) Tj
+ET
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 8 0 R
+>>
+endobj
+8 0 obj
+<<
+/Length 5032
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 785.1970866141732586 Td
+(6. Independent Practice \(15 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 762.5199212598424765 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 745.5120472440944468 Td
+(Ini waktunya tantangan mandiri, Arsitek Jean! Ada 3 ruangan yang butuh dihitung luasnya. Satu) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 731.3388188976377933 Td
+(ruangan berbentuk \(x+5\) kali x. Dan satu lagi tantangan berat: hitung area taman \(arsiran\) di tengah) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 717.1655905511811397 Td
+(kolam renang. Kamu punya 10 menit, aku akan melihat progresmu di sini.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 691.6537795275589815 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 674.6459055118109518 Td
+(• Menyelesaikan perkalian aljabar x\(x+6\).) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 657.6380314960629221 Td
+(• Menghitung luas area yang diarsir dari gambar bangun gabungan.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 612.2837007874015853 Td
+(7. Consolidation & Reflection \(5 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 589.6065354330708033 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 572.5986614173227736 Td
+(Luar biasa, Jean! Hari ini kamu belajar bahwa aljabar itu seperti potongan puzzle. Luas total adalah) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 558.42543307086612 Td
+(jumlah dari semua potongan kecilnya. Jangan lupa, untuk latihan lebih lanjut, silakan login ke) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 544.2522047244094665 Td
+(https://learn.algonova.id/login dan selesaikan misi di sana ya. Sampai jumpa di sesi berikutnya!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 518.7403937007873083 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 501.7325196850393354 Td
+(• Merangkum rumus Model Area.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 484.7246456692913057 Td
+(• Instruksi akses LMS.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 439.3703149606298552 Td
+(Homework) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 411.0238582677164914 Td
+(Medium Questions:) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 394.0159842519684616 Td
+(1. Hitung luas persegi panjang dengan panjang 7 dan lebar 4x.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 371.3388188976377364 Td
+(2. Sederhanakan ekspresi luas dari model area dengan dimensi x dan \(x + 8\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 348.6616535433070112 Td
+(3. Sebuah ruangan memiliki panjang 5x dan lebar 3. Berapakah luasnya?) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 325.9844881889763428 Td
+(4. Jika x = 2, hitunglah nilai dari luas 3\(x + 4\).) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 286.2994488188975311 Td
+(Hard Questions:) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 269.2915748031495013 Td
+(1. Tentukan ekspresi aljabar untuk luas daerah yang diarsir jika persegi panjang luar) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 255.1183464566928478 Td
+(berukuran 10x5 dan persegi di dalamnya berukuran x kali x.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 232.4411811023621794 Td
+(2. Selesaikan perkalian 2x\(x + 5\) menggunakan model area.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 209.7640157480313974 Td
+(3. Sebuah taman berbentuk persegi panjang dengan ukuran \(x + 3\) dan lebar x. Jika luas) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 195.5907874015747439 Td
+(taman adalah x² + 3x, berapakah luasnya jika x diganti dengan 5?) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 172.9136220472439618 Td
+(4. Hitung luas daerah yang diarsir: Persegi panjang besar \(x+2\) kali 6, dikurangi persegi kecil) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 158.7403937007873083 Td
+(di tengah berukuran 2 kali 3.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 136.0632283464566399 Td
+(5. Modelkan dan tuliskan ekspresi untuk \(x+1\)\(x+4\) menggunakan pembagian 4 kotak area.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 113.3860629921258578 Td
+(6. Diberikan persegi panjang dengan luas 12x. Jika lebarnya adalah 4, berapakah) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 99.2128346456692043 Td
+(panjangnya dalam bentuk variabel?) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 59.5277952755905062 Td
+(Answer Key:) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 07/07/2026, 09:50:31) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(3 / 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 10 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 3861
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 785.1970866141732586 Td
+(1. 28x) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 771.0238582677164914 Td
+(2. x² + 8x) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 756.8506299212598378 Td
+(3. 15x) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 742.6774015748030706 Td
+(4. 3\(2+4\) = 18) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 728.5041732283464171 Td
+(5. 50 - x²) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 714.3309448818897636 Td
+(6. 2x² + 10x) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 700.15771653543311 Td
+(7. 5² + 3\(5\) = 25 + 15 = 40) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 685.9844881889763428 Td
+(8. 6\(x+2\) - 6 = 6x + 12 - 6 = 6x + 6) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 671.8112598425196893 Td
+(9. x² + 5x + 4) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 657.6380314960629221 Td
+(10. 3x) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 643.4648031496062686 Td
+(REVIEW: Bangun Ruang Gabungan - Vol Kubus \(s=4\) + Balok \(2x3x4\) = 64 + 24 = 88) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 629.291574803149615 Td
+(REVIEW: Bangun Ruang Gabungan - Jika total volume dua kubus identik adalah 250,) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 615.1183464566928478 Td
+(volume satu kubus adalah 125.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 600.9451181102361943 Td
+(REVIEW: Bangun Ruang Gabungan - \(Hard\) Hitung volume balok di atas balok lain: \(5x5x10\)) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 586.7718897637794271 Td
+(+ \(2x2x2\) = 258 unit.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 572.5986614173227736 Td
+(REVIEW: Bangun Ruang Gabungan - \(Hard\) Selisih volume kubus r=6 dan kubus r=4: 216 -) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 558.42543307086612 Td
+(64 = 152.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 544.2522047244094665 Td
+(REVIEW: Pre-assessment - Jika 3a = 21, maka a = 7.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 530.0789763779526993 Td
+(REVIEW: Pre-assessment - Hasil dari 15 - \(3 * 4\) + 2 = 5.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 515.9057480314959321 Td
+(REVIEW: Pre-assessment - \(Hard\) Jika x+y=10 dan x=4, maka 2y = 12.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 501.7325196850393354 Td
+(REVIEW: Pre-assessment - \(Hard\) Nilai dari \(2^3 + 4\) / 2 = 6.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 464.8821259842518998 Td
+(Parent Reminder) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 442.2049606299212314 Td
+(Update Belajar Jean: Menjadi Arsitek Aljabar!) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 425.1970866141731449 Td
+(Hari ini Jean belajar menghubungkan konsep luas bangun datar dengan aljabar) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 411.0238582677164914 Td
+(menggunakan Model Area. Ia mulai memahami bagaimana variabel x digunakan dalam) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 396.850629921259781 Td
+(perhitungan desain nyata. Mohon bantu sertai Jean untuk mencoba tantangan di) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 382.6774015748030706 Td
+(https://learn.algonova.id/login ya!) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 07/07/2026, 09:50:31) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(4 / 4) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R 9 0 R ]
+/Count 4
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+21 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+22 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+23 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+24 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 11 0 R
+/F2 12 0 R
+/F3 13 0 R
+/F4 14 0 R
+/F5 15 0 R
+/F6 16 0 R
+/F7 17 0 R
+/F8 18 0 R
+/F9 19 0 R
+/F10 20 0 R
+/F11 21 0 R
+/F12 22 0 R
+/F13 23 0 R
+/F14 24 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+25 0 obj
+<<
+/Producer (jsPDF 3.0.2)
+/CreationDate (D:20260707095031+07'00')
+>>
+endobj
+26 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 27
+0000000000 65535 f 
+0000017826 00000 n 
+0000019666 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000003961 00000 n 
+0000004098 00000 n 
+0000008553 00000 n 
+0000008690 00000 n 
+0000013774 00000 n 
+0000013912 00000 n 
+0000017901 00000 n 
+0000018027 00000 n 
+0000018158 00000 n 
+0000018292 00000 n 
+0000018430 00000 n 
+0000018554 00000 n 
+0000018683 00000 n 
+0000018815 00000 n 
+0000018951 00000 n 
+0000019079 00000 n 
+0000019206 00000 n 
+0000019335 00000 n 
+0000019468 00000 n 
+0000019570 00000 n 
+0000019919 00000 n 
+0000020005 00000 n 
+trailer
+<<
+/Size 27
+/Root 26 0 R
+/Info 25 0 R
+/ID [ <54A0C10BE1EF30E593B28456FD9CE479> <54A0C10BE1EF30E593B28456FD9CE479> ]
+>>
+startxref
+20109
+%%EOF
