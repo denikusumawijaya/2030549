@@ -1,0 +1,1175 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 3861
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 20 Tf
+23. TL
+0 g
+56.6929133858267775 785.1970866141732586 Td
+(Teorema Pythagoras & Visualisasi Kuadrat - Jean) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 742.6774015748030706 Td
+(Created: 7/16/2026) Tj
+ET
+56.6929133858267775 714.3309448818897636 m
+538.5826771653544256 714.3309448818897636 l
+S
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 685.9844881889763428 Td
+(Student) Tj
+ET
+BT
+/F1 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 657.6380314960629221 Td
+(Student: Jean) Tj
+ET
+BT
+/F1 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 634.9608661417322537 Td
+(Topic: Teorema Pythagoras & Visualisasi Kuadrat) Tj
+ET
+BT
+/F1 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 612.2837007874015853 Td
+(Status: completed) Tj
+ET
+BT
+/F2 16 Tf
+18.3999999999999986 TL
+0 g
+56.6929133858267775 569.7640157480313974 Td
+(Lesson Plan) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 527.2443307086614368 Td
+(Learning Objectives) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 504.5671653543306547 Td
+(• Menghitung panjang sisi miring segitiga siku-siku menggunakan rumus Teorema Pythagoras \(a² +) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 487.559291338582625 Td
+(b² = c²\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 464.8821259842518998 Td
+(• Merepresentasikan bukti visual Pythagoras dengan menggambar persegi pada setiap sisi segitiga) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 447.8742519685038701 Td
+(siku-siku.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 425.1970866141731449 Td
+(• Menentukan jarak terpendek \(diagonal\) pada objek dunia nyata seperti layar gadget atau tangga.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 402.5199212598424765 Td
+(• Menganalisis hubungan antara luas persegi yang menempel pada sisi-sisi segitiga siku-siku.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 357.1655905511810261 Td
+(Lesson Information) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 311.8112598425195756 Td
+(Lesson Sections) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 283.4648031496062686 Td
+(1. Spiral Review Warm-up \(10 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 260.7876377952754865 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 243.7797637795274568 Td
+(Halo Jean! Senang sekali bertemu lagi. Sebelum kita masuk ke petualangan baru, mari kita panaskan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 229.6065354330708033 Td
+(otak dengan tantangan kilat dari pelajaran sebelumnya. Kita akan bagi papan tulis menjadi dua area) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 215.4333070866141497 Td
+(ya!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 189.9214960629919915 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 172.9136220472439618 Td
+(• Tantangan 1 \(Bangun Ruang\): 'Jean, jika ada sebuah kubus dengan rusuk 5 cm, berapa volumenya?') Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 155.9057480314959321 Td
+(• Tantangan 2 \(Bangun Ruang\): 'Jika kita menaruh balok 10x5x2 cm di atas kubus tadi, berapa total volume gabungannya?') Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 138.8978740157479024 Td
+(• Tantangan 3 \(Number Game\): 'Coba tebak pola ini: 1, 4, 9, 16, ... angka apa selanjutnya?') Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 121.8899999999998727 Td
+(• Tantangan 4 \(Number Game\): 'Berapakah nilai dari 8 kuadrat dan akar kuadrat dari 49?') Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 7/16/2026, 11:58:29 AM) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(1 / 4) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 4684
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 785.1970866141732586 Td
+(2. Introduction & Real-World Connection \(5 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 762.5199212598424765 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 745.5120472440944468 Td
+(Jean, pernahkah kamu penasaran bagaimana tukang bangunan memastikan sudut ruangan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 731.3388188976377933 Td
+(benar-benar lurus? Atau bagaimana ukuran 50 inci pada TV diukur? Mereka menggunakan rahasia) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 717.1655905511811397 Td
+(kuno bernama Teorema Pythagoras! Hari ini, kamu akan jadi 'Arsitek Matematika'.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 691.6537795275589815 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 674.6459055118109518 Td
+(• Menunjukkan gambar TV dan cara mengukur diagonalnya.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 657.6380314960629221 Td
+(• Menjelaskan bahwa Pythagoras hanya berlaku untuk segitiga yang punya 'sudut kursi L' atau siku-siku.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 612.2837007874015853 Td
+(3. Review of Prior Knowledge \(5 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 589.6065354330708033 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 572.5986614173227736 Td
+(Sebelum kita pakai rumusnya, ingat ini: 3 kuadrat artinya 3 dikali 3, hasilnya 9. Secara visual, itu) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 558.42543307086612 Td
+(seperti membuat persegi berukuran 3x3. Coba Jean gambar persegi 4x4 di whiteboard. Berapa) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 544.2522047244094665 Td
+(kotaknya?) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 518.7403937007873083 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 501.7325196850393354 Td
+(• Menggambar persegi di atas sisi-sisi segitiga virtual.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 484.7246456692913057 Td
+(• Review konsep akar kuadrat sebagai 'jalan pulang' dari bilangan kuadrat.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 439.3703149606298552 Td
+(4. Problem Introduction \(10 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 416.69314960629913 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 399.6852755905511003 Td
+(Lihat segitiga ini. Sisi alasnya 3 cm, tingginya 4 cm. Pythagoras bilang: kalau kita buat persegi di alas) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 385.5120472440944468 Td
+(\(9 kotak\) dan persegi di tinggi \(16 kotak\), lalu kita jumlahkan \(9+16=25\), hasilnya adalah luas persegi) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 371.3388188976377364 Td
+(di sisi miring! Jadi, berapa panjang sisi miringnya jika luas perseginya 25?) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 345.8270078740156919 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 328.8191338582676053 Td
+(• Membuktikan a² + b² = c² secara visual menggunakan grid.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 311.8112598425195756 Td
+(• Menuliskan rumus a² + b² = c² dengan warna yang berbeda untuk setiap sisi.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 266.4569291338582389 Td
+(5. Guided Practice \(15 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 243.7797637795274568 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 226.7718897637794271 Td
+(Sekarang giliranmu, Arsitek Jean! Mari kita hitung tangga yang bersandar di tembok. Tinggi tembok 6) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 212.5986614173227736 Td
+(meter, jarak kaki tangga ke tembok 8 meter. Pakai rumus kita: 6 kuadrat ditambah 8 kuadrat sama) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 198.4254330708660063 Td
+(dengan panjang tangga kuadrat. Mari kita hitung langkah demi langkah.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 172.9136220472439618 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 155.9057480314959321 Td
+(• Menghitung 6x6 dan 8x8 secara mandiri.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 138.8978740157479024 Td
+(• Menjumlahkan hasil \(36 + 64 = 100\).) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 121.8899999999998727 Td
+(• Mencari akar dari 100 bersama guru.) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 7/16/2026, 11:58:29 AM) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(2 / 4) Tj
+ET
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 8 0 R
+>>
+endobj
+8 0 obj
+<<
+/Length 5222
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 785.1970866141732586 Td
+(6. Independent Practice \(15 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 762.5199212598424765 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 745.5120472440944468 Td
+(Tantangan mandiri! Seorang pelaut berlayar ke Utara sejauh 5 km, lalu belok ke Timur sejauh 12 km.) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 731.3388188976377933 Td
+(Berapa jarak terpendek dari posisi awal? Kerjakan di whiteboard-mu, aku akan melihat prosesnya ya!) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 705.8270078740157487 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 688.819133858267719 Td
+(• Menyelesaikan soal Pythagoras dengan angka 5, 12, 13.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 671.8112598425196893 Td
+(• Mencari panjang sisi tegak jika sisi miring dan alas diketahui \(modifikasi rumus\).) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 626.4569291338582389 Td
+(7. Consolidation & Reflection \(5 minutes\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 603.7797637795274568 Td
+(Teacher Script:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 586.7718897637794271 Td
+(Luar biasa, Jean! Hari ini kamu belajar bahwa c² = a² + b². Ini adalah kunci untuk banyak hal di dunia) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 572.5986614173227736 Td
+(nyata. Jangan lupa untuk masuk ke https://learn.algonova.id/login untuk melihat catatan dan tugasmu) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 558.42543307086612 Td
+(ya. Apa satu hal paling menarik yang kamu pelajari hari ini?) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 532.9136220472440755 Td
+(Activities:) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 515.9057480314959321 Td
+(• Ringkasan rumus utama.) Tj
+ET
+BT
+/F3 10 Tf
+11.5 TL
+0 g
+85.0393700787401627 498.8978740157479592 Td
+(• Refleksi diri mengenai bagian mana yang paling menantang.) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 453.5435433070865656 Td
+(Homework) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 425.1970866141731449 Td
+(Medium Questions:) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 408.1892125984251152 Td
+(1. Sebuah segitiga siku-siku memiliki alas 9 cm dan tinggi 12 cm. Berapakah panjang sisi) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 394.0159842519684616 Td
+(miringnya?) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 371.3388188976377364 Td
+(2. Hitunglah panjang sisi miring jika sisi tegaknya adalah 8 cm dan 15 cm.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 348.6616535433070112 Td
+(3. Visualisasikan: Jika luas persegi di sisi a adalah 49 cm² dan di sisi b adalah 576 cm²,) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 334.4884251968503008 Td
+(berapakah panjang sisi miring c?) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 311.8112598425195756 Td
+(4. Sebuah layar smartphone berbentuk persegi panjang dengan lebar 6 cm dan tinggi 8 cm.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 297.6380314960629221 Td
+(Berapa inci diagonalnya \(hitung dalam cm\)?) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 257.952992125984224 Td
+(Hard Questions:) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 240.9451181102361943 Td
+(1. Tangga sepanjang 13 meter bersandar di tembok. Jika jarak bawah tangga ke tembok) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 226.7718897637794271 Td
+(adalah 5 meter, berapakah tinggi tembok yang dicapai tangga?) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 204.0947244094487587 Td
+(2. Sebuah lapangan berbentuk persegi panjang memiliki diagonal 25 meter. Jika lebarnya 7) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 189.9214960629919915 Td
+(meter, hitunglah panjang lapangan tersebut.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 167.2443307086613231 Td
+(3. Dua buah tiang berdiri tegak dengan tinggi 12 meter dan 21 meter. Jika jarak antar tiang) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 153.0711023622046696 Td
+(adalah 12 meter, berapakah jarak antara ujung atas kedua tiang tersebut?) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 130.3939370078738875 Td
+(4. Tentukan apakah segitiga dengan sisi 7 cm, 24 cm, dan 25 cm adalah segitiga siku-siku.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 116.220708661417234 Td
+(Buktikan dengan rumus!) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 93.5435433070865656 Td
+(5. Rumus Pythagoras dibalik: Jika c = 10 dan a = 6, cari nilai b menggunakan pengurangan) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 79.3703149606297984 Td
+(kuadrat.) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 7/16/2026, 11:58:29 AM) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(3 / 4) Tj
+ET
+endstream
+endobj
+9 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 10 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 4214
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 785.1970866141732586 Td
+(6. Seorang anak berjalan 10 meter ke selatan, lalu 24 meter ke barat. Berapa jarak terpendek) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 771.0238582677164914 Td
+(anak tersebut dari titik awal?) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 731.3388188976377933 Td
+(Answer Key:) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 714.3309448818897636 Td
+( 1 .   1 5   \(" \( 8 1 + 1 4 4 \) \) ;   2 .   1 7   \(" \( 6 4 + 2 2 5 \) \) ;   3 .   2 5   \(" \( 4 9 + 5 7 6 = 6 2 5 \) \) ;   4 .   1 0   \(" \( 3 6 + 6 4 \) \)) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 700.15771653543311 Td
+( 5 .   1 2   \(" \( 1 6 9 - 2 5 \) \) ;   6 .   2 4   \(" \( 6 2 5 - 4 9 \) \) ;   7 .   1 5   \( S e l i s i h   t i n g g i = 9 ,   A l a s = 1 2 ,  " \( 8 1 + 1 4 4 \) \) ;   8 .   Y a) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 685.9844881889763428 Td
+( \( 4 9 + 5 7 6 = 6 2 5 \) ;   9 .   8   \(" \( 1 0 0 - 3 6 \) \) ;   1 0 .   2 6   \(" \( 1 0 0 + 5 7 6 = 6 7 6 \) \)) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 671.8112598425196893 Td
+(REVIEW: Bangun Ruang Gabungan - Medium 1: Kubus \(r=4\) dan Balok \(5x4x2\). Total) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 657.6380314960629221 Td
+(Volume = 64 + 40 = 104 cm³.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 643.4648031496062686 Td
+(REVIEW: Bangun Ruang Gabungan - Medium 2: Dua kubus identik \(r=3\). Total Volume = 2 x) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 629.291574803149615 Td
+(27 = 54 cm³.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 615.1183464566928478 Td
+(REVIEW: Bangun Ruang Gabungan - Hard 1: Balok besar \(10x5x4\) dilubangi kubus \(r=2\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 600.9451181102361943 Td
+(Sisa Volume = 200 - 8 = 192 cm³.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 586.7718897637794271 Td
+(REVIEW: Bangun Ruang Gabungan - Hard 2: Tiga kubus bertumpuk dengan r=2, r=3, r=4.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 572.5986614173227736 Td
+(Total Volume = 8 + 27 + 64 = 99 unit³.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 558.42543307086612 Td
+(REVIEW: Pre-assessment - Medium 1: Berapakah 12 pangkat 2? \(144\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 544.2522047244094665 Td
+(REVIEW: Pre-assessment - Medium 2: Akar dari 121? \(11\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 530.0789763779526993 Td
+(REVIEW: Pre-assessment - Hard 1: Jika n² = 225, berapakah n? \(15\).) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+85.0393700787401627 515.9057480314959321 Td
+( R E V I E W :   P r e - a s s e s s m e n t   -   H a r d   2 :   H i t u n g   \(" 1 6   +  " 9 \) ²   \( H a s i l n y a   4 9 \) .) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 479.0553543307086102 Td
+(Parent Reminder) Tj
+ET
+BT
+/F2 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 456.378188976377885 Td
+(Update Belajar Jean: Menjadi Arsitek Matematika!) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 439.3703149606298552 Td
+(Hari ini Jean belajar Teorema Pythagoras untuk menghitung jarak diagonal dan) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 425.1970866141731449 Td
+(membuktikannya secara visual. Jean menunjukkan pemahaman yang baik pada konsep) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 411.0238582677164914 Td
+(bilangan kuadrat. Di rumah, Ayah/Bunda bisa mengajak Jean menebak ukuran 'inci' layar TV) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+70.8661417322834666 396.850629921259781 Td
+(dengan mengukur diagonalnya menggunakan penggaris!) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 34.0159842519684616 Td
+(Generated on: 7/16/2026, 11:58:29 AM) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+523.0626771653543301 34.0159842519684616 Td
+(4 / 4) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R 9 0 R ]
+/Count 4
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+21 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+22 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+23 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+24 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 11 0 R
+/F2 12 0 R
+/F3 13 0 R
+/F4 14 0 R
+/F5 15 0 R
+/F6 16 0 R
+/F7 17 0 R
+/F8 18 0 R
+/F9 19 0 R
+/F10 20 0 R
+/F11 21 0 R
+/F12 22 0 R
+/F13 23 0 R
+/F14 24 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+25 0 obj
+<<
+/Producer (jsPDF 3.0.2)
+/CreationDate (D:20260716115829+07'00')
+>>
+endobj
+26 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 27
+0000000000 65535 f 
+0000018754 00000 n 
+0000020594 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000004065 00000 n 
+0000004202 00000 n 
+0000008938 00000 n 
+0000009075 00000 n 
+0000014349 00000 n 
+0000014487 00000 n 
+0000018829 00000 n 
+0000018955 00000 n 
+0000019086 00000 n 
+0000019220 00000 n 
+0000019358 00000 n 
+0000019482 00000 n 
+0000019611 00000 n 
+0000019743 00000 n 
+0000019879 00000 n 
+0000020007 00000 n 
+0000020134 00000 n 
+0000020263 00000 n 
+0000020396 00000 n 
+0000020498 00000 n 
+0000020847 00000 n 
+0000020933 00000 n 
+trailer
+<<
+/Size 27
+/Root 26 0 R
+/Info 25 0 R
+/ID [ <FBD52DE83DC9337F76F4968EAF6B32E7> <FBD52DE83DC9337F76F4968EAF6B32E7> ]
+>>
+startxref
+21037
+%%EOF
